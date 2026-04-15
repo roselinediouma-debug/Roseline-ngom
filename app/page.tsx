@@ -281,17 +281,9 @@ export default function HomePage() {
             Ressource gratuite
           </div>
           <AnimatedGuideButton />
-          <div className="mt-3">
-            <LinkButton
-              href="/guide"
-              icon="✅"
-              label="Checklist voyage Sénégal"
-              sublabel="Tout ce qu'il faut prévoir, étape par étape"
-            />
-          </div>
         </div>
 
-        {/* ─── BLOC 2 — Mes formations ─── */}
+        {/* ─── BLOC 2 — Guides signatures ─── */}
         <div className="mb-6">
           <div className="text-xs font-bold uppercase tracking-widest mb-3 px-1 flex items-center gap-2" style={{ color: '#b8860b' }}>
             <span
@@ -300,7 +292,7 @@ export default function HomePage() {
             >
               📚
             </span>
-            Mes formations
+            Guides signatures
           </div>
           <div className="flex flex-col gap-3">
             <LinkButton
@@ -312,10 +304,10 @@ export default function HomePage() {
             />
             <LinkButton
               href="/offres"
-              icon="🎓"
-              label="Masterclass Voyage Sénégal"
-              sublabel="Formation complète pour un voyage réussi"
-              price="97 EUR"
+              icon="🗓️"
+              label="Le Sénégal en une semaine"
+              sublabel="Itinéraire clé en main pour un séjour de 7 jours"
+              price="29 EUR"
             />
           </div>
         </div>
