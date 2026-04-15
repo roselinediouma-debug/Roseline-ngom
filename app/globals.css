@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Charte Roseline Ngom */
+  --color-bordeaux: #560E13;
+  --color-bordeaux-dark: #3d0a0e;
+  --color-bordeaux-light: #7a1a20;
+  --color-gold: #F6C961;
+  --color-gold-dark: #e0a830;
+  --color-noir: #0A0A0A;
+  --color-creme: #F8F5F0;
+  --color-blanc: #FEFCF9;
+
+  --font-playfair: var(--font-playfair);
+  --font-poppins: var(--font-poppins);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #FEFCF9;
+  color: #0A0A0A;
+  font-family: var(--font-poppins), Poppins, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes glow-gold {
+  0%, 100% { box-shadow: 0 0 8px rgba(246, 201, 97, 0.4); }
+  50% { box-shadow: 0 0 24px rgba(246, 201, 97, 0.9), 0 0 40px rgba(246, 201, 97, 0.4); }
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.85; }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+@keyframes rotate-ring {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotate-ring-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulse-whatsapp {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+}
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+  33% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+  66% { transform: translateY(-10px) translateX(-8px); opacity: 0.8; }
+}
+
+.animate-shake {
+  animation: shake 0.6s ease-in-out;
+}
+
+.animate-glow-gold {
+  animation: glow-gold 3s ease-in-out infinite;
+}
+
+.animate-pulse-badge {
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+.animate-bounce-arrow {
+  animation: bounce-arrow 1s ease-in-out infinite;
+}
+
+.animate-rotate-ring {
+  animation: rotate-ring 8s linear infinite;
+}
+
+.animate-rotate-ring-reverse {
+  animation: rotate-ring-reverse 12s linear infinite;
+}
+
+.animate-pulse-whatsapp {
+  animation: pulse-whatsapp 2s ease-in-out infinite;
+}
+
+.font-playfair {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+}
+
+.font-poppins {
+  font-family: var(--font-poppins), Poppins, sans-serif;
+}
