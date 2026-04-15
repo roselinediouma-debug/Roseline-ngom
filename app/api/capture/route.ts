@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
-import { createBrevoContact } from '@/lib/brevo'
+import { createBrevoContact, sendTransactionalEmail } from '@/lib/brevo'
+import { guideDeliveryEmail } from '@/lib/emails/guideDelivery'
 
 export async function POST(req: Request) {
   try {
@@ -50,6 +51,19 @@ export async function POST(req: Request) {
       } catch (err) {
         console.error('Brevo contact creation failed:', err)
         // On continue même si Brevo échoue
+      }
+
+      // 3. Envoyer l'email de livraison du guide
+      try {
+        const { subject, htmlContent } = guideDeliveryEmail({ prenom: prenom.trim() })
+        await sendTransactionalEmail({
+          to: emailLower,
+          subject,
+          htmlContent,
+        })
+      } catch (err) {
+        console.error('Brevo email delivery failed:', err)
+        // Le fallback /guide/merci affiche un lien de téléchargement direct
       }
     }
 
