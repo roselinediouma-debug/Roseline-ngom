@@ -3,40 +3,51 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { ExperienceCard } from '@/components/ExperienceCard'
 
-// ─── Previews des 10 expériences (synchronisé avec le PDF) ─────────────────────
+// ─── Teasers des 10 expériences — version "verrouillée" pour créer du suspense ──
+// Le contenu réel (nom du lieu, contact, tips) est dans le PDF uniquement.
 const EXPERIENCES_PREVIEW = [
-  { n: '01', icon: '🌅', title: 'Lac Rose au coucher', teaser: 'Quand la salinité magnétise l\'eau en magenta' },
-  { n: '02', icon: '🐟', title: 'Marché aux pirogues de Mbour', teaser: 'Le ballet des pêcheurs à l\'aube' },
-  { n: '03', icon: '🛶', title: 'Île de Carabane en bolong', teaser: 'Casamance profonde, ni voiture ni touristes' },
-  { n: '04', icon: '⛓️', title: 'Gorée avec un historien local', teaser: 'Un choc émotionnel différent du tour classique' },
-  { n: '05', icon: '🏕️', title: 'Pays Bassari en immersion', teaser: 'Rituels d\'initiation et masques sacrés' },
-  { n: '06', icon: '🌿', title: 'Delta du Saloum en pirogue', teaser: 'Mangroves, bolongs, îles sérères' },
-  { n: '07', icon: '🌙', title: 'Saint-Louis de nuit à Guet Ndar', teaser: 'L\'âme de la ville quand les touristes dorment' },
-  { n: '08', icon: '🦁', title: 'Safari Niokolo-Koba', teaser: 'Lions et chimpanzés — oui, au Sénégal' },
-  { n: '09', icon: '🥊', title: 'Lutte sénégalaise à Pikine', teaser: 'Le sport national dans sa version la plus intense' },
-  { n: '10', icon: '🐪', title: 'Bivouac au désert de Lompoul', teaser: 'Un Sahara miniature à 2h30 de Dakar' },
+  { n: 1, category: 'Nature', teaser: 'Un lac qui devient rose à 17h pile. Pas celui que vous imaginez.', image: '/images/senegal/exp-01-lac-rose.jpg' },
+  { n: 2, category: 'Rencontres', teaser: 'Le ballet silencieux de 2 000 pirogues à l\'aube.', image: '/images/senegal/exp-02-mbour.jpg' },
+  { n: 3, category: 'Hors des sentiers', teaser: 'Une île sans voiture où les pirogues s\'arrêtent le temps d\'une nuit.', image: '/images/senegal/exp-03-carabane.jpg' },
+  { n: 4, category: 'Mémoire', teaser: 'Un lieu d\'histoire — mais pas la visite que vous avez déjà lue partout.', image: '/images/senegal/exp-04-goree.jpg' },
+  { n: 5, category: 'Culture', teaser: 'Une ethnie classée UNESCO qui n\'ouvre ses rituels qu\'à quelques invités.', image: '/images/senegal/exp-05-bassari.jpg' },
+  { n: 6, category: 'Nature', teaser: 'Un labyrinthe de mangroves où le silence a une texture.', image: '/images/senegal/exp-06-saloum.jpg' },
+  { n: 7, category: 'Villes', teaser: 'La ville coloniale qui révèle son âme quand les touristes dorment.', image: '/images/senegal/exp-07-saint-louis.jpg' },
+  { n: 8, category: 'Faune', teaser: 'L\'endroit — le seul — où voir des lions au Sénégal.', image: '/images/senegal/exp-08-niokolo.jpg' },
+  { n: 9, category: 'Adrénaline', teaser: 'Un combat qui fait vibrer 50 000 personnes. Le vrai sport national.', image: '/images/senegal/exp-09-lutte.jpg' },
+  { n: 10, category: 'Aventure', teaser: 'Un Sahara miniature. À 2h30 de la capitale. Personne n\'en parle.', image: '/images/senegal/exp-10-lompoul.jpg' },
 ]
 
 const TESTIMONIALS = [
   {
     name: 'Amina D.',
     country: 'Paris, France',
-    initial: 'A',
+    image: '/images/senegal/testimonial-1.jpg',
     text: 'Ce guide m\'a ouvert des portes que je n\'aurais jamais trouvées seule. Le conseil sur Carabane vaut déjà les 10 minutes pour le télécharger.',
   },
   {
     name: 'Marcus T.',
     country: 'New York, USA',
-    initial: 'M',
+    image: '/images/senegal/testimonial-2.jpg',
     text: 'Indispensable pour vivre le vrai Sénégal — pas le Sénégal des resorts. J\'ai suivi l\'itinéraire Bassari à la lettre.',
   },
   {
     name: 'Sophie K.',
     country: 'Bruxelles, Belgique',
-    initial: 'S',
+    image: '/images/senegal/testimonial-3.jpg',
     text: 'J\'ai partagé ce guide à toute ma famille avant notre voyage. Les 10 expériences sont validées par les locaux.',
   },
+]
+
+const GALLERY = [
+  '/images/senegal/gallery-1.jpg',
+  '/images/senegal/gallery-2.jpg',
+  '/images/senegal/gallery-3.jpg',
+  '/images/senegal/gallery-4.jpg',
+  '/images/senegal/gallery-5.jpg',
+  '/images/senegal/gallery-6.jpg',
 ]
 
 const FAQ_ITEMS = [
@@ -57,20 +68,6 @@ const FAQ_ITEMS = [
     a: 'Jamais. Vous recevrez le guide, puis occasionnellement une newsletter (1 à 2/mois max). Désinscription en 1 clic si ça ne vous parle pas.',
   },
 ]
-
-function CheckItem({ text }: { text: string }) {
-  return (
-    <li className="flex items-start gap-3">
-      <span
-        className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
-        style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-      >
-        ✓
-      </span>
-      <span className="text-sm" style={{ color: '#0A0A0A' }}>{text}</span>
-    </li>
-  )
-}
 
 function FAQItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
   return (
@@ -96,6 +93,14 @@ function FAQItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean
           {a}
         </p>
       )}
+    </div>
+  )
+}
+
+function Stars() {
+  return (
+    <div className="flex gap-0.5 text-sm" style={{ color: '#F6C961' }} aria-label="5 étoiles">
+      {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
     </div>
   )
 }
@@ -140,102 +145,92 @@ export default function GuidePage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#FEFCF9', fontFamily: 'var(--font-poppins), Poppins, sans-serif' }}>
-      {/* ═══════════════════════════════════════════════
-           HERO — 2 colonnes : form à gauche, mockup droite
-         ═══════════════════════════════════════════════ */}
-      <section
-        className="relative overflow-hidden pt-14 pb-20 px-4"
-        style={{ background: 'linear-gradient(180deg, #FEFCF9 0%, #F8F5F0 100%)' }}
-      >
+    <div style={{ backgroundColor: '#FEFCF9', fontFamily: 'var(--font-poppins), Poppins, sans-serif' }}>
+
+      {/* ═══════════════════════════════════════════════════════════
+          HERO — 100vh immersif avec photo pleine page
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="relative flex items-center justify-center min-h-screen overflow-hidden">
+        {/* Photo de fond */}
+        <Image
+          src="/images/senegal/hero.jpg"
+          alt="Sénégal au coucher du soleil"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+
+        {/* Overlay dégradé bordeaux pour lisibilité */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(180deg, rgba(86,14,19,0.55) 0%, rgba(86,14,19,0.45) 35%, rgba(86,14,19,0.9) 100%)',
+          }}
+        />
+
+        {/* Contenu centré */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-5 py-24">
+          <div
+            className="inline-block text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] px-4 py-2 rounded-full mb-8 backdrop-blur-sm"
+            style={{ backgroundColor: 'rgba(246,201,97,0.18)', color: '#F6C961', border: '1px solid rgba(246,201,97,0.5)' }}
+          >
+            📖 Guide offert · 15 pages
+          </div>
+
+          <h1
+            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6"
+            style={{
+              fontFamily: 'var(--font-playfair), "Playfair Display", serif',
+              color: '#FEFCF9',
+              textShadow: '0 3px 20px rgba(0,0,0,0.4)',
+            }}
+          >
+            Le Sénégal<br />
+            <span style={{ color: '#F6C961', fontStyle: 'italic' }}>que seule une locale</span><br />
+            peut vous offrir
+          </h1>
+
+          <p
+            className="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+            style={{ color: 'rgba(254,252,249,0.92)', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
+          >
+            10 expériences secrètes, mon carnet d&apos;adresses personnel, les astuces qu&apos;on ne trouve dans aucun Lonely Planet.
+          </p>
+
+          <button
+            onClick={scrollToForm}
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-sm uppercase tracking-[0.2em] transition-all hover:scale-[1.03] active:scale-[0.98]"
+            style={{
+              backgroundColor: '#F6C961',
+              color: '#560E13',
+              boxShadow: '0 12px 40px rgba(246,201,97,0.4)',
+            }}
+          >
+            Recevoir mon guide <span>→</span>
+          </button>
+
+          <div className="mt-6 text-xs uppercase tracking-widest" style={{ color: 'rgba(246,201,97,0.85)' }}>
+            100% gratuit · livraison immédiate
+          </div>
+        </div>
+
+        {/* Chevron animé bas */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-center animate-bounce" style={{ color: '#F6C961' }}>
+          <div className="text-[10px] uppercase tracking-[0.3em] mb-1 opacity-80">Découvrir</div>
+          <div className="text-2xl">↓</div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — OUVREZ LE GUIDE (éditorial)
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-5" style={{ backgroundColor: '#FEFCF9' }}>
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-14 items-center">
-            {/* GAUCHE — Proposition + form */}
-            <div>
-              <div
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
-                style={{
-                  backgroundColor: 'rgba(246,201,97,0.2)',
-                  color: '#b8860b',
-                  border: '1px solid rgba(246,201,97,0.5)',
-                }}
-              >
-                <span>📖</span>
-                <span>PDF gratuit · 15 pages</span>
-              </div>
-
-              <h1
-                className="text-4xl md:text-5xl font-bold mb-5 leading-tight"
-                style={{ fontFamily: 'var(--font-playfair), "Playfair Display", serif', color: '#560E13' }}
-              >
-                Découvrez le Sénégal<br />
-                <span style={{ color: '#b8860b' }}>comme une locale</span>
-              </h1>
-
-              <p className="text-base mb-7 leading-relaxed" style={{ color: '#0A0A0A', opacity: 0.75 }}>
-                10 expériences que vous ne trouverez dans aucun Lonely Planet.
-                Des adresses validées sur le terrain par Roseline, fondatrice de TripAfro.
-              </p>
-
-              <ul className="flex flex-col gap-3 mb-8">
-                <CheckItem text="Du Lac Rose à la Casamance — 10 pépites hors des sentiers battus" />
-                <CheckItem text="Pour chaque lieu : comment y aller, quand, combien, le conseil de Roseline" />
-                <CheckItem text="Préparation complète : visa, santé, budget, transport, sécurité" />
-                <CheckItem text="Téléchargement immédiat — 100% gratuit, 0% spam" />
-              </ul>
-
-              <form
-                id="guide-form"
-                onSubmit={handleSubmit}
-                className="bg-white rounded-2xl p-6 shadow-lg"
-                style={{ border: '1px solid #e0d8d0' }}
-              >
-                <div className="flex flex-col gap-3">
-                  <input
-                    type="text"
-                    placeholder="Votre prénom (optionnel)"
-                    value={prenom}
-                    onChange={(e) => setPrenom(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border text-sm outline-none focus:border-[#560E13] transition-colors"
-                    style={{ borderColor: '#e0d8d0', backgroundColor: '#FEFCF9' }}
-                  />
-                  <input
-                    type="email"
-                    placeholder="Votre adresse email *"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full px-4 py-3.5 rounded-xl border text-sm outline-none focus:border-[#560E13] transition-colors"
-                    style={{ borderColor: '#e0d8d0', backgroundColor: '#FEFCF9' }}
-                  />
-                  {error && <p className="text-red-500 text-xs">{error}</p>}
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
-                    style={{
-                      backgroundColor: '#560E13',
-                      color: '#FEFCF9',
-                      boxShadow: '0 8px 24px rgba(86,14,19,0.25)',
-                    }}
-                  >
-                    {loading ? 'Envoi en cours...' : '📥 Recevoir mon guide'}
-                  </button>
-                </div>
-                <div className="flex items-center justify-center gap-4 mt-4 text-[10px] uppercase tracking-wider" style={{ color: '#0A0A0A', opacity: 0.45 }}>
-                  <span>🔒 RGPD</span>
-                  <span>·</span>
-                  <span>0 spam</span>
-                  <span>·</span>
-                  <span>1 clic pour se désinscrire</span>
-                </div>
-              </form>
-            </div>
-
-            {/* DROITE — Mockup du PDF (effet livre posé) */}
-            <div className="hidden lg:flex justify-center items-center">
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
+            {/* Mockup PDF stylisé */}
+            <div className="flex justify-center lg:justify-start">
               <div className="relative">
-                {/* Badge flottant */}
                 <div
                   className="absolute -top-4 -right-4 z-20 px-4 py-2 rounded-full font-bold text-xs uppercase tracking-widest rotate-[6deg]"
                   style={{
@@ -246,30 +241,18 @@ export default function GuidePage() {
                 >
                   100% gratuit
                 </div>
-
-                {/* Ombre portée */}
                 <div
                   className="absolute -bottom-6 -right-6 w-full h-full rounded-lg"
-                  style={{
-                    backgroundColor: 'rgba(86,14,19,0.15)',
-                    transform: 'rotate(3deg)',
-                  }}
+                  style={{ backgroundColor: 'rgba(86,14,19,0.15)', transform: 'rotate(3deg)' }}
                 />
-
-                {/* Faux PDF — représentation stylisée de la cover */}
                 <div
-                  className="relative w-[320px] h-[440px] rounded-lg overflow-hidden"
+                  className="relative w-[300px] h-[420px] md:w-[340px] md:h-[470px] rounded-lg overflow-hidden"
                   style={{
-                    boxShadow: '0 30px 60px -15px rgba(86,14,19,0.4), 0 0 0 1px rgba(86,14,19,0.1)',
+                    boxShadow: '0 30px 60px -15px rgba(86,14,19,0.5), 0 0 0 1px rgba(86,14,19,0.1)',
                     transform: 'rotate(-2deg)',
                   }}
                 >
-                  {/* Fond bordeaux */}
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(155deg, #560E13 0%, #3d0a0e 100%)' }}
-                  />
-                  {/* Motif hexagonal décoratif */}
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(155deg, #560E13 0%, #3d0a0e 100%)' }} />
                   <div className="absolute inset-0 opacity-[0.08]">
                     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                       <defs>
@@ -280,38 +263,24 @@ export default function GuidePage() {
                       <rect width="100%" height="100%" fill="url(#hexPDF)" />
                     </svg>
                   </div>
-
-                  {/* Contenu cover */}
                   <div className="relative h-full flex flex-col justify-between p-8 text-white">
-                    {/* Haut : pill or */}
-                    <div>
-                      <span
-                        className="inline-block px-3 py-1 text-[9px] font-bold tracking-[0.2em]"
-                        style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-                      >
-                        GUIDE OFFERT · 2026
-                      </span>
-                    </div>
-
-                    {/* Milieu : titre + sous-titre */}
+                    <span
+                      className="inline-block self-start px-3 py-1 text-[9px] font-bold tracking-[0.2em]"
+                      style={{ backgroundColor: '#F6C961', color: '#560E13' }}
+                    >
+                      GUIDE OFFERT · 2026
+                    </span>
                     <div>
                       <div className="w-12 h-[3px] mb-4" style={{ backgroundColor: '#F6C961' }} />
-                      <h3
-                        className="text-3xl font-bold leading-[1.1] mb-4"
-                        style={{ fontFamily: 'var(--font-playfair), "Playfair Display", serif' }}
-                      >
+                      <h3 className="text-3xl font-bold leading-[1.1] mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
                         10 expériences secrètes au Sénégal
                       </h3>
                       <p className="text-xs leading-relaxed" style={{ color: '#F6C961' }}>
                         Le guide que seule une locale peut vous offrir
                       </p>
                     </div>
-
-                    {/* Bas : auteur */}
                     <div>
-                      <div className="font-bold text-base" style={{ fontFamily: 'var(--font-playfair)' }}>
-                        Roseline Ngom
-                      </div>
+                      <div className="font-bold text-base" style={{ fontFamily: 'var(--font-playfair)' }}>Roseline Ngom</div>
                       <div className="text-[9px] tracking-[0.2em] uppercase mt-0.5" style={{ color: '#F6C961' }}>
                         Fondatrice TripAfro
                       </div>
@@ -320,121 +289,32 @@ export default function GuidePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ═══════════════════════════════════════════════
-           SECTION — 10 EXPÉRIENCES (preview teasers)
-         ═══════════════════════════════════════════════ */}
-      <section className="py-20 px-4" style={{ backgroundColor: '#F8F5F0' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#b8860b' }}>
-              À l&apos;intérieur du guide
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              Les 10 expériences qui vont transformer votre voyage
-            </h2>
-            <p className="text-sm opacity-60 max-w-xl mx-auto">
-              Chaque expérience est détaillée sur une page dédiée avec photo, conseils pratiques et l&apos;astuce insider de Roseline.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            {EXPERIENCES_PREVIEW.map((exp) => (
-              <div
-                key={exp.n}
-                className="bg-white rounded-2xl p-5 flex items-start gap-4 transition-transform hover:scale-[1.02]"
-                style={{ border: '1px solid #e0d8d0' }}
-              >
-                <div className="flex-shrink-0 flex items-center gap-2">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                    style={{ backgroundColor: 'rgba(246,201,97,0.15)' }}
-                  >
-                    {exp.icon}
-                  </div>
-                  <div
-                    className="font-bold text-xs tracking-[0.15em]"
-                    style={{ fontFamily: 'var(--font-playfair)', color: '#b8860b' }}
-                  >
-                    {exp.n}
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-sm mb-1" style={{ color: '#560E13' }}>{exp.title}</div>
-                  <div className="text-xs opacity-60 leading-snug">{exp.teaser}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <button
-              onClick={scrollToForm}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-widest transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{
-                backgroundColor: '#560E13',
-                color: '#FEFCF9',
-                boxShadow: '0 6px 20px rgba(86,14,19,0.25)',
-              }}
-            >
-              📥 Télécharger le guide <span>→</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
-           SECTION — QUI EST ROSELINE ?
-         ═══════════════════════════════════════════════ */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-[auto_1fr] gap-10 items-center">
-            <div className="flex justify-center">
-              <div
-                className="relative w-48 h-48 rounded-full overflow-hidden"
-                style={{
-                  boxShadow: '0 12px 40px rgba(86,14,19,0.25)',
-                  border: '4px solid #FEFCF9',
-                  outline: '3px solid rgba(246,201,97,0.4)',
-                }}
-              >
-                <Image
-                  src="/images/roseline.jpg"
-                  alt="Roseline Ngom"
-                  width={192}
-                  height={192}
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
-            </div>
-
+            {/* Texte éditorial */}
             <div>
-              <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#b8860b' }}>
-                L&apos;auteure
+              <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#b8860b' }}>
+                Un guide, un carnet d&apos;adresses
               </div>
-              <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-                Bonjour, je suis Roseline
+              <h2 className="text-3xl md:text-4xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                Ce n&apos;est pas un guide touristique. C&apos;est mon carnet.
               </h2>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: '#0A0A0A', opacity: 0.8 }}>
-                Fondatrice de TripAfro, je partage l&apos;Afrique de l&apos;Ouest autrement depuis plus de 10 ans.
-                Ce guide rassemble les expériences que j&apos;offre à mes amis quand ils viennent me voir —
-                celles qui transforment un séjour en voyage intime.
+              <p className="text-base leading-relaxed mb-8" style={{ color: '#0A0A0A', opacity: 0.78 }}>
+                Pendant dix ans, j&apos;ai emmené des voyageurs découvrir le Sénégal. À chaque fois, ce sont les mêmes
+                lieux, les mêmes rencontres qui transforment leur séjour. J&apos;ai rassemblé ces 10 pépites ici —
+                pour que vous viviez un voyage, pas des vacances.
               </p>
 
-              <div className="grid grid-cols-3 gap-4 pt-4" style={{ borderTop: '1px solid #e0d8d0' }}>
+              <div className="grid grid-cols-3 gap-6 pt-6" style={{ borderTop: '2px solid rgba(246,201,97,0.3)' }}>
                 {[
-                  { num: '500+', label: 'voyageurs' },
-                  { num: '12+', label: 'destinations' },
-                  { num: '10 ans', label: 'de terrain' },
+                  { num: '15', label: 'pages dédiées' },
+                  { num: '10', label: 'expériences' },
+                  { num: '10 ans', label: 'sur le terrain' },
                 ].map(({ num, label }) => (
-                  <div key={label} className="text-center">
-                    <div className="text-xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                  <div key={label} className="text-center md:text-left">
+                    <div className="text-3xl md:text-4xl font-bold leading-none" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
                       {num}
                     </div>
-                    <div className="text-[10px] uppercase tracking-wider opacity-55 mt-0.5">{label}</div>
+                    <div className="text-[10px] uppercase tracking-[0.15em] opacity-60 mt-2">{label}</div>
                   </div>
                 ))}
               </div>
@@ -443,40 +323,301 @@ export default function GuidePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-           SECTION — TÉMOIGNAGES
-         ═══════════════════════════════════════════════ */}
-      <section className="py-20 px-4" style={{ backgroundColor: '#F8F5F0' }}>
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — LES 10 EXPÉRIENCES (grille photos)
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-5" style={{ backgroundColor: '#F8F5F0' }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#b8860b' }}>
+              À l&apos;intérieur du guide
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+              10 expériences que<br />je ne partage qu&apos;à mes proches
+            </h2>
+            <p className="text-sm md:text-base opacity-60 max-w-2xl mx-auto">
+              Chaque expérience est détaillée sur une page du PDF : le lieu exact, comment y aller, quand, combien, mon contact de confiance sur place et l&apos;astuce insider que seule une locale connaît.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {EXPERIENCES_PREVIEW.map((exp) => (
+              <ExperienceCard
+                key={exp.n}
+                number={exp.n}
+                category={exp.category}
+                teaser={exp.teaser}
+                image={exp.image}
+              />
+            ))}
+          </div>
+
+          <div className="text-center mt-14">
+            <button
+              onClick={scrollToForm}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-sm uppercase tracking-[0.2em] transition-all hover:scale-[1.03] active:scale-[0.98]"
+              style={{
+                backgroundColor: '#560E13',
+                color: '#FEFCF9',
+                boxShadow: '0 10px 30px rgba(86,14,19,0.3)',
+              }}
+            >
+              Recevoir le guide complet <span>→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — RENCONTREZ ROSELINE
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-5 bg-white">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 mb-3">
-              <div className="text-4xl font-bold" style={{ color: '#560E13', fontFamily: 'var(--font-playfair)' }}>500+</div>
-              <div className="text-left text-xs opacity-60 leading-tight">
-                voyageurs<br />nous font confiance
+          <div className="grid md:grid-cols-[auto_1fr] gap-12 items-center">
+            {/* Portrait */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <div
+                  className="absolute -top-3 -left-3 w-full h-full rounded-2xl"
+                  style={{ backgroundColor: '#F6C961', zIndex: 0 }}
+                />
+                <div
+                  className="relative w-56 h-72 md:w-64 md:h-80 rounded-2xl overflow-hidden"
+                  style={{ boxShadow: '0 20px 40px rgba(86,14,19,0.2)' }}
+                >
+                  <Image
+                    src="/images/roseline.jpg"
+                    alt="Roseline Ngom"
+                    fill
+                    sizes="(max-width: 768px) 224px, 256px"
+                    className="object-cover object-top"
+                  />
+                </div>
               </div>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              Ce que disent ceux qui l&apos;ont lu
+
+            {/* Texte */}
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#b8860b' }}>
+                L&apos;auteure
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                Bonjour, je suis Roseline
+              </h2>
+
+              <blockquote
+                className="text-xl md:text-2xl leading-snug mb-6 pl-5"
+                style={{
+                  fontFamily: 'var(--font-playfair)',
+                  color: '#560E13',
+                  fontStyle: 'italic',
+                  borderLeft: '3px solid #F6C961',
+                }}
+              >
+                &ldquo;Ce guide, c&apos;est ce que j&apos;offre à mes amis quand ils viennent me voir.&rdquo;
+              </blockquote>
+
+              <p className="text-sm md:text-base leading-relaxed mb-8" style={{ color: '#0A0A0A', opacity: 0.78 }}>
+                Fondatrice de TripAfro, je partage l&apos;Afrique de l&apos;Ouest autrement depuis plus de 10 ans.
+                En une décennie, j&apos;ai accompagné plus de 2000 voyageurs — et à chaque fois, ce sont ces mêmes
+                expériences qui transforment un séjour en voyage intime.
+              </p>
+
+              <div className="grid grid-cols-3 gap-4 pt-6" style={{ borderTop: '2px solid rgba(246,201,97,0.3)' }}>
+                {[
+                  { num: '2000+', label: 'voyageurs accompagnés' },
+                  { num: '12+', label: 'destinations' },
+                  { num: '10 ans', label: 'sur le terrain' },
+                ].map(({ num, label }) => (
+                  <div key={label} className="text-center md:text-left">
+                    <div className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                      {num}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.15em] opacity-60 mt-2 leading-tight">{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — GALERIE MOSAÏQUE (ambiance Sénégal)
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-20 px-5" style={{ backgroundColor: '#560E13' }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#F6C961' }}>
+              @tripafro
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#FEFCF9' }}>
+              Le Sénégal vu de l&apos;intérieur
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+            {GALLERY.map((src, i) => (
+              <div
+                key={src}
+                className="relative overflow-hidden rounded-lg group cursor-pointer"
+                style={{ aspectRatio: '1/1' }}
+              >
+                <Image
+                  src={src}
+                  alt={`Sénégal - photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100" style={{ backgroundColor: 'rgba(86,14,19,0.3)' }} />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <a
+              href="https://instagram.com/tripafro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest transition-opacity hover:opacity-70"
+              style={{ color: '#F6C961' }}
+            >
+              Suivre @tripafro sur Instagram <span>→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — FORM (capture centrale)
+         ═══════════════════════════════════════════════════════════ */}
+      <section id="guide-form" className="py-24 px-5" style={{ backgroundColor: '#F8F5F0' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ border: '1px solid #e0d8d0' }}>
+            <div className="grid md:grid-cols-[1fr_1.2fr]">
+              {/* Gauche : visuel */}
+              <div className="relative p-10 md:p-12 flex flex-col justify-center text-white" style={{ backgroundColor: '#560E13' }}>
+                <div className="absolute inset-0 opacity-10">
+                  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <pattern id="hexForm" x="0" y="0" width="50" height="44" patternUnits="userSpaceOnUse">
+                        <polygon points="25,2 47,14 47,30 25,42 3,30 3,14" fill="none" stroke="#F6C961" strokeWidth="1" />
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#hexForm)" />
+                  </svg>
+                </div>
+                <div className="relative">
+                  <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#F6C961' }}>
+                    Dernière étape
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    Votre guide vous attend
+                  </h2>
+                  <p className="text-sm leading-relaxed mb-6 opacity-85">
+                    Entrez votre email ci-contre et recevez le PDF dans votre boîte mail dans les 2 minutes.
+                  </p>
+                  <ul className="space-y-2 text-sm">
+                    {['15 pages illustrées', 'Téléchargement immédiat', '100% gratuit, 0% spam'].map((t) => (
+                      <li key={t} className="flex items-start gap-2">
+                        <span style={{ color: '#F6C961' }}>✓</span>
+                        <span className="opacity-90">{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Droite : form */}
+              <div className="p-8 md:p-12">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <label className="block">
+                    <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: '#560E13' }}>
+                      Prénom (optionnel)
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="Ex : Sophie"
+                      value={prenom}
+                      onChange={(e) => setPrenom(e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-xl border text-sm outline-none focus:border-[#560E13] transition-colors"
+                      style={{ borderColor: '#e0d8d0', backgroundColor: '#FEFCF9' }}
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: '#560E13' }}>
+                      Votre email *
+                    </span>
+                    <input
+                      type="email"
+                      placeholder="vous@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-4 py-3.5 rounded-xl border text-sm outline-none focus:border-[#560E13] transition-colors"
+                      style={{ borderColor: '#e0d8d0', backgroundColor: '#FEFCF9' }}
+                    />
+                  </label>
+                  {error && <p className="text-red-500 text-xs">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-[0.2em] transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60 mt-2"
+                    style={{
+                      backgroundColor: '#560E13',
+                      color: '#FEFCF9',
+                      boxShadow: '0 10px 30px rgba(86,14,19,0.3)',
+                    }}
+                  >
+                    {loading ? 'Envoi en cours...' : 'Envoyer mon guide →'}
+                  </button>
+                  <div className="flex flex-wrap items-center justify-center gap-3 mt-3 text-[10px] uppercase tracking-wider" style={{ color: '#0A0A0A', opacity: 0.5 }}>
+                    <span>🔒 RGPD</span>
+                    <span>·</span>
+                    <span>0 spam</span>
+                    <span>·</span>
+                    <span>Désinscription 1 clic</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — TÉMOIGNAGES (avec portraits)
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-5 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-3 mb-3">
+              <div className="text-4xl md:text-5xl font-bold" style={{ color: '#560E13', fontFamily: 'var(--font-playfair)' }}>2000+</div>
+              <div className="text-left text-xs opacity-60 leading-tight uppercase tracking-wider">
+                voyageurs<br />nous font confiance
+              </div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+              Ce qu&apos;ils en disent
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.name}
-                className="bg-white p-6 rounded-2xl shadow-sm flex flex-col"
-                style={{ border: '1px solid #e0d8d0' }}
+                className="bg-white p-7 rounded-2xl flex flex-col"
+                style={{ border: '1px solid #e0d8d0', boxShadow: '0 4px 20px rgba(86,14,19,0.05)' }}
               >
-                <div className="text-2xl mb-3" style={{ color: '#F6C961' }}>&ldquo;</div>
-                <p className="text-sm leading-relaxed flex-1 mb-4" style={{ color: '#0A0A0A', opacity: 0.8 }}>
+                <Stars />
+                <div className="text-3xl mt-3 mb-2 leading-none" style={{ color: '#F6C961' }}>&ldquo;</div>
+                <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: '#0A0A0A', opacity: 0.8 }}>
                   {t.text}
                 </p>
-                <div className="flex items-center gap-3 pt-3" style={{ borderTop: '1px solid #e0d8d0' }}>
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                    style={{ backgroundColor: '#560E13', color: '#F6C961', fontFamily: 'var(--font-playfair)' }}
-                  >
-                    {t.initial}
+                <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid #e0d8d0' }}>
+                  <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src={t.image} alt={t.name} fill sizes="44px" className="object-cover" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold" style={{ color: '#560E13' }}>{t.name}</div>
@@ -489,16 +630,16 @@ export default function GuidePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-           SECTION — FAQ
-         ═══════════════════════════════════════════════ */}
-      <section className="py-20 px-4 bg-white">
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION — FAQ
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="py-24 px-5" style={{ backgroundColor: '#F8F5F0' }}>
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
-            <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#b8860b' }}>
+            <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#b8860b' }}>
               Questions fréquentes
             </div>
-            <h2 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
               Tout ce que vous vous demandez
             </h2>
           </div>
@@ -517,27 +658,36 @@ export default function GuidePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-           CTA FINAL
-         ═══════════════════════════════════════════════ */}
-      <section className="py-20 px-4" style={{ backgroundColor: '#560E13' }}>
-        <div className="max-w-2xl mx-auto text-center" style={{ color: '#FEFCF9' }}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Prêt à recevoir votre guide ?
+      {/* ═══════════════════════════════════════════════════════════
+          CTA FINAL — avec photo de fond
+         ═══════════════════════════════════════════════════════════ */}
+      <section className="relative py-24 px-5 overflow-hidden">
+        <Image
+          src="/images/senegal/hero.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(86,14,19,0.92)' }} />
+
+        <div className="relative z-10 max-w-2xl mx-auto text-center" style={{ color: '#FEFCF9' }}>
+          <h2 className="text-3xl md:text-5xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+            Prêt à découvrir <span style={{ color: '#F6C961', fontStyle: 'italic' }}>mon Sénégal</span> ?
           </h2>
-          <p className="text-sm opacity-75 mb-8 leading-relaxed">
+          <p className="text-sm md:text-base opacity-85 mb-10 leading-relaxed">
             Il arrive dans votre boîte mail en moins de 2 minutes. Gratuit, sans spam, 1 clic pour se désinscrire.
           </p>
           <button
             onClick={scrollToForm}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all hover:opacity-90 active:scale-[0.98]"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-sm uppercase tracking-[0.2em] transition-all hover:scale-[1.03] active:scale-[0.98]"
             style={{
               backgroundColor: '#F6C961',
               color: '#560E13',
-              boxShadow: '0 10px 30px rgba(246,201,97,0.4)',
+              boxShadow: '0 12px 40px rgba(246,201,97,0.4)',
             }}
           >
-            📥 Recevoir mon guide maintenant <span>→</span>
+            Recevoir mon guide maintenant <span>→</span>
           </button>
         </div>
       </section>
