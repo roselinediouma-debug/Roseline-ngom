@@ -91,17 +91,41 @@ function MerciContent() {
         </a>
       </div>
 
-      {/* CTA Instagram */}
-      <div className="max-w-sm w-full">
-        <a
-          href="https://instagram.com/tripafro"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full py-4 rounded-xl text-sm font-semibold text-center border transition-all hover:opacity-80"
-          style={{ borderColor: '#e0d8d0', color: '#0A0A0A', backgroundColor: '#FEFCF9' }}
-        >
-          Suivre @tripafro sur Instagram
-        </a>
+      {/* Réseaux sociaux */}
+      <div className="max-w-sm w-full bg-white rounded-2xl p-6 shadow-sm">
+        <p className="text-xs uppercase tracking-widest font-bold mb-4 opacity-60" style={{ color: '#560E13' }}>
+          Retrouvez-moi
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { label: '▶ YouTube', href: 'https://www.youtube.com/@RoselineNgom' },
+            { label: '📸 Instagram', href: 'https://www.instagram.com/roselinengom' },
+            { label: '🎵 TikTok', href: 'https://www.tiktok.com/@roselinengom' },
+            { label: '💼 LinkedIn', href: 'https://www.linkedin.com/in/roselinengom' },
+          ].map(({ label, href }) => (
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2.5 px-3 rounded-xl text-sm font-semibold text-center border transition-all hover:opacity-80"
+              style={{ borderColor: '#e0d8d0', color: '#560E13', backgroundColor: '#FEFCF9' }}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="mt-4 pt-3" style={{ borderTop: '1px solid #e8e0d8' }}>
+          <a
+            href="https://www.instagram.com/tripafro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3 rounded-xl text-sm font-bold text-center transition-all hover:opacity-80"
+            style={{ backgroundColor: '#560E13', color: '#F6C961' }}
+          >
+            @tripafro · 24 000+ abonnés
+          </a>
+        </div>
       </div>
 
       <Link href="/" className="mt-8 text-xs opacity-40 underline hover:opacity-60">

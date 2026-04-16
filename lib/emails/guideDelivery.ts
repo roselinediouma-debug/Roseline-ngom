@@ -6,7 +6,11 @@
 const SITE_URL = 'https://www.roselinengom.com'
 const PDF_URL = `${SITE_URL}/guide-senegal-gratuit.pdf`
 const CALENDLY_URL = 'https://calendly.com/roselinengom/decouverte-15min'
-const INSTAGRAM_URL = 'https://instagram.com/tripafro'
+const YOUTUBE_URL = 'https://www.youtube.com/@RoselineNgom'
+const TIKTOK_URL = 'https://www.tiktok.com/@roselinengom'
+const INSTAGRAM_URL = 'https://www.instagram.com/roselinengom'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/roselinengom'
+const TRIPAFRO_URL = 'https://www.instagram.com/tripafro'
 
 const C = {
   bordeaux: '#560E13',
@@ -115,12 +119,24 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
             </td>
           </tr>
 
-          <!-- FOOTER -->
+          <!-- FOOTER — Réseaux sociaux -->
           <tr>
-            <td style="background-color:${C.creme};padding:24px 32px;text-align:center;">
-              <div style="font-size:12px;color:${C.noir};opacity:0.55;line-height:1.7;">
-                <a href="${INSTAGRAM_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">Instagram @tripafro</a>
+            <td style="background-color:${C.creme};padding:32px 32px 16px;text-align:center;">
+              <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:14px;">Retrouvez-moi</div>
+              <div style="font-size:13px;line-height:2.2;color:${C.noir};">
+                <a href="${YOUTUBE_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">YouTube</a>
                 &nbsp;·&nbsp;
+                <a href="${INSTAGRAM_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">Instagram</a>
+                &nbsp;·&nbsp;
+                <a href="${TIKTOK_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">TikTok</a>
+                &nbsp;·&nbsp;
+                <a href="${LINKEDIN_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">LinkedIn</a>
+              </div>
+              <div style="font-size:12px;margin-top:10px;color:${C.noir};opacity:0.6;">
+                Et suivez <a href="${TRIPAFRO_URL}" style="color:${C.or};font-weight:700;text-decoration:none;">@tripafro</a> sur Instagram (24 000+ abonnés)
+              </div>
+              <div style="height:1px;background-color:${C.or};opacity:0.3;margin:20px auto;max-width:200px;"></div>
+              <div style="font-size:13px;margin-bottom:4px;">
                 <a href="${SITE_URL}" style="color:${C.bordeaux};text-decoration:none;font-weight:600;">roselinengom.com</a>
               </div>
               <div style="font-size:11px;color:${C.noir};opacity:0.4;margin-top:12px;line-height:1.6;">

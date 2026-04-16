@@ -485,15 +485,34 @@ export default function GuidePage() {
             ))}
           </div>
 
-          <div className="text-center mt-10">
+          <div className="text-center mt-10 space-y-4">
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { label: 'YouTube', href: 'https://www.youtube.com/@RoselineNgom' },
+                { label: 'Instagram', href: 'https://www.instagram.com/roselinengom' },
+                { label: 'TikTok', href: 'https://www.tiktok.com/@roselinengom' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/roselinengom' },
+              ].map(({ label, href }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
+                  style={{ backgroundColor: 'rgba(246,201,97,0.15)', color: '#F6C961', border: '1px solid rgba(246,201,97,0.3)' }}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
             <a
-              href="https://instagram.com/tripafro"
+              href="https://www.instagram.com/tripafro"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest transition-opacity hover:opacity-70"
+              className="inline-flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-70"
               style={{ color: '#F6C961' }}
             >
-              Suivre @tripafro sur Instagram <span>→</span>
+              @tripafro · 24 000+ abonnés <span>→</span>
             </a>
           </div>
         </div>
