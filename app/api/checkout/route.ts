@@ -49,8 +49,9 @@ export async function GET(req: Request) {
 
     return NextResponse.redirect(url as string)
   } catch (err) {
-    console.error('Stripe checkout error:', err)
-    return NextResponse.json({ error: 'Erreur Stripe' }, { status: 500 })
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('Stripe checkout error:', message)
+    return NextResponse.json({ error: 'Erreur Stripe', detail: message }, { status: 500 })
   }
 }
 
@@ -65,7 +66,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url })
   } catch (err) {
-    console.error('Stripe checkout error:', err)
-    return NextResponse.json({ error: 'Erreur Stripe' }, { status: 500 })
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('Stripe checkout error:', message)
+    return NextResponse.json({ error: 'Erreur Stripe', detail: message }, { status: 500 })
   }
 }
