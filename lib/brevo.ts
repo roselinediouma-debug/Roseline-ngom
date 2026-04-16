@@ -32,7 +32,7 @@ export async function sendTransactionalEmail({
   subject,
   htmlContent,
   senderName = 'Roseline Ngom',
-  senderEmail = 'roseline@roselinengom.com',
+  senderEmail = 'contact@tripafro.com',
 }: {
   to: string
   subject: string
