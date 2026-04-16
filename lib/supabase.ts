@@ -1,23 +1,12 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 // Client public (côté client, avec anon key)
-let _supabase: SupabaseClient | null = null
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
-  get(_target, prop) {
-    if (!_supabase) {
-      const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-      if (!url || !key) {
-        // Retourne un objet no-op pour le build
-        return () => Promise.resolve({ data: null, error: null, count: null })
-      }
-      _supabase = createClient(url, key)
-    }
-    const val = (_supabase as unknown as Record<string, unknown>)[prop as string]
-    return typeof val === 'function' ? val.bind(_supabase) : val
-  },
-})
+export const supabase: SupabaseClient = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : createClient('https://placeholder.supabase.co', 'placeholder-key')
 
 // Client serveur avec service role
 export function createServiceClient(): SupabaseClient {

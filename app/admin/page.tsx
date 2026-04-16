@@ -38,10 +38,10 @@ export default function AdminLoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-3"
-            style={{ backgroundColor: '#F6C961', color: '#560E13', fontFamily: 'var(--font-playfair)' }}>
+            style={{ backgroundColor: '#F6C961', color: '#560E13', fontFamily: 'var(--font-cormorant)' }}>
             RN
           </div>
-          <h1 className="text-white font-bold text-xl" style={{ fontFamily: 'var(--font-playfair)' }}>Back-office</h1>
+          <h1 className="text-white font-bold text-xl" style={{ fontFamily: 'var(--font-cormorant)' }}>Back-office</h1>
           <p className="text-white opacity-50 text-sm mt-1">Roseline Ngom · Admin</p>
         </div>
 

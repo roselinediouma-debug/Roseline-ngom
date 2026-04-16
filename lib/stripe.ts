@@ -24,6 +24,18 @@ export const PRODUCTS = {
     price: 9700,
     currency: 'eur',
   },
+  guide_senegal_7j: {
+    name: 'Le Sénégal en 7 jours',
+    description: 'Guide complet pour un séjour de 7 jours au Sénégal',
+    price: 2900,
+    currency: 'eur',
+  },
+  bundle_decouverte: {
+    name: 'Bundle Découverte Sénégal',
+    description: 'Pack découverte incluant guides et ressources pour le Sénégal',
+    price: 4900,
+    currency: 'eur',
+  },
 } as const
 
 export type ProductKey = keyof typeof PRODUCTS

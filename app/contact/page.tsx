@@ -33,7 +33,7 @@ export default function ContactPage() {
       <Nav />
       <main className="pt-28 pb-16 px-4 min-h-screen" style={{ backgroundColor: '#F8F5F0' }}>
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold mb-3 text-center" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+          <h1 className="text-3xl font-bold mb-3 text-center" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
             Contactez-nous
           </h1>
           <p className="text-center text-sm opacity-60 mb-10">

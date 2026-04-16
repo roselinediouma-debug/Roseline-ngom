@@ -11,7 +11,7 @@
   --color-creme: #F8F5F0;
   --color-blanc: #FEFCF9;
 
-  --font-playfair: var(--font-playfair);
+  --font-cormorant: var(--font-cormorant);
   --font-poppins: var(--font-poppins);
 }
 
@@ -26,7 +26,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
 }
 
 @keyframes shake {
@@ -99,8 +99,12 @@ h1, h2, h3, h4, h5, h6 {
   animation: pulse-whatsapp 2s ease-in-out infinite;
 }
 
+.font-cormorant {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+}
+
 .font-playfair {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
 }
 
 .font-poppins {

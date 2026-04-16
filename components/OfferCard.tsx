@@ -59,7 +59,7 @@ export default function OfferCard({
         {level}
       </div>
 
-      <h3 className="font-bold text-lg mb-1" style={{ fontFamily: 'var(--font-playfair)', color: '#0A0A0A' }}>
+      <h3 className="font-bold text-lg mb-1" style={{ fontFamily: 'var(--font-cormorant)', color: '#0A0A0A' }}>
         {title}
       </h3>
 

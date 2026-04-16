@@ -39,7 +39,7 @@ function MerciContent() {
         <span style={{ color: '#F6C961' }}>✓</span>
       </div>
 
-      <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+      <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
         Merci{prenom ? `, ${prenom}` : ''} !
       </h1>
 
@@ -73,7 +73,7 @@ function MerciContent() {
         <div className="text-xs uppercase tracking-widest font-bold mb-2" style={{ color: '#F6C961' }}>
           L'étape suivante
         </div>
-        <div className="font-bold text-lg mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <div className="font-bold text-lg mb-2" style={{ fontFamily: 'var(--font-cormorant)' }}>
           Envie d'en discuter ?
         </div>
         <p className="text-sm opacity-80 mb-4 leading-relaxed">

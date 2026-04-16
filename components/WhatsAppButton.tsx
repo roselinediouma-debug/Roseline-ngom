@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 const WHATSAPP_URL = process.env.NEXT_PUBLIC_WHATSAPP_URL || 'https://wa.me/33650329808'
 const DEFAULT_MESSAGE = 'Bonjour Roseline, je souhaite en savoir plus sur vos services.'
@@ -10,12 +11,18 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({ message = DEFAULT_MESSAGE }: WhatsAppButtonProps) {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
 
+  const isAdmin = pathname.startsWith('/admin')
+
   useEffect(() => {
+    if (isAdmin) return
     const timer = setTimeout(() => setVisible(true), 1500)
     return () => clearTimeout(timer)
-  }, [])
+  }, [isAdmin])
+
+  if (isAdmin) return null
 
   const href = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`
 

@@ -9,6 +9,9 @@ const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
   { href: '/admin/leads', label: 'Leads', icon: '👥' },
   { href: '/admin/commandes', label: 'Commandes', icon: '💳' },
+  { href: '/admin/blog', label: 'Blog', icon: '📝' },
+  { href: '/admin/candidatures', label: 'Candidatures', icon: '📋' },
+  { href: '/admin/newsletter', label: 'Newsletter', icon: '📧' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -44,7 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className="w-56 flex-shrink-0 flex flex-col" style={{ backgroundColor: '#560E13' }}>
         <div className="p-6 border-b" style={{ borderColor: 'rgba(254,252,249,0.1)' }}>
-          <div className="font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>Roseline Ngom</div>
+          <div className="font-bold text-white" style={{ fontFamily: 'var(--font-cormorant)' }}>Roseline Ngom</div>
           <div className="text-xs opacity-50 text-white mt-0.5">Back-office</div>
         </div>
         <nav className="flex-1 p-4 flex flex-col gap-1">

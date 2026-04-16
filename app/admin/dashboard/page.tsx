@@ -68,7 +68,7 @@ export default function DashboardPage() {
   return (
     <AdminLayout>
       <div className="max-w-6xl">
-        <h1 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+        <h1 className="text-2xl font-bold mb-8" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
           Dashboard
         </h1>
 

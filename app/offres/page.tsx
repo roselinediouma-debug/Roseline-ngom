@@ -1,112 +1,125 @@
-import OfferCard from '@/components/OfferCard'
+import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import SalesPageHero from '@/components/SalesPageHero'
+import SectionHeader from '@/components/SectionHeader'
+import FAQAccordion from '@/components/FAQAccordion'
+import Link from 'next/link'
 
-const offers = [
+export const metadata: Metadata = {
+  title: 'Nos Offres | Roseline Ngom',
+  description: "Du gratuit au premium : voyages, guides, consulting, digital & IA. Trouvez l'offre qui vous correspond.",
+  openGraph: {
+    title: 'Nos Offres | Roseline Ngom',
+    description: "Du gratuit au premium : voyages, guides, consulting, digital & IA. Trouvez l'offre qui vous correspond.",
+  },
+}
+
+const volets = [
   {
-    level: 'Gratuit',
-    levelColor: '#16a34a',
-    title: 'Guide PDF + Checklist',
-    description: 'Le kit de démarrage pour préparer votre voyage au Sénégal.',
-    price: '0 EUR',
+    icon: '🌍',
+    title: 'TripAfro Voyages',
+    price: '2 200 – 6 500 €',
     features: [
-      '10 expériences secrètes au Sénégal',
+      'Voyages immersifs au Sénégal et en Afrique de l\'Ouest',
+      'Retour aux racines pour la diaspora',
+      'Itinéraires sur mesure avec accompagnement local',
+      'Hébergement, transport et expériences inclus',
+    ],
+    href: '/voyages',
+    cta: 'Explorer les voyages',
+  },
+  {
+    icon: '📚',
+    title: 'Guides Signatures',
+    price: '29 – 49 €',
+    features: [
+      'Guide Casamance authentique',
+      'Guide Sénégal 7 jours incontournables',
+      'Bundle découverte multi-guides',
+      'Accès immédiat + mises à jour à vie',
+    ],
+    href: '/guides',
+    cta: 'Découvrir les guides',
+  },
+  {
+    icon: '🎯',
+    title: 'Consulting Stratégique',
+    price: '1 800 – 15 000 €',
+    features: [
+      'Audit stratégique de projet',
+      'Accompagnement personnalisé 3 à 6 mois',
+      'Conseil institutionnel et partenariats',
+    ],
+    href: '/consulting',
+    cta: 'En savoir plus',
+  },
+  {
+    icon: '💻',
+    title: 'Digital & IA',
+    price: '1 500 €/mois – 15 000 €',
+    features: [
+      'Présence digitale et stratégie de contenu',
+      'Formations IA appliquée au business',
+      'Transformation digitale pour organisations',
+    ],
+    href: '/digital-ia',
+    cta: 'Voir les solutions',
+  },
+  {
+    icon: '🎁',
+    title: 'Ressources Gratuites',
+    price: '0 €',
+    features: [
+      'Guide PDF : 10 expériences secrètes au Sénégal',
       'Checklist de voyage complète',
-      'Téléchargement immédiat',
-      'Accès à vie',
+      'Newsletter avec conseils exclusifs',
+      'Accès immédiat sans engagement',
     ],
-    ctaText: 'Télécharger gratuitement',
-    ctaLink: '/guide',
-  },
-  {
-    level: 'Digital',
-    levelColor: '#2563eb',
-    title: 'Guides & Formations',
-    description: 'Pour aller plus loin et préparer un voyage inoubliable.',
-    price: '29 – 97 EUR',
-    features: [
-      'Guide Casamance complet (29 EUR)',
-      'Masterclass Voyage Sénégal (97 EUR)',
-      'Accès immédiat en ligne',
-      'Mises à jour incluses',
-    ],
-    ctaText: 'Découvrir les formations',
-    ctaLink: '/offres#digital',
-  },
-  {
-    level: 'Voyages',
-    levelColor: '#560E13',
-    title: 'Voyages Immersifs TripAfro',
-    description: 'Des expériences authentiques, organisées sur mesure par Roseline.',
-    price: '500 – 5 000 EUR',
-    features: [
-      'Retour aux Racines (diaspora)',
-      'Voyages sur mesure',
-      'Expériences culturelles',
-      'Accompagnement complet',
-    ],
-    ctaText: 'Planifier mon voyage',
-    ctaLink: '/voyages',
-    highlighted: true,
-  },
-  {
-    level: 'Conseil',
-    levelColor: '#7c3aed',
-    title: 'Conseil & Accompagnement',
-    description: 'Un accompagnement stratégique pour vos projets en Afrique de l\'Ouest.',
-    price: '300 – 3 000 EUR',
-    features: [
-      'Audit de projet (300 EUR)',
-      'Accompagnement 3 mois (1500 EUR)',
-      'Conseil diaspora (sur devis)',
-      'Session découverte gratuite 15 min',
-    ],
-    ctaText: 'Prendre RDV',
-    ctaLink: '/conseil',
-  },
-  {
-    level: 'Premium',
-    levelColor: '#b45309',
-    title: 'Accompagnement VIP 6 mois',
-    description: 'Pour les projets ambitieux qui nécessitent un suivi intensif.',
-    price: '5 000 – 10 000 EUR',
-    features: [
-      'Suivi hebdomadaire personnalisé',
-      'Accès direct WhatsApp',
-      'Réseau de partenaires inclus',
-      'Candidature sur sélection',
-    ],
-    ctaText: 'Candidater',
-    ctaLink: '/contact',
-  },
-  {
-    level: 'Institutionnel',
-    levelColor: '#0e7490',
-    title: 'Programme Grand Théâtre & TRAME',
-    description: 'Partenariats institutionnels et programmes culturels sur mesure.',
-    price: 'Sur devis',
-    features: [
-      'Conception de programmes culturels',
-      'Partenariat Grand Théâtre de Dakar',
-      'Formations professionnelles',
-      'Projets à impact social',
-    ],
-    ctaText: 'En savoir plus',
-    ctaLink: '/contact',
+    href: '/ressources',
+    cta: 'Accéder gratuitement',
   },
 ]
 
-const processSteps = [
-  { num: '01', title: 'Partagez votre vision', desc: 'Dites-moi qui vous êtes et ce que vous souhaitez vivre ou créer.' },
-  { num: '02', title: 'Échange personnalisé', desc: "On explore ensemble les possibilités lors d'une session découverte gratuite." },
-  { num: '03', title: 'Proposition sur mesure', desc: 'Je vous propose une offre adaptée à vos besoins et votre budget.' },
+const steps = [
+  {
+    num: '01',
+    title: 'Téléchargez le guide gratuit',
+    desc: 'Recevez immédiatement le guide PDF avec 10 expériences secrètes au Sénégal et la checklist de voyage.',
+  },
+  {
+    num: '02',
+    title: 'Explorez les guides et voyages',
+    desc: 'Parcourez les guides signatures et les voyages immersifs pour trouver ce qui vous correspond.',
+  },
+  {
+    num: '03',
+    title: 'Réservez un appel découverte',
+    desc: 'Un échange de 15 minutes, gratuit et sans engagement, pour définir ensemble votre projet.',
+  },
 ]
 
-const faq = [
-  { q: 'Comment démarrer ?', a: "Commencez par télécharger le guide gratuit, puis écrivez-moi sur WhatsApp ou prenez un RDV découverte de 15 min." },
-  { q: 'Puis-je payer en plusieurs fois ?', a: 'Oui, pour les offres à partir de 300 EUR, un paiement en 2 ou 3 fois est possible. Contactez-moi pour en discuter.' },
-  { q: 'Les voyages sont-ils adaptés aux familles ?', a: 'Absolument ! Je propose des voyages pour tous les profils : familles, couples, groupes d\'amis, voyageurs solo.' },
-  { q: 'Comment se passe la session découverte ?', a: 'C\'est un RDV de 15 min en visio, entièrement gratuit. On discute de votre projet et je vous présente les options.' },
+const faqItems = [
+  {
+    q: 'Comment fonctionne l\'écosystème Roseline Ngom ?',
+    a: 'L\'écosystème est organisé en 5 volets complémentaires : voyages immersifs, guides numériques, consulting stratégique, solutions digitales & IA, et ressources gratuites. Vous pouvez commencer par n\'importe quel volet selon vos besoins.',
+  },
+  {
+    q: 'Par où commencer si je ne sais pas quel volet choisir ?',
+    a: 'Commencez par télécharger le guide gratuit, puis réservez un appel découverte de 15 minutes. Cet échange gratuit me permettra de vous orienter vers le volet le plus adapté à votre projet.',
+  },
+  {
+    q: 'Quelles sont les options de paiement disponibles ?',
+    a: 'Pour les voyages et le consulting, un paiement en 2 ou 3 fois est possible. Les guides sont payables en une fois. Contactez-moi pour discuter de la solution qui vous convient.',
+  },
+  {
+    q: 'Les voyages TripAfro sont-ils adaptés aux familles ?',
+    a: 'Absolument ! Les voyages sont conçus pour tous les profils : familles, couples, groupes d\'amis, voyageurs solo, et membres de la diaspora souhaitant un retour aux sources.',
+  },
+  {
+    q: 'Comment se déroule un appel découverte ?',
+    a: 'C\'est un rendez-vous de 15 minutes en visio ou par téléphone, entièrement gratuit. On fait le point sur votre projet, vos envies, et je vous présente les options les plus pertinentes.',
+  },
 ]
 
 export default function OffresPage() {
@@ -114,101 +127,159 @@ export default function OffresPage() {
     <>
       <Nav />
       <main>
-        {/* Hero */}
-        <section
-          className="pt-28 pb-16 px-4 text-center"
-          style={{ background: 'linear-gradient(135deg, #560E13 0%, #3d0a0e 100%)', color: '#FEFCF9' }}
-        >
-          <div className="max-w-2xl mx-auto">
-            <div className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
-              style={{ backgroundColor: 'rgba(246,201,97,0.2)', color: '#F6C961', border: '1px solid rgba(246,201,97,0.3)' }}>
-              Écosystème complet
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Du gratuit au premium
-            </h1>
-            <p className="text-lg opacity-75">
-              Choisissez le niveau qui correspond à votre projet et à votre budget.
-            </p>
-          </div>
-        </section>
+        {/* 1. Hero */}
+        <SalesPageHero
+          eyebrow="ÉCOSYSTÈME COMPLET"
+          title="Du gratuit au premium"
+          subtitle="Choisissez le niveau qui correspond à votre projet"
+        />
 
-        {/* Escalier de valeur */}
-        <section className="py-16 px-4" style={{ backgroundColor: '#F8F5F0' }}>
+        {/* 2. Les 5 volets */}
+        <section className="py-20 px-4" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-6xl mx-auto">
+            <div className="mb-14">
+              <SectionHeader
+                eyebrow="Nos offres"
+                title="Les 5 volets"
+                subtitle="Un écosystème complet pour accompagner chaque étape de votre projet"
+                centered
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {offers.map((offer) => (
-                <OfferCard key={offer.level} {...offer} />
+              {volets.map((volet) => (
+                <div
+                  key={volet.title}
+                  className="bg-white rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200"
+                  style={{ border: '1px solid rgba(86,14,19,0.08)' }}
+                >
+                  <div className="text-4xl mb-3">{volet.icon}</div>
+                  <h3
+                    className="text-xl font-bold mb-1"
+                    style={{
+                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                      color: '#560E13',
+                    }}
+                  >
+                    {volet.title}
+                  </h3>
+                  <p
+                    className="text-sm font-semibold mb-4"
+                    style={{ color: '#F6C961' }}
+                  >
+                    {volet.price}
+                  </p>
+                  <ul className="flex-1 space-y-2 mb-6">
+                    {volet.features.map((f) => (
+                      <li
+                        key={f}
+                        className="text-sm flex items-start gap-2"
+                        style={{ color: 'rgba(10,10,10,0.65)' }}
+                      >
+                        <span style={{ color: '#560E13', flexShrink: 0 }}>&#10003;</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href={volet.href}
+                    className="block text-center px-6 py-3 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: '#560E13', color: '#FEFCF9' }}
+                  >
+                    {volet.cta}
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Process 3 étapes */}
-        <section className="py-16 px-4 bg-white">
+        {/* 3. Comment démarrer */}
+        <section className="py-20 px-4" style={{ backgroundColor: '#FEFCF9' }}>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              Comment ça fonctionne
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {processSteps.map(({ num, title, desc }) => (
+            <div className="mb-14">
+              <SectionHeader
+                title="Comment démarrer"
+                subtitle="Trois étapes simples pour lancer votre projet"
+                centered
+              />
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-10">
+              {steps.map(({ num, title, desc }) => (
                 <div key={num} className="flex flex-col items-center text-center">
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold mb-4"
+                    className="w-16 h-16 rounded-full flex items-center justify-center text-lg font-bold mb-5"
                     style={{ backgroundColor: '#F6C961', color: '#560E13' }}
                   >
                     {num}
                   </div>
-                  <h3 className="font-bold mb-2">{title}</h3>
-                  <p className="text-sm opacity-60">{desc}</p>
+                  <h3
+                    className="text-lg font-bold mb-2"
+                    style={{
+                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                      color: '#0A0A0A',
+                    }}
+                  >
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(10,10,10,0.6)' }}>
+                    {desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="py-16 px-4" style={{ backgroundColor: '#F8F5F0' }}>
+        {/* 4. FAQ */}
+        <section className="py-20 px-4" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-10 text-center" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              Questions fréquentes
-            </h2>
-            <div className="flex flex-col gap-4">
-              {faq.map(({ q, a }) => (
-                <div key={q} className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h3 className="font-semibold mb-2" style={{ color: '#560E13' }}>{q}</h3>
-                  <p className="text-sm opacity-65">{a}</p>
-                </div>
-              ))}
+            <div className="mb-14">
+              <SectionHeader
+                title="Questions fréquentes"
+                centered
+              />
             </div>
+            <FAQAccordion items={faqItems} />
           </div>
         </section>
 
-        {/* CTA Final */}
-        <section className="py-16 px-4 text-center bg-white">
+        {/* 5. CTA Final */}
+        <section className="py-20 px-4 text-center" style={{ backgroundColor: '#560E13' }}>
           <div className="max-w-xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              Pas encore convaincu·e ?
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-4"
+              style={{
+                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                color: '#FEFCF9',
+              }}
+            >
+              Prêt à démarrer ?
             </h2>
-            <p className="text-sm opacity-60 mb-8">
-              Commencez par le guide gratuit, et si vous avez des questions, écrivez-moi directement.
+            <p className="text-base mb-10" style={{ color: 'rgba(254,252,249,0.75)' }}>
+              Commencez par le guide gratuit ou échangeons directement sur WhatsApp.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/guide"
+                className="inline-block px-8 py-4 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
+                style={{ backgroundColor: '#F6C961', color: '#560E13' }}
+              >
+                Télécharger le guide gratuit
+              </Link>
               <a
                 href="https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20offres."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 rounded-xl font-semibold text-sm text-white transition-opacity hover:opacity-85"
-                style={{ backgroundColor: '#25D366' }}
+                className="inline-block px-8 py-4 rounded-xl font-semibold text-sm transition-opacity hover:opacity-80"
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#FEFCF9',
+                  border: '2px solid rgba(254,252,249,0.4)',
+                }}
               >
-                💬 Écrire sur WhatsApp
-              </a>
-              <a
-                href="/guide"
-                className="px-8 py-4 rounded-xl font-semibold text-sm transition-opacity hover:opacity-85"
-                style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-              >
-                🎁 Guide gratuit
+                Écrire sur WhatsApp
               </a>
             </div>
           </div>

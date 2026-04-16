@@ -191,7 +191,7 @@ export default function GuidePage() {
           <h1
             className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6"
             style={{
-              fontFamily: 'var(--font-playfair), "Playfair Display", serif',
+              fontFamily: 'var(--font-cormorant), "Playfair Display", serif',
               color: '#FEFCF9',
               textShadow: '0 3px 20px rgba(0,0,0,0.4)',
             }}
@@ -282,7 +282,7 @@ export default function GuidePage() {
                     </span>
                     <div>
                       <div className="w-12 h-[3px] mb-4" style={{ backgroundColor: '#F6C961' }} />
-                      <h3 className="text-3xl font-bold leading-[1.1] mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+                      <h3 className="text-3xl font-bold leading-[1.1] mb-4" style={{ fontFamily: 'var(--font-cormorant)' }}>
                         15 expériences secrètes au Sénégal
                       </h3>
                       <p className="text-xs leading-relaxed" style={{ color: '#F6C961' }}>
@@ -290,7 +290,7 @@ export default function GuidePage() {
                       </p>
                     </div>
                     <div>
-                      <div className="font-bold text-base" style={{ fontFamily: 'var(--font-playfair)' }}>Roseline Ngom</div>
+                      <div className="font-bold text-base" style={{ fontFamily: 'var(--font-cormorant)' }}>Roseline Ngom</div>
                       <div className="text-[9px] tracking-[0.2em] uppercase mt-0.5" style={{ color: '#F6C961' }}>
                         Fondatrice TripAfro
                       </div>
@@ -305,7 +305,7 @@ export default function GuidePage() {
               <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#b8860b' }}>
                 Un guide, un carnet d&apos;adresses
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
                 Ce n&apos;est pas un guide touristique. C&apos;est mon carnet.
               </h2>
               <p className="text-base leading-relaxed mb-8" style={{ color: '#0A0A0A', opacity: 0.78 }}>
@@ -321,7 +321,7 @@ export default function GuidePage() {
                   { num: '10 ans', label: 'sur le terrain' },
                 ].map(({ num, label }) => (
                   <div key={label} className="text-center md:text-left">
-                    <div className="text-3xl md:text-4xl font-bold leading-none" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                    <div className="text-3xl md:text-4xl font-bold leading-none" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
                       {num}
                     </div>
                     <div className="text-[10px] uppercase tracking-[0.15em] opacity-60 mt-2">{label}</div>
@@ -342,7 +342,7 @@ export default function GuidePage() {
             <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#b8860b' }}>
               À l&apos;intérieur du guide
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               15 expériences que<br />je ne partage qu&apos;à mes proches
             </h2>
             <p className="text-sm md:text-base opacity-60 max-w-2xl mx-auto">
@@ -411,14 +411,14 @@ export default function GuidePage() {
               <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#b8860b' }}>
                 L&apos;auteure
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
                 Bonjour, je suis Roseline
               </h2>
 
               <blockquote
                 className="text-xl md:text-2xl leading-snug mb-6 pl-5"
                 style={{
-                  fontFamily: 'var(--font-playfair)',
+                  fontFamily: 'var(--font-cormorant)',
                   color: '#560E13',
                   fontStyle: 'italic',
                   borderLeft: '3px solid #F6C961',
@@ -440,7 +440,7 @@ export default function GuidePage() {
                   { num: '10 ans', label: 'sur le terrain' },
                 ].map(({ num, label }) => (
                   <div key={label} className="text-center md:text-left">
-                    <div className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+                    <div className="text-2xl md:text-3xl font-bold leading-none" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
                       {num}
                     </div>
                     <div className="text-[10px] uppercase tracking-[0.15em] opacity-60 mt-2 leading-tight">{label}</div>
@@ -461,7 +461,7 @@ export default function GuidePage() {
             <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#F6C961' }}>
               @tripafro
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#FEFCF9' }}>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: 'var(--font-cormorant)', color: '#FEFCF9' }}>
               Le Sénégal vu de l&apos;intérieur
             </h2>
           </div>
@@ -541,7 +541,7 @@ export default function GuidePage() {
                   <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4" style={{ color: '#F6C961' }}>
                     Dernière étape
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-4" style={{ fontFamily: 'var(--font-cormorant)' }}>
                     Votre guide vous attend
                   </h2>
                   <p className="text-sm leading-relaxed mb-6 opacity-85">
@@ -622,12 +622,12 @@ export default function GuidePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-3 mb-3">
-              <div className="text-4xl md:text-5xl font-bold" style={{ color: '#560E13', fontFamily: 'var(--font-playfair)' }}>2000+</div>
+              <div className="text-4xl md:text-5xl font-bold" style={{ color: '#560E13', fontFamily: 'var(--font-cormorant)' }}>2000+</div>
               <div className="text-left text-xs opacity-60 leading-tight uppercase tracking-wider">
                 voyageurs<br />nous font confiance
               </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Ce qu&apos;ils en disent
             </h2>
           </div>
@@ -668,7 +668,7 @@ export default function GuidePage() {
             <div className="text-xs font-bold uppercase tracking-[0.3em] mb-3" style={{ color: '#b8860b' }}>
               Questions fréquentes
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Tout ce que vous vous demandez
             </h2>
           </div>
@@ -701,7 +701,7 @@ export default function GuidePage() {
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(86,14,19,0.92)' }} />
 
         <div className="relative z-10 max-w-2xl mx-auto text-center" style={{ color: '#FEFCF9' }}>
-          <h2 className="text-3xl md:text-5xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-3xl md:text-5xl font-bold mb-5 leading-tight" style={{ fontFamily: 'var(--font-cormorant)' }}>
             Prêt à découvrir <span style={{ color: '#F6C961', fontStyle: 'italic' }}>mon Sénégal</span> ?
           </h2>
           <p className="text-sm md:text-base opacity-85 mb-10 leading-relaxed">

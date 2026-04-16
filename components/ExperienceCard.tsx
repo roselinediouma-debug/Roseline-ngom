@@ -32,7 +32,7 @@ export function ExperienceCard({ number, category, teaser, image }: ExperienceCa
       <div className="absolute top-4 left-5 right-5 flex items-start justify-between">
         <div
           className="text-5xl font-bold leading-none"
-          style={{ color: '#F6C961', fontFamily: 'var(--font-playfair)', textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
+          style={{ color: '#F6C961', fontFamily: 'var(--font-cormorant)', textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}
         >
           {String(number).padStart(2, '0')}
         </div>
@@ -61,7 +61,7 @@ export function ExperienceCard({ number, category, teaser, image }: ExperienceCa
 
         <p
           className="text-[15px] md:text-base leading-snug font-medium"
-          style={{ color: '#FEFCF9', fontFamily: 'var(--font-playfair)', fontStyle: 'italic' }}
+          style={{ color: '#FEFCF9', fontFamily: 'var(--font-cormorant)', fontStyle: 'italic' }}
         >
           « {teaser} »
         </p>

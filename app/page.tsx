@@ -124,7 +124,7 @@ function ServiceCard({
         }
       >
         <div className="text-3xl">{icon}</div>
-        <div className="font-bold text-sm leading-snug" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <div className="font-bold text-sm leading-snug" style={{ fontFamily: 'var(--font-cormorant)' }}>
           {title}
         </div>
         <div className="text-xs opacity-65 leading-relaxed flex-1">{description}</div>
@@ -178,7 +178,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)', color: '#0A0A0A' }}>
+          <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: 'var(--font-cormorant)', color: '#0A0A0A' }}>
             Roseline Ngom
           </h1>
           <p className="text-sm font-semibold mb-4" style={{ color: '#560E13' }}>
@@ -190,7 +190,7 @@ export default function HomePage() {
             className="rounded-2xl px-5 py-4 mb-5 w-full text-center"
             style={{ backgroundColor: '#560E13', color: '#FEFCF9' }}
           >
-            <p className="text-base font-semibold leading-snug" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <p className="text-base font-semibold leading-snug" style={{ fontFamily: 'var(--font-cormorant)' }}>
               Je vous emmène découvrir l&apos;Afrique de l&apos;Ouest autrement
             </p>
             <p className="text-xs opacity-65 mt-1">
@@ -296,14 +296,14 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-3">
             <LinkButton
-              href="/offres"
+              href="/guides/guide-casamance"
               icon="📖"
               label="Guide Casamance"
               sublabel="Le guide PDF complet pour un séjour unique"
               price="29 EUR"
             />
             <LinkButton
-              href="/offres"
+              href="/guides/guide-senegal-7jours"
               icon="🗓️"
               label="Le Sénégal en une semaine"
               sublabel="Itinéraire clé en main pour un séjour de 7 jours"
@@ -331,20 +331,20 @@ export default function HomePage() {
               icon="🌍"
               title="Voyages TripAfro"
               description="Séjours immersifs et authentiques, de Dakar à la Casamance"
-              price="Dès 1 500 EUR"
+              price="Dès 2 200 €"
               dark={true}
             />
             <ServiceCard
-              href="/conseil"
+              href="/consulting"
               icon="🎯"
               title="Conseil stratégique"
               description="Accompagnement pour vos projets en Afrique de l'Ouest"
-              price="Dès 300 EUR"
+              price="Dès 1 800 €"
             />
           </div>
 
           {/* Session découverte */}
-          <Link href="/conseil" className="block">
+          <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className="block">
             <div
               className="w-full rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all hover:scale-[1.01]"
               style={{ border: '1.5px dashed #560E13', backgroundColor: 'rgba(86,14,19,0.04)' }}
@@ -363,7 +363,18 @@ export default function HomePage() {
               </div>
               <span style={{ color: '#560E13', opacity: 0.4 }}>→</span>
             </div>
-          </Link>
+          </a>
+
+          {/* Digital & IA */}
+          <div className="mt-3">
+            <LinkButton
+              href="/digital-ia"
+              icon="🤖"
+              label="Digital & IA"
+              sublabel="Automatisation, stratégie digitale & intelligence artificielle"
+              price="Dès 1 500 €/mois"
+            />
+          </div>
         </div>
 
         {/* ─── WhatsApp CTA ─── */}
@@ -376,7 +387,7 @@ export default function HomePage() {
         >
           <span className="text-xl">💬</span>
           Discuter sur WhatsApp
-          <span className="text-xs opacity-75 hidden sm:inline">· +221 76 194 02 37</span>
+          <span className="text-xs opacity-75 hidden sm:inline">· +33 6 50 32 98 08</span>
         </a>
 
         <div className="text-center pb-4">

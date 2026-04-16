@@ -62,7 +62,7 @@ export default function ConseilPage() {
               style={{ backgroundColor: 'rgba(246,201,97,0.2)', color: '#F6C961', border: '1px solid rgba(246,201,97,0.3)' }}>
               Conseil stratégique
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-cormorant)' }}>
               Accompagnement stratégique pour l'Afrique de l'Ouest
             </h1>
             <p className="text-lg opacity-75">
@@ -74,7 +74,7 @@ export default function ConseilPage() {
         {/* Pour qui */}
         <section className="py-16 px-4" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Pour qui ?
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -92,7 +92,7 @@ export default function ConseilPage() {
         {/* Les 3 offres conseil */}
         <section className="py-16 px-4 bg-white">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Nos offres conseil
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -110,7 +110,7 @@ export default function ConseilPage() {
                       style={{ backgroundColor: '#F6C961', color: '#560E13' }}>⭐ RECOMMANDÉ</div>
                   )}
                   <div className="text-3xl mb-3">{icon}</div>
-                  <h3 className="font-bold text-lg mb-1" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>{title}</h3>
+                  <h3 className="font-bold text-lg mb-1" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>{title}</h3>
                   <div className="font-bold text-xl mb-1" style={{ color: '#560E13' }}>{price}</div>
                   <div className="text-xs opacity-50 mb-3">{duration}</div>
                   <p className="text-sm opacity-65 mb-4">{description}</p>
@@ -143,7 +143,7 @@ export default function ConseilPage() {
         {/* Témoignages */}
         <section className="py-16 px-4" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-center text-2xl font-bold mb-10" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Ce que disent mes clients
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
@@ -169,7 +169,7 @@ export default function ConseilPage() {
         <section id="rdv" className="py-16 px-4 bg-white">
           <div className="max-w-3xl mx-auto text-center">
             <div className="text-4xl mb-4">📅</div>
-            <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
+            <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
               Session découverte gratuite — 15 min
             </h2>
             <p className="text-sm opacity-60 mb-8 max-w-lg mx-auto">

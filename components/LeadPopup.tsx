@@ -1,21 +1,26 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function LeadPopup() {
+  const pathname = usePathname()
   const [show, setShow] = useState(false)
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
 
   useEffect(() => {
+    // Ne pas afficher sur les pages admin ni les pages merci
+    if (pathname.startsWith('/admin') || pathname.startsWith('/merci')) return
+
     // Ne pas afficher si déjà vu cette session
     const seen = sessionStorage.getItem('lead_popup_seen')
     if (seen) return
 
     const timer = setTimeout(() => setShow(true), 30000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [pathname])
 
   const handleClose = () => {
     sessionStorage.setItem('lead_popup_seen', '1')
