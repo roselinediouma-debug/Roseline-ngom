@@ -38,7 +38,7 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
           <tr>
             <td style="background-color:${C.bordeaux};padding:32px 32px 28px;text-align:center;">
               <div style="color:${C.or};font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:8px;">Roseline Ngom</div>
-              <div style="color:${C.blanc};font-size:22px;font-weight:600;font-family:Georgia,'Times New Roman',serif;">10 expériences secrètes au Sénégal</div>
+              <div style="color:${C.blanc};font-size:22px;font-weight:600;font-family:Georgia,'Times New Roman',serif;">15 expériences secrètes au Sénégal</div>
             </td>
           </tr>
 
@@ -50,8 +50,8 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
                 Merci pour votre confiance — votre guide est prêt !
               </p>
               <p style="font-size:16px;line-height:1.6;margin:0 0 24px;color:${C.noir};">
-                J'y ai rassemblé les 10 expériences que j'offre à mes amis quand ils viennent découvrir mon pays.
-                Des lieux hors des sentiers battus, des conseils pratiques, et la pépite insider pour chaque expérience.
+                J'y ai rassemblé les 15 expériences que j'offre à mes amis quand ils viennent découvrir mon pays.
+                33 pages de lieux, conseils pratiques, et les pépites insider pour chaque expérience.
               </p>
 
               <!-- CTA principal -->
@@ -67,18 +67,14 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
 
               <!-- Ce que contient le guide -->
               <div style="background-color:${C.creme};border-radius:12px;padding:24px;margin:0 0 28px;">
-                <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:12px;">Au sommaire</div>
+                <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:12px;">Au sommaire — 5 régions, 15 expériences</div>
                 <ul style="margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.9;color:${C.noir};">
-                  <li>Le Lac Rose au coucher du soleil (avec la vraie saison)</li>
-                  <li>Le marché aux pirogues de Mbour à l'aube</li>
-                  <li>L'île de Carabane en bolong (Casamance profonde)</li>
-                  <li>Gorée avec un historien local</li>
-                  <li>Le pays Bassari, inscrit UNESCO</li>
-                  <li>Le Delta du Saloum en pirogue traditionnelle</li>
-                  <li>Saint-Louis de nuit, quartier Guet Ndar</li>
-                  <li>Safari au Niokolo-Koba (lions + chimpanzés)</li>
-                  <li>La lutte sénégalaise à Pikine</li>
-                  <li>Bivouac dans le désert du Lompoul</li>
+                  <li>Dakar & Cap-Vert — Gorée, Lac Rose</li>
+                  <li>Petite Côte — Bandia, Fathala, Somone, Mbour, Fadial, Fadiouth</li>
+                  <li>Sine Saloum — mangroves en pirogue UNESCO</li>
+                  <li>Nord & Désert — Saint-Louis en calèche, Lompoul sous les étoiles</li>
+                  <li>Casamance & Îles — Karabane, Nioumoune, Hitou</li>
+                  <li>+ conseils pratiques, prix, contacts pour chaque expérience</li>
                 </ul>
               </div>
 

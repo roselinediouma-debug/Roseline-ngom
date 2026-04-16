@@ -5,19 +5,29 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ExperienceCard } from '@/components/ExperienceCard'
 
-// ─── Teasers des 10 expériences — version "verrouillée" pour créer du suspense ──
+// ─── Teasers des 15 expériences — version "verrouillée" pour créer du suspense ──
 // Le contenu réel (nom du lieu, contact, tips) est dans le PDF uniquement.
 const EXPERIENCES_PREVIEW = [
-  { n: 1, category: 'Nature', teaser: 'Un lac qui devient rose à 17h pile. Pas celui que vous imaginez.', image: '/images/senegal/exp-01-lac-rose.jpg' },
-  { n: 2, category: 'Rencontres', teaser: 'Le ballet silencieux de 2 000 pirogues à l\'aube.', image: '/images/senegal/exp-02-mbour.jpg' },
-  { n: 3, category: 'Hors des sentiers', teaser: 'Une île sans voiture où les pirogues s\'arrêtent le temps d\'une nuit.', image: '/images/senegal/exp-03-carabane.jpg' },
-  { n: 4, category: 'Mémoire', teaser: 'Un lieu d\'histoire — mais pas la visite que vous avez déjà lue partout.', image: '/images/senegal/exp-04-goree.jpg' },
-  { n: 5, category: 'Culture', teaser: 'Une ethnie classée UNESCO qui n\'ouvre ses rituels qu\'à quelques invités.', image: '/images/senegal/exp-05-bassari.jpg' },
-  { n: 6, category: 'Nature', teaser: 'Un labyrinthe de mangroves où le silence a une texture.', image: '/images/senegal/exp-06-saloum.jpg' },
-  { n: 7, category: 'Villes', teaser: 'La ville coloniale qui révèle son âme quand les touristes dorment.', image: '/images/senegal/exp-07-saint-louis.jpg' },
-  { n: 8, category: 'Faune', teaser: 'L\'endroit — le seul — où voir des lions au Sénégal.', image: '/images/senegal/exp-08-niokolo.jpg' },
-  { n: 9, category: 'Adrénaline', teaser: 'Un combat qui fait vibrer 50 000 personnes. Le vrai sport national.', image: '/images/senegal/exp-09-lutte.jpg' },
-  { n: 10, category: 'Aventure', teaser: 'Un Sahara miniature. À 2h30 de la capitale. Personne n\'en parle.', image: '/images/senegal/exp-10-lompoul.jpg' },
+  // DAKAR & CAP-VERT
+  { n: 1, category: 'Mémoire', teaser: 'Classée UNESCO. Et pourtant, presque personne ne la vit vraiment.', image: '/images/senegal/gallery-3.jpg' },
+  { n: 2, category: 'Nature', teaser: 'Les plus belles photos du Sénégal se prennent ici. À 6h30 du matin.', image: '/images/senegal/exp-01-lac-rose.jpg' },
+  // PETITE CÔTE
+  { n: 3, category: 'Faune', teaser: 'Un safari à 1h de Dakar. Oui, au Sénégal.', image: '/images/senegal/exp-08-niokolo.jpg' },
+  { n: 4, category: 'Adrénaline', teaser: 'Une des quatre expériences de ce type au monde. 180 kilos à côté de vous.', image: '/images/senegal/exp-05-bassari.jpg' },
+  { n: 5, category: 'Évasion', teaser: 'La mangrove à portée de main, entre océan et cocotiers.', image: '/images/senegal/exp-06-saloum.jpg' },
+  { n: 6, category: 'Gastronomie', teaser: 'Le poisson grillé, l\'ambiance, les pieds dans le sable. Rien d\'autre.', image: '/images/senegal/exp-02-mbour.jpg' },
+  { n: 7, category: 'Rencontres', teaser: 'Un des plus grands débarquements de pêche artisanale d\'Afrique de l\'Ouest.', image: '/images/senegal/exp-03-carabane.jpg' },
+  { n: 8, category: 'Sacré', teaser: 'Mille ans. Un seul arbre. Un silence qui impose.', image: '/images/senegal/gallery-4.jpg' },
+  { n: 9, category: 'Culture', teaser: 'Une île de coquillages où deux confessions reposent ensemble. Unique en Afrique.', image: '/images/senegal/exp-04-goree.jpg' },
+  // SINE SALOUM
+  { n: 10, category: 'Nature', teaser: 'Un labyrinthe d\'eau, classé Réserve de Biosphère UNESCO.', image: '/images/senegal/gallery-5.jpg' },
+  // NORD & DÉSERT
+  { n: 11, category: 'Villes', teaser: 'L\'ancienne capitale de l\'AOF, au rythme d\'un autre siècle.', image: '/images/senegal/exp-07-saint-louis.jpg' },
+  { n: 12, category: 'Aventure', teaser: 'Un mini-Sahara à 150 km de Dakar. Et une nuit sous les étoiles.', image: '/images/senegal/exp-10-lompoul.jpg' },
+  // CASAMANCE & ÎLES
+  { n: 13, category: 'Hors des sentiers', teaser: 'Premier comptoir français de l\'Afrique de l\'Ouest. Oublié du monde.', image: '/images/senegal/exp-03-carabane.jpg' },
+  { n: 14, category: 'Hors des sentiers', teaser: 'L\'île vierge. Presque aucun touriste ne la connaît.', image: '/images/senegal/exp-06-saloum.jpg' },
+  { n: 15, category: 'Mystère', teaser: 'Fromagers sacrés, bolongs secrets, silence total. Aucun guide ne la mentionne.', image: '/images/senegal/gallery-1.jpg' },
 ]
 
 const TESTIMONIALS = [
@@ -37,7 +47,7 @@ const TESTIMONIALS = [
     name: 'Sophie K.',
     country: 'Bruxelles, Belgique',
     image: '/images/senegal/testimonial-3.jpg',
-    text: 'J\'ai partagé ce guide à toute ma famille avant notre voyage. Les 10 expériences sont validées par les locaux.',
+    text: 'J\'ai partagé ce guide à toute ma famille avant notre voyage. Les 15 expériences sont validées par les locaux.',
   },
 ]
 
@@ -57,7 +67,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Quel est le format du fichier ?',
-    a: 'Un PDF de 15 pages, optimisé pour la lecture mobile et l\'impression. Ouvrable partout, sans inscription à une plateforme.',
+    a: 'Un PDF de 33 pages, optimisé pour la lecture mobile et l\'impression. Ouvrable partout, sans inscription à une plateforme.',
   },
   {
     q: 'Pourquoi c\'est gratuit ?',
@@ -175,7 +185,7 @@ export default function GuidePage() {
             className="inline-block text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] px-4 py-2 rounded-full mb-8 backdrop-blur-sm"
             style={{ backgroundColor: 'rgba(246,201,97,0.18)', color: '#F6C961', border: '1px solid rgba(246,201,97,0.5)' }}
           >
-            📖 Guide offert · 15 pages
+            📖 Guide offert · 33 pages
           </div>
 
           <h1
@@ -195,7 +205,7 @@ export default function GuidePage() {
             className="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ color: 'rgba(254,252,249,0.92)', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
           >
-            10 expériences secrètes, mon carnet d&apos;adresses personnel, les astuces qu&apos;on ne trouve dans aucun Lonely Planet.
+            15 expériences secrètes, mon carnet d&apos;adresses personnel, les astuces qu&apos;on ne trouve dans aucun Lonely Planet.
           </p>
 
           <button
@@ -273,7 +283,7 @@ export default function GuidePage() {
                     <div>
                       <div className="w-12 h-[3px] mb-4" style={{ backgroundColor: '#F6C961' }} />
                       <h3 className="text-3xl font-bold leading-[1.1] mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-                        10 expériences secrètes au Sénégal
+                        15 expériences secrètes au Sénégal
                       </h3>
                       <p className="text-xs leading-relaxed" style={{ color: '#F6C961' }}>
                         Le guide que seule une locale peut vous offrir
@@ -300,14 +310,14 @@ export default function GuidePage() {
               </h2>
               <p className="text-base leading-relaxed mb-8" style={{ color: '#0A0A0A', opacity: 0.78 }}>
                 Pendant dix ans, j&apos;ai emmené des voyageurs découvrir le Sénégal. À chaque fois, ce sont les mêmes
-                lieux, les mêmes rencontres qui transforment leur séjour. J&apos;ai rassemblé ces 10 pépites ici —
+                lieux, les mêmes rencontres qui transforment leur séjour. J&apos;ai rassemblé ces 15 pépites ici —
                 pour que vous viviez un voyage, pas des vacances.
               </p>
 
               <div className="grid grid-cols-3 gap-6 pt-6" style={{ borderTop: '2px solid rgba(246,201,97,0.3)' }}>
                 {[
-                  { num: '15', label: 'pages dédiées' },
-                  { num: '10', label: 'expériences' },
+                  { num: '33', label: 'pages dédiées' },
+                  { num: '15', label: 'expériences' },
                   { num: '10 ans', label: 'sur le terrain' },
                 ].map(({ num, label }) => (
                   <div key={label} className="text-center md:text-left">
@@ -324,7 +334,7 @@ export default function GuidePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION — LES 10 EXPÉRIENCES (grille photos)
+          SECTION — LES 15 EXPÉRIENCES (grille photos)
          ═══════════════════════════════════════════════════════════ */}
       <section className="py-24 px-5" style={{ backgroundColor: '#F8F5F0' }}>
         <div className="max-w-7xl mx-auto">
@@ -333,7 +343,7 @@ export default function GuidePage() {
               À l&apos;intérieur du guide
             </div>
             <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight" style={{ fontFamily: 'var(--font-playfair)', color: '#560E13' }}>
-              10 expériences que<br />je ne partage qu&apos;à mes proches
+              15 expériences que<br />je ne partage qu&apos;à mes proches
             </h2>
             <p className="text-sm md:text-base opacity-60 max-w-2xl mx-auto">
               Chaque expérience est détaillée sur une page du PDF : le lieu exact, comment y aller, quand, combien, mon contact de confiance sur place et l&apos;astuce insider que seule une locale connaît.
@@ -519,7 +529,7 @@ export default function GuidePage() {
                     Entrez votre email ci-contre et recevez le PDF dans votre boîte mail dans les 2 minutes.
                   </p>
                   <ul className="space-y-2 text-sm">
-                    {['15 pages illustrées', 'Téléchargement immédiat', '100% gratuit, 0% spam'].map((t) => (
+                    {['33 pages illustrées', 'Téléchargement immédiat', '100% gratuit, 0% spam'].map((t) => (
                       <li key={t} className="flex items-start gap-2">
                         <span style={{ color: '#F6C961' }}>✓</span>
                         <span className="opacity-90">{t}</span>
