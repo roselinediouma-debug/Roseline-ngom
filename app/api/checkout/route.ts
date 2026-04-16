@@ -33,8 +33,8 @@ export async function POST(req: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${origin}/guide/merci?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/offres`,
+      success_url: `${origin}/merci/${productKey}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/guides`,
       metadata: { productKey },
     })
 
