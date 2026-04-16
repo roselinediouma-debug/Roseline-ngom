@@ -81,7 +81,7 @@ function MerciContent() {
           C'est gratuit, sans engagement.
         </p>
         <a
-          href="https://calendly.com/roselinengom/15min"
+          href="https://calendly.com/roselinengom/decouverte-15min"
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full py-3 rounded-xl text-sm font-bold text-center transition-opacity hover:opacity-90"

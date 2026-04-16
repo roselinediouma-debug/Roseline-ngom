@@ -5,7 +5,7 @@
 
 const SITE_URL = 'https://www.roselinengom.com'
 const PDF_URL = `${SITE_URL}/guide-senegal-gratuit.pdf`
-const CALENDLY_URL = 'https://calendly.com/roselinengom/15min'
+const CALENDLY_URL = 'https://calendly.com/roselinengom/decouverte-15min'
 const INSTAGRAM_URL = 'https://instagram.com/tripafro'
 
 const C = {
