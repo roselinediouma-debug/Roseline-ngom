@@ -11,7 +11,12 @@
   --color-creme: #F8F5F0;
   --color-blanc: #FEFCF9;
 
+  --color-gray: #8A7E74;
+  --color-cream-2: #F0EDE4;
+  --color-gold-light: #FCE8A8;
+
   --font-cormorant: var(--font-cormorant);
+  --font-dm-sans: var(--font-dm-sans);
   --font-poppins: var(--font-poppins);
 }
 
@@ -22,7 +27,7 @@
 body {
   background: #FEFCF9;
   color: #0A0A0A;
-  font-family: var(--font-poppins), Poppins, sans-serif;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -109,4 +114,111 @@ h1, h2, h3, h4, h5, h6 {
 
 .font-poppins {
   font-family: var(--font-poppins), Poppins, sans-serif;
+}
+
+.font-dm-sans {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+}
+
+/* ─── CTA Boutons ─── */
+@layer base {
+  .btn-gold {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none !important;
+    background-color: #F6C961 !important;
+    color: #560E13 !important;
+    box-shadow: 0 12px 40px rgba(246,201,97,0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none !important;
+  }
+  .btn-gold:hover {
+    background-color: #FEFCF9 !important;
+    color: #560E13 !important;
+    box-shadow: 0 12px 40px rgba(254,252,249,0.3);
+    transform: scale(1.03);
+  }
+
+  .btn-bordeaux {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none !important;
+    background-color: #560E13 !important;
+    color: #FEFCF9 !important;
+    box-shadow: 0 10px 30px rgba(86,14,19,0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none !important;
+  }
+  .btn-bordeaux:hover {
+    background-color: #3d0a0e !important;
+    transform: scale(1.03);
+  }
+}
+
+@layer base {
+  .btn-outline-gold {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem !important;
+    border-radius: 9999px !important;
+    font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+    font-weight: 700 !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none !important;
+    background: transparent !important;
+    color: #F6C961 !important;
+    border: 1.5px solid #F6C961 !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .btn-outline-gold:hover {
+    background-color: rgba(246,201,97,0.1) !important;
+    transform: scale(1.03);
+  }
+}
+
+/* ─── Photos ─── */
+.photo-hover {
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+.photo-hover:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+/* ─── Hex Pattern Overlay ─── */
+.hex-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url('/images/hex-pattern.svg');
+  background-repeat: repeat;
+  background-size: 120px;
 }

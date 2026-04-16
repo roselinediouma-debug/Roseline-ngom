@@ -11,7 +11,7 @@ interface TestimonialCardProps {
 export default function TestimonialCard({ name, location, quote, image, stars = 5 }: TestimonialCardProps) {
   return (
     <div
-      className="rounded-xl p-6 transition-transform duration-300 hover:scale-[1.02]"
+      className="rounded-[4px] p-6 transition-transform duration-300 hover:scale-[1.02]"
       style={{
         backgroundColor: '#F8F5F0',
         border: '1px solid rgba(86,14,19,0.08)',

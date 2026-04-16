@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Poppins } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LeadPopup from "@/components/LeadPopup";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
@@ -31,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${cormorant.variable} ${poppins.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${dmSans.variable} ${poppins.variable}`}>
       <body className="min-h-screen antialiased" style={{ backgroundColor: '#FEFCF9', color: '#0A0A0A' }}>
         {children}
         <WhatsAppButton />
