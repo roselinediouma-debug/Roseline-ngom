@@ -1,415 +1,438 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SalesPageHero from '@/components/SalesPageHero'
-import SectionHeader from '@/components/SectionHeader'
-import TimelineSection from '@/components/TimelineSection'
-import PricingTable from '@/components/PricingTable'
-import FAQAccordion from '@/components/FAQAccordion'
-import CandidatureForm from '@/components/CandidatureForm'
-
-export const metadata: Metadata = {
-  title: 'Back to Senegal | Programme entrepreneurial',
-  description: 'Programme de 7 jours pour entrepreneurs de la diaspora. Rendez-vous institutionnels, networking, accompagnement projet.',
-  openGraph: {
-    title: 'Back to Senegal | Programme entrepreneurial',
-    description: 'Programme de 7 jours pour entrepreneurs de la diaspora. Rendez-vous institutionnels, networking, accompagnement projet.',
-  },
-}
-
-const timelineDays = [
-  {
-    day: 'Jour 1',
-    title: 'Arrivee & cadrage',
-    location: 'Dakar',
-    highlights: [
-      'Accueil a l\'aeroport et transfert hotel',
-      'Presentation du programme et des intervenants',
-      'Diagnostic individuel : ou en est votre projet ?',
-      'Diner de bienvenue et networking',
-    ],
-  },
-  {
-    day: 'Jour 2-3',
-    title: 'Institutions & financement',
-    location: 'Dakar',
-    highlights: [
-      'Visite et echanges avec la FAISE (Fonds d\'Appui a l\'Investissement des Senegalais de l\'Exterieur)',
-      'Rencontre DER/FJ : mecanismes de financement diaspora',
-      'Presentation APIX : cadre juridique et incitations fiscales',
-      'Banques partenaires : options de credit et garanties',
-    ],
-  },
-  {
-    day: 'Jour 4-5',
-    title: 'Terrain & reseau',
-    location: 'Dakar & regions',
-    highlights: [
-      'Visites de sites potentiels pour vos projets',
-      'Rencontres avec des entrepreneurs de la diaspora deja installes',
-      'Networking structure avec l\'ecosysteme local',
-      'Retours d\'experience : ce qui marche, ce qui ne marche pas',
-    ],
-  },
-  {
-    day: 'Jour 6',
-    title: 'Strategie & plan d\'action',
-    location: 'Dakar',
-    highlights: [
-      'Ateliers en petit groupe : affiner votre business model',
-      'Preparation du pitch : presenter votre projet en 5 minutes',
-      'Session de feedback avec des mentors locaux',
-      'Redaction de votre feuille de route individuelle',
-    ],
-  },
-  {
-    day: 'Jour 7',
-    title: 'Cloture & engagement',
-    location: 'Dakar',
-    highlights: [
-      'Presentation des feuilles de route individuelles',
-      'Ceremonie de cloture officielle',
-      'Remise des attestations',
-      'Engagement de suivi 6 mois avec l\'equipe TripAfro',
-    ],
-  },
-]
-
-const partenaires = [
-  { name: 'APIX', description: 'Agence de Promotion des Investissements et des Grands Travaux' },
-  { name: 'DER/FJ', description: 'Delegation Generale a l\'Entrepreneuriat Rapide des Femmes et des Jeunes' },
-  { name: 'FAISE', description: 'Fonds d\'Appui a l\'Investissement des Senegalais de l\'Exterieur' },
-  { name: 'MONCAP Diaspora', description: 'Mecanisme de garantie pour les investissements diaspora' },
-  { name: 'CESAG', description: 'Centre Africain d\'Etudes Superieures en Gestion' },
-]
-
-const inclus = [
-  'Hebergement 6 nuits en hotel 4 etoiles a Dakar',
-  'Pension complete : petits-dejeuners, dejeuners et diners',
-  'Tous les transferts et transports internes',
-  'Acces a toutes les sessions institutionnelles',
-  'Materiel pedagogique et supports de travail',
-  'Networking structures avec les partenaires',
-  'Diagnostic individuel et feuille de route personnalisee',
-  'Suivi post-programme 6 mois (visio mensuelle)',
-  'Certificat de participation',
-  'Support WhatsApp 24/7',
-]
-
-const pricingTiers = [
-  {
-    name: 'Early Bird',
-    price: '3 800 EUR',
-    period: '/ participant',
-    features: [
-      'Reservation 3+ mois avant le depart',
-      'Programme complet 7 jours',
-      'Hebergement 4 etoiles + pension complete',
-      'Acces institutionnel complet',
-      'Suivi 6 mois inclus',
-      'Economisez 700 EUR',
-    ],
-    highlighted: true,
-    ctaLabel: 'Postuler en Early Bird',
-    ctaHref: '#candidature',
-  },
-  {
-    name: 'Tarif Normal',
-    price: '4 500 EUR',
-    period: '/ participant',
-    features: [
-      'Programme complet 7 jours',
-      'Hebergement 4 etoiles + pension complete',
-      'Acces institutionnel complet',
-      'Suivi 6 mois inclus',
-      'Places limitees a 12 participants',
-    ],
-    highlighted: false,
-    ctaLabel: 'Postuler au programme',
-    ctaHref: '#candidature',
-  },
-  {
-    name: 'VIP',
-    price: '6 500 EUR',
-    period: '/ participant',
-    features: [
-      'Tout le programme Normal, plus :',
-      'Suite hotel au lieu de chambre standard',
-      '2 sessions individuelles avec Roseline',
-      'Mise en relation premium avec 3 contacts cles',
-      'Suivi 12 mois (au lieu de 6)',
-      'Acces prioritaire aux editions suivantes',
-    ],
-    highlighted: false,
-    ctaLabel: 'Postuler en VIP',
-    ctaHref: '#candidature',
-  },
-]
-
-const faqItems = [
-  {
-    q: 'Qui peut postuler a Back to Senegal ?',
-    a: 'Tout membre de la diaspora (senegalaise ou africaine) residant a l\'etranger, porteur d\'un projet d\'investissement ou d\'installation au Senegal. Le programme est selectionne sur dossier.',
-  },
-  {
-    q: 'Faut-il deja avoir un projet structure ?',
-    a: 'Non. Vous pouvez etre au stade de l\'idee. Le programme vous aide justement a passer de l\'idee au projet concret, avec un plan d\'action clair.',
-  },
-  {
-    q: 'Combien de participants par edition ?',
-    a: '8 a 12 participants maximum par edition. C\'est volontairement restreint pour garantir un accompagnement personnalise et des echanges de qualite.',
-  },
-  {
-    q: 'Les vols sont-ils inclus ?',
-    a: 'Non, les vols internationaux ne sont pas inclus. Cela vous permet de choisir vos dates et votre compagnie. Nous vous conseillons sur les meilleurs vols.',
-  },
-  {
-    q: 'Quel est le processus de selection ?',
-    a: 'Vous remplissez le formulaire de candidature. Nous etudions votre profil et votre projet. Un entretien visio de 20 minutes finalise la selection. Reponse sous 10 jours.',
-  },
-  {
-    q: 'En quoi consiste le suivi post-programme ?',
-    a: 'Un suivi de 6 mois (12 mois en VIP) avec une visio mensuelle, un acces au reseau des alumni, et un support par email et WhatsApp pour avancer sur votre feuille de route.',
-  },
-  {
-    q: 'Les partenaires institutionnels sont-ils garantis ?',
-    a: 'Oui. Les partenariats avec APIX, DER/FJ, FAISE et MONCAP Diaspora sont contractualises. Les intervenants sont confirmes pour chaque edition.',
-  },
-  {
-    q: 'Quelle est la politique d\'annulation ?',
-    a: 'Annulation gratuite jusqu\'a 60 jours avant le depart. Entre 30 et 60 jours : 50% rembourses. Moins de 30 jours : non remboursable. Une assurance annulation est recommandee.',
-  },
-]
+import s from './page.module.css'
 
 export default function BackToSenegalPage() {
+  const [days, setDays] = useState('--')
+  const [hours, setHours] = useState('--')
+  const [mins, setMins] = useState('--')
+  const [secs, setSecs] = useState('--')
+  const [floatShow, setFloatShow] = useState(false)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const end = new Date('2027-02-01T00:00:00').getTime()
+    const pad = (n: number) => (n < 10 ? '0' + n : '' + n)
+    const up = () => {
+      const diff = end - Date.now()
+      if (diff <= 0) return
+      setDays(String(Math.floor(diff / 864e5)))
+      setHours(pad(Math.floor((diff % 864e5) / 36e5)))
+      setMins(pad(Math.floor((diff % 36e5) / 6e4)))
+      setSecs(pad(Math.floor((diff % 6e4) / 1e3)))
+    }
+    up()
+    const id = setInterval(up, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => setFloatShow(window.scrollY > 600)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!rootRef.current) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add(s.vis)
+        })
+      },
+      { threshold: 0.08 }
+    )
+    rootRef.current.querySelectorAll('.' + s.fi).forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
+  const faq = [
+    {
+      q: "C'est un voyage ou un programme ?",
+      a: "Un programme d'accélération. Vous venez avec un projet, vous repartez avec un plan d'action, un réseau et un business plan validé.",
+    },
+    {
+      q: 'Comment fonctionne la sélection ?',
+      a: 'Formulaire → étude de dossier → entretien 30 min. 12 places max par cohorte.',
+    },
+    {
+      q: 'Pas de projet précis, je peux postuler ?',
+      a: 'Oui, avec une idée claire et une forte motivation. Le programme structure votre idée.',
+    },
+    {
+      q: 'Le vol est inclus ?',
+      a: 'Non. Tout le reste oui : hébergement, repas, transports, rencontres, ateliers, suivi 3 mois.',
+    },
+    {
+      q: 'Paiement en plusieurs fois ?',
+      a: 'Oui. 40% à la confirmation. 60% à J-60.',
+    },
+    {
+      q: 'Quelle différence entre les 2 cohortes ?',
+      a: 'Même programme. Février = saison sèche. Juillet = possibilité de combiner avec Retour aux Sources.',
+    },
+  ]
+
   return (
-    <>
+    <div ref={rootRef} className={s.page}>
       <Nav />
-      <main>
-        <SalesPageHero
-          eyebrow="PROGRAMME INSTITUTIONNEL"
-          title="Back to Senegal"
-          subtitle="7 jours pour passer de l'idee au projet concret, soutenus par les institutions"
-          badges={['Programme institutionnel', 'FAISE, DER/FJ, APIX', '8 a 12 participants', 'Selection sur dossier']}
-          ctaPrimary={{ label: 'Postuler au programme', href: '#candidature' }}
-        />
 
-        {/* Le Probleme */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader
-              eyebrow="LE CONSTAT"
-              title="Pourquoi votre projet n'avance pas"
-              centered
-            />
-            <div className="mt-10 space-y-6">
-              {[
-                'Vous avez une idee depuis des mois, peut-etre des annees. Mais vous ne savez pas par ou commencer.',
-                'Vous ne connaissez pas les bons interlocuteurs sur place. Les institutions vous semblent opaques, inaccessibles.',
-                'Vous avez peur de vous faire arnaquer. De perdre votre argent. De faire confiance aux mauvaises personnes.',
-                'Vous manquez d\'un reseau local solide. Les contacts WhatsApp ne suffisent pas.',
-                'Vous avez besoin d\'un cadre, d\'un accompagnement, d\'un programme qui vous prend par la main et vous emmene jusqu\'au bout.',
-              ].map((text, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <span
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5"
-                    style={{ backgroundColor: 'rgba(86,14,19,0.08)', color: '#560E13' }}
-                  >
-                    {i + 1}
-                  </span>
-                  <p className="text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
-                    {text}
-                  </p>
+      {/* HERO */}
+      <section className={s.hero}>
+        <div className={s.heroBg}>
+          <Image
+            src="/images/senegal/hero.jpg"
+            alt="Sénégal — Back to Senegal"
+            fill
+            priority
+            sizes="100vw"
+          />
+        </div>
+        <div className={s.heroOv} />
+        <div className={s.heroAccent} />
+        <div className={s.heroCt}>
+          <div className={s.heroLeft}>
+            <div className={s.topline}>
+              <span className={s.chip}>Nouveau programme</span>
+              <span className={s.chipOutline}>7 jours · Sénégal</span>
+            </div>
+            <h1 className={s.heroH1}>
+              BACK TO<br /><span>SENEGAL</span>
+            </h1>
+            <div className={s.tagline}>L&apos;accélérateur de projets pour la diaspora.</div>
+            <p className={s.heroSub}>
+              Vous avez un projet au Sénégal depuis des années. En 7 jours, on le rend concret.{' '}
+              <strong>
+                Rencontres institutionnelles, entrepreneurs locaux, terrain, business plan, pitch devant jury.
+              </strong>{' '}
+              Vous repartez avec un plan d&apos;action, pas un rêve.
+            </p>
+            <div className={s.btns}>
+              <a href="#candidature" className={s.btnAcc}>Candidater →</a>
+              <a href="#programme" className={s.btnGhost}>Voir le programme</a>
+            </div>
+            <div className={s.proof}>
+              <div className={s.proofItem}>
+                <div className={s.pN}>15+</div>
+                <div className={s.pL}>décideurs rencontrés</div>
+              </div>
+              <div className={s.proofItem}>
+                <div className={s.pN}>12</div>
+                <div className={s.pL}>places par cohorte</div>
+              </div>
+              <div className={s.proofItem}>
+                <div className={s.pN}>3 mois</div>
+                <div className={s.pL}>de suivi post-programme</div>
+              </div>
+            </div>
+          </div>
+          <div className={s.heroCard}>
+            <div className={s.hcCountdown}>
+              <div className={s.hcTitle}>Cohorte 1 dans</div>
+              <div className={s.cdRow}>
+                <div className={s.cdBox}>
+                  <div className={s.cdN}>{days}</div>
+                  <div className={s.cdL}>Jours</div>
                 </div>
-              ))}
-            </div>
-            <p className="mt-10 text-lg font-semibold text-center" style={{ color: '#560E13' }}>
-              Back to Senegal existe pour debloquer exactement ca.
-            </p>
-          </div>
-        </section>
-
-        {/* Programme 7 jours */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="LE PROGRAMME"
-              title="7 jours qui vont tout changer"
-              subtitle="Un programme dense, structure, avec des resultats concrets."
-              centered
-            />
-            <div className="mt-14">
-              <TimelineSection days={timelineDays} />
-            </div>
-          </div>
-        </section>
-
-        {/* Partenaires Institutionnels */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-5xl mx-auto">
-            <SectionHeader
-              eyebrow="NOS PARTENAIRES"
-              title="Soutenus par les institutions"
-              subtitle="Des partenariats officiels pour des resultats concrets."
-              centered
-            />
-            <div className="mt-14 grid grid-cols-2 md:grid-cols-5 gap-6">
-              {partenaires.map((p, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl p-6 flex flex-col items-center text-center"
-                  style={{
-                    backgroundColor: '#F8F5F0',
-                    border: '1px solid rgba(86,14,19,0.08)',
-                  }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center text-sm font-bold mb-3"
-                    style={{ backgroundColor: '#560E13', color: '#F6C961' }}
-                  >
-                    {p.name.slice(0, 2)}
-                  </div>
-                  <h3 className="font-bold text-sm mb-1" style={{ color: '#560E13' }}>{p.name}</h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(10,10,10,0.5)' }}>{p.description}</p>
+                <div className={s.cdBox}>
+                  <div className={s.cdN}>{hours}</div>
+                  <div className={s.cdL}>Heures</div>
                 </div>
-              ))}
+                <div className={s.cdBox}>
+                  <div className={s.cdN}>{mins}</div>
+                  <div className={s.cdL}>Min</div>
+                </div>
+                <div className={s.cdBox}>
+                  <div className={s.cdN} style={{ color: '#EF4444' }}>{secs}</div>
+                  <div className={s.cdL}>Sec</div>
+                </div>
+              </div>
+            </div>
+            <div className={s.hcCohortes}>
+              <div className={s.coh}>
+                <div className={s.cLabel}>Cohorte 1</div>
+                <div className={s.cDate}>Février 2027</div>
+                <div className={`${s.cPlaces} ${s.hot}`}>⚡ 12 places</div>
+                <a href="#candidature" className={s.cCta}>Candidater</a>
+              </div>
+              <div className={`${s.coh} ${s.cohGold}`}>
+                <div className={s.cLabel}>Cohorte 2</div>
+                <div className={s.cDate}>Juillet 2027</div>
+                <div className={`${s.cPlaces} ${s.open}`}>✓ 12 places</div>
+                <a href="#candidature" className={s.cCta}>Candidater</a>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Inclus */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader
-              eyebrow="TOUT EST INCLUS"
-              title="Ce que comprend le programme"
-              centered
-            />
-            <div
-              className="mt-10 rounded-xl p-8"
-              style={{ backgroundColor: '#FEFCF9', border: '1px solid rgba(86,14,19,0.08)' }}
-            >
-              <ul className="space-y-3">
-                {inclus.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(10,10,10,0.75)' }}>
-                    <span style={{ color: '#F6C961' }} className="mt-0.5 flex-shrink-0">&#10003;</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+      {/* DOULEUR */}
+      <section className={s.douleur}>
+        <div className={s.douleurIn}>
+          <div className={`${s.label} ${s.fi}`}>Le problème</div>
+          <div className={`${s.stitle} ${s.fi}`}>
+            2,7 milliards d&apos;euros de transferts diaspora par an.<br />
+            4% deviennent des investissements productifs.
+          </div>
+          <div className={`${s.intro} ${s.fi}`}>
+            Pas par manque d&apos;argent. Par manque de{' '}
+            <strong>réseau, d&apos;information et de méthode</strong>. Voici ce qui bloque les porteurs de projets diaspora :
+          </div>
+          <div className={s.douleurGrid}>
+            <div className={`${s.doul} ${s.fi}`}>
+              <div className={s.dIco}>🚫</div>
+              <h3>Pas de réseau local</h3>
+              <p>Vous ne connaissez personne à l&apos;APIX, à la DER, au FAISE. Vos emails restent sans réponse.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD1}`}>
+              <div className={s.dIco}>📄</div>
+              <h3>Pas de méthode</h3>
+              <p>Business plan théorique, jamais confronté au terrain. Pricing au doigt mouillé.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD2}`}>
+              <div className={s.dIco}>⏰</div>
+              <h3>Des années perdues</h3>
+              <p>Le projet traîne depuis 3, 5, 10 ans. Vous tournez en rond. Seul derrière votre écran.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD3}`}>
+              <div className={s.dIco}>❓</div>
+              <h3>Foncier opaque</h3>
+              <p>Comment sécuriser un terrain ? Quel notaire ? Quels pièges ? Personne ne vous explique.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD4}`}>
+              <div className={s.dIco}>💸</div>
+              <h3>Prestataires non fiables</h3>
+              <p>Architecte, artisan, fournisseur. Trouvés sur Google. Aucune garantie. Aucune référence.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD5}`}>
+              <div className={s.dIco}>😔</div>
+              <h3>La solitude du porteur</h3>
+              <p>Personne autour de vous ne comprend votre projet. Pas de pairs. Pas de mentors.</p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Suivi Post-Programme */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader
-              eyebrow="APRES LE PROGRAMME"
-              title="Un suivi de 6 mois pour concretiser"
-              centered
-            />
-            <div className="mt-10 space-y-6 text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
-              <p>
-                Le programme ne s'arrete pas a l'aeroport. Pendant 6 mois apres votre retour, vous beneficiez d'un accompagnement structure.
-              </p>
-              <p>
-                Chaque mois, une visio individuelle avec l'equipe TripAfro pour faire le point sur votre feuille de route. Ou en etes-vous ? Quels obstacles ? Quelles prochaines etapes ?
-              </p>
-              <p>
-                Vous gardez acces au reseau des alumni Back to Senegal : des entrepreneurs de la diaspora qui partagent les memes defis que vous. Entraide, contacts, opportunites.
-              </p>
-              <p>
-                Support par email et WhatsApp pour les questions ponctuelles. Mise en relation avec des prestataires locaux de confiance si besoin.
-              </p>
-              <p style={{ color: '#560E13', fontWeight: 600 }}>
-                Notre objectif : que 80% des participants aient lance une action concrete dans les 6 mois suivant le programme.
-              </p>
-            </div>
+      {/* SPLIT */}
+      <section className={s.split}>
+        <div className={`${s.splitL} ${s.fi}`}>
+          <h3 className={s.splitH3}>
+            Sans Back to Senegal<br />vous <span>perdez du temps</span>
+          </h3>
+          <div className={s.sp}><div className={s.spI}>✗</div><div className={s.spT}><strong>2 à 5 ans</strong> de démarches solitaires</div></div>
+          <div className={s.sp}><div className={s.spI}>✗</div><div className={s.spT}>Des dizaines d&apos;emails sans réponse</div></div>
+          <div className={s.sp}><div className={s.spI}>✗</div><div className={s.spT}>Un business plan <strong>jamais validé</strong> par le terrain</div></div>
+          <div className={s.sp}><div className={s.spI}>✗</div><div className={s.spT}>Des prestataires trouvés au hasard</div></div>
+          <div className={s.sp}><div className={s.spI}>✗</div><div className={s.spT}>Aucune communauté de pairs</div></div>
+        </div>
+        <div className={`${s.splitR} ${s.fi}`}>
+          <h3 className={s.splitH3}>
+            Avec Back to Senegal<br />vous <span>accélérez tout</span>
+          </h3>
+          <div className={s.sp}><div className={s.spI}>✓</div><div className={s.spT}><strong>7 jours</strong> pour faire ce qui prend 2 ans</div></div>
+          <div className={s.sp}><div className={s.spI}>✓</div><div className={s.spT}>15+ rencontres <strong>face à face</strong> organisées</div></div>
+          <div className={s.sp}><div className={s.spI}>✓</div><div className={s.spT}>Business plan <strong>validé par un jury</strong></div></div>
+          <div className={s.sp}><div className={s.spI}>✓</div><div className={s.spT}>Prestataires <strong>vérifiés</strong> par Roseline</div></div>
+          <div className={s.sp}><div className={s.spI}>✓</div><div className={s.spT}>Communauté de <strong>12 porteurs de projets</strong></div></div>
+        </div>
+      </section>
+
+      {/* PROGRAMME */}
+      <section className={s.prog} id="programme">
+        <div className={s.progIn}>
+          <div className={`${s.label} ${s.fi}`}>Le programme</div>
+          <div className={`${s.stitle} ${s.fi}`}>7 jours. 7 accélérations. 1 transformation.</div>
+          <div className={s.jours}>
+            <div className={`${s.jour} ${s.fi}`}><div className={s.jNum}>J1</div><div className={s.jIco}>🎯</div><h4>Pitch &amp; cadrage</h4><p>Chaque porteur pitch son projet. Feedback immédiat.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD1}`}><div className={s.jNum}>J2</div><div className={s.jIco}>🏛️</div><h4>Institutions</h4><p>APIX, DER/FJ, FAISE, ADEPME. Face à face.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD2}`}><div className={s.jNum}>J3</div><div className={s.jIco}>🏦</div><h4>Banques</h4><p>Comptes, financement, dispositifs diaspora.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD3}`}><div className={s.jNum}>J4</div><div className={s.jIco}>💼</div><h4>Entrepreneurs</h4><p>5+ qui ont réussi. Retour d&apos;expérience brut.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD4}`}><div className={s.jNum}>J5</div><div className={s.jIco}>🛤️</div><h4>Terrain</h4><p>Visites, expert foncier, prestataires locaux.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD5}`}><div className={s.jNum}>J6</div><div className={s.jIco}>📊</div><h4>Business plan</h4><p>Atelier intensif avec Roseline. Document final.</p></div>
+            <div className={`${s.jour} ${s.fi}`}><div className={s.jNum}>J7</div><div className={s.jIco}>🚀</div><h4>Pitch final</h4><p>Jury d&apos;experts. Roadmap. Alumni. C&apos;est parti.</p></div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Pricing */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="TARIFS"
-              title="Investissez dans votre projet"
-              centered
-            />
-            <p className="text-center mt-4 mb-14 text-sm font-semibold" style={{ color: '#560E13' }}>
-              Edition 1 : 8-14 fevrier 2027 | Edition 2 : 5-11 juillet 2027
+      {/* GAINS */}
+      <section className={s.gains}>
+        <div className={s.gainsIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#FF6B35' }}>Ce que vous repartez avec</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>Pas des promesses. Des livrables.</div>
+          <div className={s.gainGrid}>
+            <div className={`${s.gain} ${s.fi}`}><div className={s.gIco}>📋</div><h4>Roadmap 6 mois</h4><p>Plan d&apos;action personnalisé, chiffré, séquencé.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD1}`}><div className={s.gIco}>🤝</div><h4>15+ contacts clés</h4><p>Décideurs, entrepreneurs, institutions.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD2}`}><div className={s.gIco}>📈</div><h4>Business plan validé</h4><p>Confronté au terrain et au jury.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD3}`}><div className={s.gIco}>💬</div><h4>Feedback jury</h4><p>Experts et investisseurs. Sans filtre.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD4}`}><div className={s.gIco}>👥</div><h4>Communauté alumni</h4><p>Groupe privé à vie. Entraide.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD5}`}><div className={s.gIco}>📞</div><h4>3 mois de suivi</h4><p>Visio mensuelle avec Roseline.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* LETTRE */}
+      <section className={s.lettre}>
+        <div className={`${s.lettreIn} ${s.fi}`}>
+          <div className={s.lettreImg}>
+            <Image src="/images/roseline-portrait-1.jpg" alt="Roseline Ngom" width={400} height={500} style={{ width: '100%', height: 'auto' }} />
+          </div>
+          <div className={s.lettreTxt}>
+            <div className={s.salut}>Pourquoi j&apos;ai créé Back to Senegal</div>
+            <p>
+              Depuis 10 ans, je reçois le même message :{' '}
+              <strong>« Roseline, j&apos;ai un projet au Sénégal. Mais je ne sais pas par où commencer. »</strong>
             </p>
-            <PricingTable tiers={pricingTiers} />
-          </div>
-        </section>
-
-        {/* Formulaire Candidature */}
-        <section id="candidature" className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              eyebrow="CANDIDATURE"
-              title="Postulez au programme"
-              subtitle="Selection sur dossier. Reponse sous 10 jours ouvrables."
-              centered
-            />
-            <div className="mt-10">
-              <CandidatureForm />
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-4xl mx-auto">
-            <SectionHeader eyebrow="FAQ" title="Questions frequentes" centered />
-            <div className="mt-14">
-              <FAQAccordion items={faqItems} />
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Final */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#560E13' }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-6"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: '#FEFCF9',
-              }}
-            >
-              Votre projet merite mieux qu'un fichier Word oublie sur votre bureau
-            </h2>
-            <p className="text-lg mb-10" style={{ color: 'rgba(254,252,249,0.75)' }}>
-              7 jours. Des institutions. Un reseau. Un plan d'action. Tout ce qu'il vous manque pour avancer, enfin.
+            <p>J&apos;ai vu des dizaines de projets mourir. Pas par manque d&apos;argent. Par manque de réseau, d&apos;information, de méthode.</p>
+            <p>
+              Back to Senegal, c&apos;est 7 jours pour vous donner ce que j&apos;ai mis 10 ans à construire. Un carnet d&apos;adresses. Une méthode. Et la confiance que <strong>votre projet est faisable</strong>.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="#candidature"
-                className="inline-block px-10 py-4 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-90"
-                style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-              >
-                Postuler maintenant
-              </a>
-              <a
-                href="https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20des%20informations%20sur%20Back%20to%20Senegal."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-80"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: '#FEFCF9',
-                  border: '2px solid rgba(254,252,249,0.4)',
-                }}
-              >
-                Parler a Roseline
-              </a>
-            </div>
+            <div className={s.sig}>— Roseline</div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* PRIX */}
+      <section className={s.prix}>
+        <div className={s.prixIn}>
+          <div className={`${s.label} ${s.fi}`}>L&apos;investissement</div>
+          <div className={`${s.stitle} ${s.fi}`}>
+            La valeur de 2 ans de démarches.<br />En 7 jours. Pour 3 800€.
+          </div>
+          <div className={`${s.prixCard} ${s.fi}`}>
+            <div className={s.prixBreakdown}>
+              <div className={s.pbRow}><div className={s.pbL}>Hébergement 7 nuits (4★)</div><div className={s.pbV}>1 400€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>Repas complets 7 jours</div><div className={s.pbV}>560€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>Transports internes</div><div className={s.pbV}>350€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>15+ rencontres organisées</div><div className={s.pbV}>2 500€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>Ateliers + mentorat</div><div className={s.pbV}>1 800€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>Roadmap + business plan</div><div className={s.pbV}>1 200€</div></div>
+              <div className={s.pbRow}><div className={s.pbL}>3 mois de suivi</div><div className={s.pbV}>900€</div></div>
+              <div className={s.pbTotal}><div className={s.pbL}>Valeur totale</div><div className={s.pbV}>8 710€</div></div>
+            </div>
+            <div className={s.prixFinal}>
+              <div className={s.prixAmount}>3 800€</div>
+              <div className={s.prixCfa}>~2 493 000 FCFA</div>
+              <div className={s.prixPer}>par participant · tout compris sauf vol</div>
+            </div>
+            <div className={s.cohortes}>
+              <div className={s.coh2}>
+                <div className={s.c2Date}>Février 2027</div>
+                <div className={s.c2Info}>Cohorte 1</div>
+                <div className={`${s.c2Places} ${s.hot}`}>⚡ 12 places</div>
+              </div>
+              <div className={s.coh2}>
+                <div className={s.c2Date}>Juillet 2027</div>
+                <div className={s.c2Info}>Cohorte 2</div>
+                <div className={`${s.c2Places} ${s.open}`}>✓ 12 places</div>
+              </div>
+            </div>
+            <a href="#candidature" className={s.prixCta}>Candidater maintenant →</a>
+            <div className={s.prixMicro}>Candidature gratuite · Sélection sur dossier · Paiement en 2 fois possible</div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={s.faq}>
+        <div className={s.faqIn}>
+          <div className={`${s.label} ${s.fi}`}>Questions fréquentes</div>
+          <div className={`${s.stitle} ${s.fi}`}>Tout savoir avant de candidater</div>
+          <div className={s.fi} style={{ marginTop: 25 }}>
+            {faq.map((item, i) => (
+              <div key={i} className={`${s.fi2} ${openFaq === i ? s.op : ''}`}>
+                <div className={s.fq} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  {item.q}<span className={s.ar}>+</span>
+                </div>
+                <div className={s.fa}>{item.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FORMULAIRE */}
+      <section className={s.form} id="candidature">
+        <div className={s.fmIn}>
+          <div className={`${s.fmHead} ${s.fi}`}>
+            <div className={s.label} style={{ color: '#FF6B35' }}>Candidature</div>
+            <h2>Rejoignez Back to Senegal</h2>
+            <p>12 places par cohorte. Sélection sur dossier.</p>
+          </div>
+          <div className={`${s.fmBar} ${s.fi}`}>
+            <div className={`${s.fmS} ${s.on}`} />
+            <div className={`${s.fmS} ${s.on}`} />
+            <div className={`${s.fmS} ${s.on}`} />
+          </div>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
+            <div className={s.fr}>
+              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
+              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
+            </div>
+            <div className={s.fr}>
+              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
+              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
+            </div>
+            <label>Ville *</label>
+            <input type="text" placeholder="Paris, Bruxelles, Montréal..." />
+            <label>Cohorte souhaitée *</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>Cohorte 1 — Février 2027</option>
+              <option>Cohorte 2 — Juillet 2027</option>
+              <option>Peu importe</option>
+            </select>
+            <label>Type de projet *</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>Hôtellerie / Lodge</option>
+              <option>Restauration</option>
+              <option>Agence de voyage</option>
+              <option>Projet culturel</option>
+              <option>Digital / Tech</option>
+              <option>Investissement</option>
+              <option>Autre</option>
+            </select>
+            <label>Maturité du projet *</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>Idée en réflexion</option>
+              <option>Projet structuré</option>
+              <option>Déjà lancé</option>
+              <option>Capital disponible</option>
+            </select>
+            <label>Budget estimé</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>- de 50K€</option>
+              <option>50K – 150K€</option>
+              <option>150K – 500K€</option>
+              <option>+ de 500K€</option>
+            </select>
+            <label>Votre projet et motivation *</label>
+            <textarea placeholder="Décrivez votre projet, votre parcours, pourquoi Back to Senegal..." />
+            <button className={s.fs} type="submit">Soumettre ma candidature →</button>
+            <div className={s.fmi}>Gratuit. Sans engagement. Réponse sous 48h.</div>
+          </form>
+          <div className={`${s.fmCt} ${s.fi}`}>
+            <a href="https://wa.me/33650329808">📱 WhatsApp</a>
+            <a href="mailto:roselinediouma@gmail.com">✉️ Email</a>
+            <a href="https://calendly.com/roselinengom/decouverte-15min">📅 Appel 15 min</a>
+          </div>
+        </div>
+      </section>
+
       <Footer />
-    </>
+
+      <a href="#candidature" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
+        <span className={s.pu} />
+        12 places — Candidater
+      </a>
+    </div>
   )
 }

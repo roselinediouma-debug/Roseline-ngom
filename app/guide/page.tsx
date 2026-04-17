@@ -418,6 +418,61 @@ export default function GuidePage() {
 
 
       {/* ═══════════════════════════════════════════════════════════
+          SECTION 6 — GALERIE MOSAÏQUE (bg bordeaux)
+         ═══════════════════════════════════════════════════════════ */}
+      <SectionWrapper bg="bordeaux" withHexOverlay>
+        <div className="text-center mb-12">
+          <div className="text-xs font-bold uppercase tracking-[0.3em] mb-4 font-poppins" style={{ color: '#F6C961' }}>
+            Carnet visuel
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold leading-tight font-cormorant" style={{ color: '#FEFCF9' }}>
+            Le Sénégal <span style={{ color: '#F6C961', fontStyle: 'italic' }}>tel qu&apos;il se vit</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {[
+            { src: '/images/senegal/gallery-1.jpg', span: 'md:row-span-2', ratio: '3/4' },
+            { src: '/images/senegal/gallery-2.jpg', span: '', ratio: '3/2' },
+            { src: '/images/senegal/gallery-3.jpg', span: '', ratio: '3/2' },
+            { src: '/images/senegal/gallery-4.jpg', span: '', ratio: '3/2' },
+            { src: '/images/senegal/gallery-5.jpg', span: '', ratio: '3/2' },
+            { src: '/images/senegal/gallery-6.jpg', span: 'md:col-span-2', ratio: '16/9' },
+          ].map((img) => (
+            <div
+              key={img.src}
+              className={`group relative overflow-hidden rounded-[4px] ${img.span}`}
+              style={{ aspectRatio: img.ratio }}
+            >
+              <Image
+                src={img.src}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 50vw, 33vw"
+                loading="lazy"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="text-sm font-dm-sans mb-4" style={{ color: 'rgba(254,252,249,0.7)' }}>
+            Suivez les coulisses au jour le jour
+          </p>
+          <div className="flex justify-center gap-4 text-xs font-bold uppercase tracking-[0.2em] font-poppins">
+            <a href="https://www.instagram.com/roselinengom" target="_blank" rel="noopener noreferrer" style={{ color: '#F6C961' }} className="hover:opacity-80 transition-opacity">
+              Instagram
+            </a>
+            <span style={{ color: 'rgba(246,201,97,0.4)' }}>·</span>
+            <a href="https://www.tiktok.com/@roselinengom" target="_blank" rel="noopener noreferrer" style={{ color: '#F6C961' }} className="hover:opacity-80 transition-opacity">
+              TikTok
+            </a>
+          </div>
+        </div>
+      </SectionWrapper>
+
+      {/* ═══════════════════════════════════════════════════════════
           SECTION 7 — TESTIMONIALS (bg cream)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="cream">

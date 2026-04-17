@@ -1,445 +1,384 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SalesPageHero from '@/components/SalesPageHero'
-import SectionHeader from '@/components/SectionHeader'
-import TimelineSection from '@/components/TimelineSection'
-import FeatureGrid from '@/components/FeatureGrid'
-import PricingTable from '@/components/PricingTable'
-import TestimonialCard from '@/components/TestimonialCard'
-import FAQAccordion from '@/components/FAQAccordion'
-
-export const metadata: Metadata = {
-  title: 'Retour aux Sources | Voyage diaspora Sénégal',
-  description: '14 jours pour reconnecter avec vos racines au Sénégal. Voyage immersif pour la diaspora, à partir de 2 200 €.',
-  openGraph: {
-    title: 'Retour aux Sources | Voyage diaspora Sénégal',
-    description: '14 jours pour reconnecter avec vos racines au Sénégal. Voyage immersif pour la diaspora, à partir de 2 200 €.',
-  },
-}
-
-const timelineDays = [
-  {
-    day: 'Jour 1-3',
-    title: 'La capitale, entre tradition et modernite',
-    location: 'Dakar',
-    highlights: [
-      'Ile de Goree : marcher sur les traces de l\'histoire',
-      'Marche Sandaga : les couleurs, les odeurs, la vie',
-      'Ngor et les Almadies : le Dakar moderne',
-      'Soiree de bienvenue : thieboudienne et teranga',
-    ],
-  },
-  {
-    day: 'Jour 4-6',
-    title: 'Les plages, la faune, les rencontres',
-    location: 'Saly & Petite Cote',
-    highlights: [
-      'Reserve de Bandia : girafes, rhinoceros, singes',
-      'Plage de Saly : repos et baignade',
-      'Lagune de la Somone : oiseaux et pirogue',
-      'Marche aux poissons de Mbour : spectacle garanti',
-    ],
-  },
-  {
-    day: 'Jour 7-9',
-    title: 'Les bolongs, les mangroves, le silence',
-    location: 'Sine Saloum',
-    highlights: [
-      'Pirogue dans les bolongs : glisser sur l\'eau',
-      'Fadiouth, l\'ile aux coquillages : un lieu unique au monde',
-      'Peche traditionnelle avec les villageois',
-      'Nuit en lodge, bruit des oiseaux et des vagues',
-    ],
-  },
-  {
-    day: 'Jour 10-12',
-    title: 'L\'histoire, le fleuve, le desert',
-    location: 'Saint-Louis & Nord',
-    highlights: [
-      'Saint-Louis en caleche : architecture coloniale et jazz',
-      'Quartier des pecheurs de Guet Ndar',
-      'Desert de Lompoul sous les etoiles',
-      'Bivouac, feu de camp, silence du Sahel',
-    ],
-  },
-  {
-    day: 'Jour 13-14',
-    title: 'Les adieux, les promesses',
-    location: 'Retour Dakar',
-    highlights: [
-      'Derniers achats : tissus, bijoux, souvenirs',
-      'Diner de cloture en groupe',
-      'Ceremonie de depart : bilan, emotions, promesses',
-    ],
-  },
-]
-
-const pourQuiFeatures = [
-  {
-    icon: '1',
-    title: 'Diaspora en quete de racines',
-    description: 'Vous etes ne ou grandi en France, en Europe, aux Etats-Unis, et vous avez des racines senegalaises.',
-  },
-  {
-    icon: '2',
-    title: 'Parents transmetteurs',
-    description: 'Vos enfants n\'ont jamais vraiment vu le Senegal. Vous voulez leur montrer d\'ou ils viennent.',
-  },
-  {
-    icon: '3',
-    title: 'Voyageurs rassures',
-    description: 'Vous voulez un voyage rassurant, bien organise, avec du sens. Pas un tour operator classique.',
-  },
-  {
-    icon: '4',
-    title: 'Immersion avec confort',
-    description: 'Vous cherchez l\'immersion sans sacrifier le confort. Hotels de charme, transport prive, guide dedie.',
-  },
-]
-
-const testimonials = [
-  {
-    name: 'Aminata D.',
-    location: 'Paris, France',
-    quote: 'J\'avais toujours voulu montrer le Senegal a mes enfants. Pas juste les vacances chez la famille. Un vrai voyage. Retour aux Sources a ete ce moment. Mes filles en parlent encore tous les jours.',
-  },
-  {
-    name: 'Mamadou K.',
-    location: 'Bruxelles, Belgique',
-    quote: 'Je suis ne a Bruxelles. Mes parents sont senegalais. A 35 ans, j\'ai fait ce voyage. J\'ai pleure a Goree. J\'ai ri au marche de Mbour. J\'ai compris des choses que mes parents n\'avaient jamais su me dire avec des mots.',
-  },
-  {
-    name: 'Fatou S.',
-    location: 'Montreal, Canada',
-    quote: 'L\'organisation etait impeccable. Roseline pense a tout. Du confort, de l\'authenticite, et surtout du coeur. Mon fils de 8 ans a appris a pecher avec des pecheurs de Saloum. Inoubliable.',
-  },
-]
-
-const inclus = [
-  'Hebergement 13 nuits (hotels 3-4 etoiles et lodges de charme)',
-  'Pension complete : petits-dejeuners, dejeuners et diners',
-  'Tous les transferts et transports internes',
-  'Guide culturel francophone dedie au groupe',
-  'Toutes les entrees, visites et activites du programme',
-  'Assurance locale',
-  'Support WhatsApp 24/7',
-  'Ceremonie de bienvenue et diner de cloture',
-]
-
-const nonInclus = [
-  'Vols internationaux (aller-retour)',
-  'Assurance voyage internationale',
-  'Depenses personnelles et pourboires',
-  'Excursions optionnelles hors programme',
-  'Visa (non requis pour les ressortissants francais)',
-]
-
-const pricingTiers = [
-  {
-    name: 'Early Bird',
-    price: '2 200 EUR',
-    period: '/ personne',
-    features: [
-      'Reservation 3+ mois avant le depart',
-      'Programme complet 14 jours',
-      'Hebergement et pension complete',
-      'Guide et transports inclus',
-      'Support WhatsApp 24/7',
-      'Economisez 400 EUR',
-    ],
-    highlighted: true,
-    ctaLabel: 'Reserver en Early Bird',
-    ctaHref: 'https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20reserver%20le%20Retour%20aux%20Sources%20en%20Early%20Bird.',
-  },
-  {
-    name: 'Tarif Normal',
-    price: '2 600 EUR',
-    period: '/ personne',
-    features: [
-      'Programme complet 14 jours',
-      'Hebergement et pension complete',
-      'Guide et transports inclus',
-      'Support WhatsApp 24/7',
-      'Places limitees a 15 personnes',
-    ],
-    highlighted: false,
-    ctaLabel: 'Reserver ma place',
-    ctaHref: 'https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20reserver%20le%20Retour%20aux%20Sources.',
-  },
-  {
-    name: 'Tarif Enfants',
-    price: '-25%',
-    period: 'enfant 6-12 ans',
-    features: [
-      'Enfant 6-12 ans : -25% sur le tarif adulte',
-      'Enfant de moins de 6 ans : -50%',
-      'Meme programme, meme confort',
-      'Activites adaptees a chaque age',
-      'Encadrement renforce',
-    ],
-    highlighted: false,
-    ctaLabel: 'Demander un devis famille',
-    ctaHref: 'https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20un%20devis%20famille%20pour%20le%20Retour%20aux%20Sources.',
-  },
-]
-
-const faqItems = [
-  {
-    q: 'Faut-il un visa pour le Senegal ?',
-    a: 'Pour les ressortissants francais, aucun visa n\'est necessaire pour un sejour de moins de 90 jours. Un passeport valide 6 mois apres la date de retour suffit. Pour les autres nationalites, nous vous guidons dans les demarches.',
-  },
-  {
-    q: 'Les vols sont-ils inclus ?',
-    a: 'Non, les vols internationaux ne sont pas inclus. Cela vous permet de choisir votre compagnie, vos dates et vos options. Nous vous recommandons les meilleurs vols et horaires.',
-  },
-  {
-    q: 'Qu\'en est-il de l\'assurance ?',
-    a: 'Une assurance locale est incluse. Nous recommandons fortement de souscrire une assurance voyage internationale couvrant l\'annulation et le rapatriement. Nous pouvons vous conseiller.',
-  },
-  {
-    q: 'A partir de quel age peut-on emmener des enfants ?',
-    a: 'Le voyage est adapte des 3 ans. Les activites sont modulees selon les ages. Les enfants adorent les animaux de Bandia, les pirogues du Saloum et les plages de Saly.',
-  },
-  {
-    q: 'Quel type d\'hebergement ?',
-    a: 'Hotels 3 a 4 etoiles en ville, lodges de charme en brousse, residences privees en bord de mer. Toujours propre, confortable, avec climatisation et eau chaude.',
-  },
-  {
-    q: 'Le confort est-il garanti ?',
-    a: 'Oui. Immersion ne veut pas dire inconfort. Transport prive climatise, hebergements selectionnes, repas de qualite. Vous vivez l\'authenticite sans rien sacrifier.',
-  },
-  {
-    q: 'Comment se fait le transport sur place ?',
-    a: 'Minibus prive climatise avec chauffeur dedie. Pour certaines etapes (Sine Saloum, Lompoul), des vehicules 4x4 ou pirogues sont prevus.',
-  },
-  {
-    q: 'Y a-t-il du temps libre ?',
-    a: 'Oui. Chaque journee alterne entre activites de groupe et moments libres. Vous n\'etes jamais enferme dans un programme rigide.',
-  },
-  {
-    q: 'Quelle est la taille du groupe ?',
-    a: '8 a 15 personnes maximum. Assez pour creer des liens, assez peu pour rester intime. Roseline est presente sur chaque depart.',
-  },
-  {
-    q: 'Quelle est la politique d\'annulation ?',
-    a: 'Annulation gratuite jusqu\'a 60 jours avant le depart (remboursement integral de l\'acompte). Entre 30 et 60 jours : 50% rembourses. Moins de 30 jours : non remboursable.',
-  },
-]
+import s from './page.module.css'
 
 export default function RetourAuxSourcesPage() {
+  const [floatShow, setFloatShow] = useState(false)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const onScroll = () => setFloatShow(window.scrollY > 800)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!rootRef.current) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add(s.vis)
+        })
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    )
+    rootRef.current.querySelectorAll('.' + s.fi).forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
+  const faq = [
+    { q: 'Le vol est-il inclus ?', a: "Non. Le vol international n'est pas inclus pour vous laisser la liberté de choisir votre compagnie. On vous conseille sur les meilleures options." },
+    { q: 'Mes enfants peuvent-ils venir ?', a: "Absolument, c'est même recommandé. -30% pour les -12 ans. Gratuit pour les -2 ans." },
+    { q: 'Je suis seul(e), c\'est possible ?', a: 'Bien sûr. Beaucoup partent en solo. Supplément chambre individuelle : 450€ (~295 000 FCFA).' },
+    { q: 'Quel niveau de confort ?', a: 'Hôtels 3-4★ à Dakar et Saint-Louis. Écolodges confortables au Sine Saloum. Climatisation partout.' },
+    { q: 'Comment se passe le paiement ?', a: 'Acompte à la réservation. Solde 45-60 jours avant. Virement EUR/FCFA ou Stripe.' },
+    { q: 'Et si je dois annuler ?', a: 'Early Bird : gratuit jusqu\'à J-90. Normal : gratuit jusqu\'à J-60. Dernière Minute : non remboursable.' },
+    { q: 'Roseline est-elle présente ?', a: 'Oui. Personnellement. Sur chaque départ. Du jour 1 au jour 14.' },
+    { q: 'Mon conjoint(e) n\'est pas africain(e) ?', a: "Parfaitement adapté. C'est souvent le conjoint non-africain qui est le plus ému." },
+  ]
+
   return (
-    <>
+    <div ref={rootRef} className={s.page}>
       <Nav />
-      <main>
-        <SalesPageHero
-          eyebrow="VOYAGE IMMERSIF"
-          title="Retour aux Sources"
-          subtitle="14 jours pour se reconnecter a ses racines, avec ses enfants"
-          badges={['14 jours', '8-15 personnes', 'Juillet-aout & decembre', 'A partir de 2 200 EUR']}
-          ctaPrimary={{ label: 'Reserver mon depart 2027', href: '#reserver' }}
-        />
 
-        {/* La Promesse */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader
-              eyebrow="LA PROMESSE"
-              title="Ce voyage va changer quelque chose en vous"
-              centered
-            />
-            <div className="mt-10 space-y-6 text-lg leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
-              <p>
-                Votre grand-mere vous parle du Senegal depuis que vous etes enfant. Vos parents y sont nes, y ont grandi, y ont aime. Et vous, vous n'y etes peut-etre jamais alle. Ou tres peu. Et jamais comme ca.
-              </p>
-              <p>
-                Il y a des voyages qu'on fait. Et il y a des voyages qui vous transforment.
-              </p>
-              <p>
-                Retour aux Sources n'est pas une visite guidee. C'est une reconnexion. Avec vos racines. Avec votre histoire. Avec la culture que vos parents ont portee jusqu'a vous. Et que vous allez a votre tour transmettre a vos enfants.
-              </p>
-              <p style={{ color: '#560E13', fontWeight: 600 }}>
-                14 jours pour remonter le temps. 14 jours pour marcher ou vos grands-parents ont marche. 14 jours pour gouter ce qu'ils ont goute. 14 jours pour comprendre ce qu'ils ont voulu vous transmettre.
-              </p>
+      {/* HERO */}
+      <section className={s.hero}>
+        <div className={s.heroBg}>
+          <Image src="/images/senegal/hero.jpg" alt="Retour aux Sources — Sénégal" fill priority sizes="100vw" />
+        </div>
+        <div className={s.heroOv} />
+        <div className={s.heroWave}>
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60Z" opacity=".6" />
+            <path d="M0,35 C480,55 960,10 1440,40 L1440,60 L0,60Z" />
+          </svg>
+        </div>
+        <div className={s.heroCt}>
+          <div className={s.heroLeft}>
+            <div className={s.heroPill}>
+              <span>Voyage immersif</span>
+              <div className={s.dot} />
+              <span>14 jours</span>
+              <div className={s.dot} />
+              <span>Sénégal</span>
             </div>
-          </div>
-        </section>
-
-        {/* Timeline - Itineraire */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="L'ITINERAIRE"
-              title="14 jours a travers le Senegal"
-              subtitle="De Dakar a Saint-Louis, en passant par le Saloum et la Petite Cote."
-              centered
-            />
-            <div className="mt-14">
-              <TimelineSection days={timelineDays} />
+            <div className={s.heroTitle}>
+              <h1>Retour aux</h1>
+              <em>Sources</em>
             </div>
-          </div>
-        </section>
-
-        {/* Pour Qui */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="POUR QUI"
-              title="Ce voyage est fait pour vous si..."
-              centered
-            />
-            <div className="mt-14">
-              <FeatureGrid features={pourQuiFeatures} />
+            <p className={s.heroSub}>
+              Vos parents vous parlent du Sénégal depuis que vous êtes enfant. Vous rêvez d&apos;y emmener vos enfants. De leur montrer d&apos;où ils viennent. <strong>Ce voyage existe. Il vous attend.</strong>
+            </p>
+            <div className={s.heroTags}>
+              <span>🌍 Dès 2 200€ · ~1,4M FCFA</span>
+              <span>👪 Groupe 8-15 pers.</span>
+              <span>☀️ Juil. · Août · Déc. 2026</span>
             </div>
-          </div>
-        </section>
-
-        {/* Inclus / Non inclus */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-5xl mx-auto">
-            <SectionHeader
-              eyebrow="LE DETAIL"
-              title="Ce qui est inclus"
-              centered
-            />
-            <div className="mt-14 grid md:grid-cols-2 gap-8">
-              <div
-                className="rounded-xl p-8"
-                style={{ backgroundColor: '#FEFCF9', border: '1px solid rgba(86,14,19,0.08)' }}
-              >
-                <h3
-                  className="text-xl font-bold mb-6"
-                  style={{
-                    fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                    color: '#560E13',
-                  }}
-                >
-                  Inclus dans le prix
-                </h3>
-                <ul className="space-y-3">
-                  {inclus.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(10,10,10,0.75)' }}>
-                      <span style={{ color: '#F6C961' }} className="mt-0.5 flex-shrink-0">&#10003;</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div
-                className="rounded-xl p-8"
-                style={{ backgroundColor: '#FEFCF9', border: '1px solid rgba(86,14,19,0.08)' }}
-              >
-                <h3
-                  className="text-xl font-bold mb-6"
-                  style={{
-                    fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                    color: '#0A0A0A',
-                  }}
-                >
-                  Non inclus
-                </h3>
-                <ul className="space-y-3">
-                  {nonInclus.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(10,10,10,0.75)' }}>
-                      <span style={{ color: 'rgba(10,10,10,0.3)' }} className="mt-0.5 flex-shrink-0">&#10005;</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+            <div className={s.heroBtns}>
+              <a href="#reservation" className={s.bg}>RÉSERVER MA PLACE →</a>
+              <a href="#programme" className={s.bo}>Voir le programme</a>
+            </div>
+            <div className={s.heroUrgency}>
+              <div className={s.hu}>
+                <div className={s.dot} />
+                <span>Départ juillet 2026 : <strong>6 places restantes sur 15</strong></span>
               </div>
             </div>
           </div>
-        </section>
 
-        {/* Temoignages */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="TEMOIGNAGES"
-              title="Ils l'ont vecu"
-              subtitle="Des voyageurs de la diaspora partagent leur experience."
-              centered
-            />
-            <div className="mt-14 grid md:grid-cols-3 gap-6">
-              {testimonials.map((t, i) => (
-                <TestimonialCard key={i} name={t.name} location={t.location} quote={t.quote} />
-              ))}
+          <div className={s.heroCard}>
+            <h3>Infos rapides</h3>
+            <div className={s.hcRow}><div className={s.hcIcon}>📅</div><div><div className={s.hcLabel}>Durée</div><div className={s.hcValue}>14 jours · <em>5 régions</em></div></div></div>
+            <div className={s.hcRow}><div className={s.hcIcon}>👪</div><div><div className={s.hcLabel}>Format</div><div className={s.hcValue}>Groupe 8-15 personnes</div></div></div>
+            <div className={s.hcRow}><div className={s.hcIcon}>⭐</div><div><div className={s.hcLabel}>Avis voyageurs</div><div className={s.hcValue}>4.9/5 · <em>2 000+ voyageurs</em></div></div></div>
+            <div className={s.hcRow}><div className={s.hcIcon}>💰</div><div><div className={s.hcLabel}>Tarif Early Bird</div><div className={s.hcValue}>2 200€ · <em>~1,4M FCFA</em></div></div></div>
+            <div className={s.hcRow}><div className={s.hcIcon}>✅</div><div><div className={s.hcLabel}>Inclus</div><div className={s.hcValue}>Hébergement, repas, transport</div></div></div>
+            <div className={s.hcRow}><div className={s.hcIcon}>🧑‍💼</div><div><div className={s.hcLabel}>Votre guide</div><div className={s.hcValue}>Roseline Ngom · <em>100% présente</em></div></div></div>
+            <a href="#reservation" className={s.hcCta}>Devis séjour gratuit →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* URGENCE BAR */}
+      <div className={s.ub}><p>⚡ Les départs de juillet et août 2026 se remplissent. 9 des 15 places sont déjà réservées. <a href="#reservation">Réserver maintenant</a></p></div>
+
+      {/* EMOTION */}
+      <section className={s.emo}>
+        <div className={s.emoIn}>
+          <div className={`${s.label} ${s.fi}`}>Plus qu&apos;un voyage</div>
+          <div className={`${s.stitle} ${s.fi}`}>Ce n&apos;est pas un circuit touristique.<br />C&apos;est une reconnexion.</div>
+          <div className={`${s.emoTx} ${s.fi}`}>
+            <p>Il y a des voyages qu&apos;on fait pour les photos. Et il y a ceux qui vous transforment.</p>
+            <p><strong>Retour aux Sources n&apos;est pas une visite guidée du Sénégal.</strong> C&apos;est une immersion de 14 jours conçue pour la diaspora africaine. Pour ceux qui portent un pays dans le cœur sans toujours savoir comment y retourner.</p>
+            <p>Pendant 14 jours, vous allez marcher où vos grands-parents ont marché. Goûter ce qu&apos;ils ont goûté. Entendre ce qu&apos;ils ont voulu vous transmettre. <strong>Et vos enfants verront, avec leurs propres yeux, d&apos;où ils viennent.</strong></p>
+            <p>Ce n&apos;est pas du tourisme. C&apos;est un acte de transmission. Et ça change tout.</p>
+          </div>
+          <div className={`${s.eq} ${s.fi}`}>« Quand mon fils de 8 ans a touché le sable de la plage où son grand-père a grandi, j&apos;ai compris pourquoi j&apos;avais fait ce voyage. »</div>
+        </div>
+      </section>
+
+      {/* PROGRAMME */}
+      <section className={s.prog} id="programme">
+        <div className={s.progIn}>
+          <div className={`${s.label} ${s.fi}`}>Le programme</div>
+          <div className={`${s.stitle} ${s.fi}`}>14 jours. 5 étapes. 1 transformation.</div>
+        </div>
+      </section>
+
+      {/* POUR QUI */}
+      <section className={s.pq}>
+        <div className={s.pqIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#F6C961' }}>Pour qui</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>Ce voyage est fait pour vous si...</div>
+          <div className={s.pqg}>
+            <div className={`${s.pqc} ${s.fi}`}><div className={s.ic}>👪</div><h3>Vous voulez transmettre vos racines</h3><p>Vos enfants grandissent en France, en Belgique, au Canada. Ils entendent parler du Sénégal mais ne l&apos;ont jamais vécu. Ce voyage est pour eux autant que pour vous.</p></div>
+            <div className={`${s.pqc} ${s.fi}`}><div className={s.ic}>🏠</div><h3>Vous n&apos;y êtes pas retourné(e)</h3><p>5 ans, 10 ans, 20 ans. Vous ne savez plus par où commencer. On s&apos;occupe de tout. Vous n&apos;avez qu&apos;à vivre.</p></div>
+            <div className={`${s.pqc} ${s.fi}`}><div className={s.ic}>❤️</div><h3>Votre conjoint(e) ne connaît pas</h3><p>Il/elle n&apos;est pas d&apos;origine sénégalaise. Vous voulez lui montrer d&apos;où vous venez. Ce voyage sera votre plus beau cadeau.</p></div>
+            <div className={`${s.pqc} ${s.fi}`}><div className={s.ic}>🤝</div><h3>Vous voulez voyager en communauté</h3><p>Pas seul dans un hôtel anonyme. Avec 8 à 15 personnes qui partagent la même histoire, les mêmes questions, la même envie.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO 1 */}
+      <section className={s.vid}>
+        <div className={`${s.vidIn} ${s.fi}`}>
+          <div className={s.label}>Les coulisses</div>
+          <div className={s.stitle}>Vivez l&apos;expérience TripAfro</div>
+          <div className={s.vw}>
+            <iframe src="https://www.youtube.com/embed/cAXg3qd8HkI" title="TripAfro" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowFullScreen />
+          </div>
+        </div>
+      </section>
+
+      {/* INCLUS */}
+      <section className={s.inc}>
+        <div className={s.incIn}>
+          <div className={`${s.label} ${s.fi}`}>Le détail</div>
+          <div className={`${s.stitle} ${s.fi}`}>Ce qui est inclus. Ce qui ne l&apos;est pas.</div>
+          <div className={`${s.ig} ${s.fi}`}>
+            <div className={`${s.ic} ${s.icOui}`}>
+              <h3>✓ Inclus</h3>
+              <ul>
+                <li>Hébergement 13 nuits (hôtels 3-4★ et écolodges)</li>
+                <li>Transports internes (minibus climatisé + pirogues)</li>
+                <li>Petit-déjeuner et dîner chaque jour</li>
+                <li>Toutes les excursions et entrées</li>
+                <li>Guide francophone dédié 14 jours</li>
+                <li>Roseline présente sur chaque départ</li>
+                <li>Assurance voyage complète</li>
+                <li>Support WhatsApp 24/7</li>
+                <li>Album photo numérique professionnel</li>
+              </ul>
+            </div>
+            <div className={`${s.ic} ${s.icNon}`}>
+              <h3>✗ Non inclus</h3>
+              <ul>
+                <li>Vol international aller-retour</li>
+                <li>Déjeuners (~5 000 FCFA/jour)</li>
+                <li>Dépenses personnelles et souvenirs</li>
+                <li>Pourboires (facultatifs)</li>
+                <li>Extensions de séjour (sur demande)</li>
+                <li>Visa si applicable</li>
+              </ul>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Pricing */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="TARIFS"
-              title="Investissez dans vos racines"
-              centered
-            />
-            <p className="text-center mt-4 mb-14 text-sm font-semibold" style={{ color: '#560E13' }}>
-              Dates : 12-26 juillet 2027 | 19 dec. 2027 - 2 jan. 2028
-            </p>
-            <PricingTable tiers={pricingTiers} />
+      {/* VIDEO 2 */}
+      <section className={s.vid2}>
+        <div className={`${s.vid2In} ${s.fi}`}>
+          <div className={s.label} style={{ color: '#F6C961' }}>Dakar vue par Roseline</div>
+          <div className={s.stitle} style={{ color: 'white' }}>Le Monument de la Renaissance</div>
+          <div className={s.vw}>
+            <iframe src="https://www.youtube.com/embed/1mQm-hhOaws" title="Monument" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowFullScreen />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FAQ */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-4xl mx-auto">
-            <SectionHeader
-              eyebrow="FAQ"
-              title="Vos questions, nos reponses"
-              centered
-            />
-            <div className="mt-14">
-              <FAQAccordion items={faqItems} />
+      {/* PRIX */}
+      <section className={s.prix}>
+        <div className={s.prixIn}>
+          <div className={`${s.label} ${s.fi}`}>Les tarifs</div>
+          <div className={`${s.stitle} ${s.fi}`}>Un prix transparent. Zéro surprise.</div>
+          <div className={s.pxg}>
+            <div className={`${s.px} ${s.fi}`}>
+              <div className={s.tp}>Early Bird</div>
+              <div className={s.am}>2 200€</div>
+              <div className={s.cf}>~1 443 000 FCFA</div>
+              <div className={s.pr}>par personne, base double</div>
+              <div className={s.dt}>✓ Réservation 4+ mois avant<br />✓ Acompte 500€<br />✓ Annulation gratuite J-90</div>
+            </div>
+            <div className={`${s.px} ${s.ft} ${s.fi}`}>
+              <div className={s.tp}>Tarif Normal</div>
+              <div className={s.am}>2 600€</div>
+              <div className={s.cf}>~1 706 000 FCFA</div>
+              <div className={s.pr}>par personne, base double</div>
+              <div className={s.dt}>✓ Réservation 2-4 mois avant<br />✓ Acompte 700€<br />✓ Annulation gratuite J-60</div>
+            </div>
+            <div className={`${s.px} ${s.fi}`}>
+              <div className={s.tp}>Dernière Minute</div>
+              <div className={s.am}>3 000€</div>
+              <div className={s.cf}>~1 968 000 FCFA</div>
+              <div className={s.pr}>par personne, base double</div>
+              <div className={s.dt}>✓ Moins de 2 mois avant<br />✓ Paiement intégral<br />✓ Non remboursable</div>
             </div>
           </div>
-        </section>
+          <div className={`${s.enf} ${s.fi}`}>
+            <span>👶 Enfants -12 ans : -30% · Bébés -2 ans : gratuit</span>
+          </div>
+        </div>
+      </section>
 
-        {/* CTA Final */}
-        <section id="reserver" className="py-20 px-6" style={{ backgroundColor: '#560E13' }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-6"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: '#FEFCF9',
-              }}
-            >
-              Pret a vivre cette experience ?
-            </h2>
-            <p className="text-lg mb-10" style={{ color: 'rgba(254,252,249,0.75)' }}>
-              Les places sont limitees a 15 personnes par depart. Reservez votre place des maintenant avec un acompte de 30%.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20reserver%20mon%20acompte%20pour%20Retour%20aux%20Sources."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-90"
-                style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-              >
-                Reserver mon acompte
-              </a>
-              <a
-                href="https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20j%27ai%20des%20questions%20sur%20Retour%20aux%20Sources."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-80"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: '#FEFCF9',
-                  border: '2px solid rgba(254,252,249,0.4)',
-                }}
-              >
-                Ecrire a Roseline sur WhatsApp
-              </a>
+      {/* DATES */}
+      <section className={s.dat}>
+        <div className={s.datIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#F6C961' }}>Les départs</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>3 dates. Places limitées.</div>
+          <div className={s.dg}>
+            <div className={`${s.dc} ${s.fi}`}>
+              <div className={s.mo}>Juillet</div>
+              <div className={s.yr}>2026</div>
+              <div className={s.rg}>5 au 18 juillet</div>
+              <div className={`${s.pl} ${s.plFw}`}>⚡ 6 places restantes</div>
+              <div className={`${s.st} ${s.sf}`}>Se remplit vite</div>
+            </div>
+            <div className={`${s.dc} ${s.fi}`}>
+              <div className={s.mo}>Août</div>
+              <div className={s.yr}>2026</div>
+              <div className={s.rg}>2 au 15 août</div>
+              <div className={`${s.pl} ${s.plOk}`}>✓ 10 places</div>
+              <div className={`${s.st} ${s.so}`}>Ouvert</div>
+            </div>
+            <div className={`${s.dc} ${s.fi}`}>
+              <div className={s.mo}>Décembre</div>
+              <div className={s.yr}>2026</div>
+              <div className={s.rg}>20 déc. au 2 janv.</div>
+              <div className={`${s.pl} ${s.plOk}`}>✓ 12 places</div>
+              <div className={`${s.st} ${s.so}`}>Ouvert</div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* TEMOIGNAGES */}
+      <section className={s.tms}>
+        <div className={s.tmsIn}>
+          <div className={`${s.label} ${s.fi}`}>Témoignages</div>
+          <div className={`${s.stitle} ${s.fi}`}>Ceux qui sont partis racontent</div>
+          <div className={s.tmg}>
+            <div className={`${s.tm} ${s.fi}`}>
+              <div className={s.tmStars}>★★★★★</div>
+              <q>J&apos;ai emmené mes 3 enfants pour la première fois. Ils parlent encore du jour où on a navigué dans les mangroves. Ce voyage a changé notre famille.</q>
+              <div className={s.tmWh}>Fatou M.</div>
+              <div className={s.tmFr}>Paris · Juillet 2024</div>
+            </div>
+            <div className={`${s.tm} ${s.fi}`}>
+              <div className={s.tmStars}>★★★★★</div>
+              <q>Mon mari n&apos;est pas sénégalais. Après Retour aux Sources, il comprend enfin pourquoi je pleure quand j&apos;entends du mbalax. Roseline a créé quelque chose de spécial.</q>
+              <div className={s.tmWh}>Awa K.</div>
+              <div className={s.tmFr}>Bruxelles · Décembre 2024</div>
+            </div>
+            <div className={`${s.tm} ${s.fi}`}>
+              <div className={s.tmStars}>★★★★★</div>
+              <q>Je n&apos;étais pas retourné au Sénégal depuis 22 ans. J&apos;avais peur. En fait, c&apos;est le Sénégal qui m&apos;a retrouvé.</q>
+              <div className={s.tmWh}>Ibrahima S.</div>
+              <div className={s.tmFr}>Montréal · Août 2024</div>
+            </div>
+            <div className={`${s.tm} ${s.fi}`}>
+              <div className={s.tmStars}>★★★★★</div>
+              <q>L&apos;organisation est impeccable. Roseline est présente du premier au dernier jour. On se sent en famille. Le Sine Saloum, c&apos;est le paradis.</q>
+              <div className={s.tmWh}>Marie-Claire D.</div>
+              <div className={s.tmFr}>Lyon · Juillet 2024</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={s.faq}>
+        <div className={s.faqIn}>
+          <div className={`${s.label} ${s.fi}`}>Questions fréquentes</div>
+          <div className={`${s.stitle} ${s.fi}`}>Tout savoir avant de réserver</div>
+          <div className={s.fi} style={{ marginTop: 25 }}>
+            {faq.map((item, i) => (
+              <div key={i} className={`${s.fi2} ${openFaq === i ? s.op : ''}`}>
+                <div className={s.fq} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  {item.q}<span className={s.ar}>+</span>
+                </div>
+                <div className={s.fa}>{item.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FORMULAIRE */}
+      <section className={s.form} id="reservation">
+        <div className={s.fmIn}>
+          <div className={`${s.fmL} ${s.fi}`}>
+            <div className={s.label}>Réservation</div>
+            <h2>Réservez votre place<br />pour l&apos;été <em>2026</em></h2>
+            <p>Remplissez ce formulaire et nous vous recontacterons sous 24h pour finaliser votre inscription.</p>
+            <p>Le groupe est limité à 15 personnes maximum par départ. Une fois complet, nous ouvrons une liste d&apos;attente.</p>
+            <div className={s.ub2}>
+              <div className={s.dot} />
+              <span>Juillet : <strong>6 places</strong> · Août : 10 places · Décembre : 12 places</span>
+            </div>
+            <div className={s.ca}>
+              <a href="https://wa.me/33650329808">📱 WhatsApp : +33 6 50 32 98 08</a>
+              <a href="mailto:roselinediouma@gmail.com">✉️ roselinediouma@gmail.com</a>
+              <a href="https://calendly.com/roselinengom/decouverte-15min">📅 Réserver un appel de 15 min</a>
+            </div>
+          </div>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
+            <h3>Formulaire de réservation</h3>
+            <div className={s.fr}>
+              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
+              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
+            </div>
+            <div className={s.fr}>
+              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
+              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
+            </div>
+            <label>Départ souhaité *</label>
+            <select defaultValue="">
+              <option value="">Choisir une date...</option>
+              <option>Juillet 2026 (5-18 juil.) — 6 places</option>
+              <option>Août 2026 (2-15 août) — 10 places</option>
+              <option>Décembre 2026 (20 déc.-2 janv.) — 12 places</option>
+            </select>
+            <div className={s.fr}>
+              <div>
+                <label>Adultes *</label>
+                <select defaultValue="1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+              </div>
+              <div>
+                <label>Enfants</label>
+                <select defaultValue="0"><option>0</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
+              </div>
+            </div>
+            <label>Ville de résidence</label>
+            <input type="text" placeholder="Paris, Bruxelles, Montréal..." />
+            <label>Message</label>
+            <textarea placeholder="Ce qui vous motive, vos questions..." />
+            <button className={s.fs} type="submit">Réserver ma place →</button>
+            <div className={s.fmi}>Vous n&apos;êtes pas encore engagé(e). Nous vous recontacterons sous 24h.</div>
+          </form>
+        </div>
+      </section>
+
       <Footer />
-    </>
+
+      <a href="#reservation" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
+        <span className={s.pu} />
+        Places limitées — Réserver
+      </a>
+    </div>
   )
 }
