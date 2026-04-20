@@ -1,18 +1,22 @@
 import { sendTransactionalEmail } from './brevo'
 
 /**
- * Notifications admin — email + WhatsApp (CallMeBot).
+ * Notifications admin — email (Brevo) + Telegram.
  *
  * Env vars requises :
- *   ADMIN_EMAIL                  — email destinataire (ex: roselinediouma@gmail.com)
- *   CALLMEBOT_PHONE              — numéro WhatsApp au format international SANS + (ex: 33650329808)
- *   CALLMEBOT_APIKEY             — clé obtenue auprès de CallMeBot (voir README plus bas)
+ *   ADMIN_EMAIL              — email destinataire (ex: roselinediouma@gmail.com)
+ *   TELEGRAM_BOT_TOKEN       — token donné par @BotFather (ex: 1234567890:AA...)
+ *   TELEGRAM_CHAT_ID         — id de la conversation (ex: 123456789) — voir setup plus bas
  *
- * Setup CallMeBot (gratuit, 2 minutes) :
- *   1. Ajouter le numéro +34 644 44 21 47 dans tes contacts WhatsApp (bot CallMeBot)
- *   2. Envoyer-lui : "I allow callmebot to send me messages"
- *   3. Tu reçois par retour ta clé API personnelle → la mettre dans CALLMEBOT_APIKEY
- *   4. Docs : https://www.callmebot.com/blog/free-api-whatsapp-messages/
+ * Setup Telegram (gratuit, 100% officiel, 5 minutes) :
+ *   1. Dans Telegram, chercher @BotFather et lancer une conversation
+ *   2. /newbot → choisir un nom (ex: "Roseline Leads") puis un username
+ *      terminant par "bot" (ex: roseline_leads_bot)
+ *   3. BotFather te donne un TOKEN → mettre dans TELEGRAM_BOT_TOKEN
+ *   4. Trouver ton bot par son username, lui envoyer un premier message (ex: "hi")
+ *   5. Récupérer ton chat_id en ouvrant dans un navigateur :
+ *      https://api.telegram.org/bot<TOKEN>/getUpdates
+ *      → chercher "chat":{"id":123456789,...} → mettre cet id dans TELEGRAM_CHAT_ID
  *
  * Si une var manque, la notification silencieusement passe — ne bloque jamais le flux.
  */
@@ -32,10 +36,10 @@ const EMOJI = {
 export async function notifyAdmin({ subject, message, priority = 'normal' }: AdminNotifPayload) {
   const emoji = EMOJI[priority]
 
-  // Lancer email + WhatsApp en parallèle, sans bloquer si l'un échoue
+  // Lancer email + Telegram en parallèle, sans bloquer si l'un échoue
   await Promise.allSettled([
     sendAdminEmail(subject, message, emoji),
-    sendAdminWhatsApp(subject, message, emoji),
+    sendAdminTelegram(subject, message, emoji),
   ])
 }
 
@@ -65,27 +69,38 @@ async function sendAdminEmail(subject: string, message: string, emoji: string) {
   }
 }
 
-async function sendAdminWhatsApp(subject: string, message: string, emoji: string) {
-  const phone = process.env.CALLMEBOT_PHONE
-  const apikey = process.env.CALLMEBOT_APIKEY
-  if (!phone || !apikey) return
+async function sendAdminTelegram(subject: string, message: string, emoji: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN
+  const chatId = process.env.TELEGRAM_CHAT_ID
+  if (!token || !chatId) return
 
-  const text = `${emoji} *${subject}*\n\n${message}`
-  const url =
-    `https://api.callmebot.com/whatsapp.php` +
-    `?phone=${encodeURIComponent(phone)}` +
-    `&text=${encodeURIComponent(text)}` +
-    `&apikey=${encodeURIComponent(apikey)}`
+  // Échapper les caractères spéciaux Markdown dans le contenu dynamique
+  const text = `${emoji} *${escapeMarkdown(subject)}*\n\n${escapeMarkdown(message)}`
+  const url = `https://api.telegram.org/bot${token}/sendMessage`
 
   try {
-    const res = await fetch(url, { method: 'GET' })
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true,
+      }),
+    })
     if (!res.ok) {
       const body = await res.text()
-      console.error('CallMeBot non-ok:', res.status, body.slice(0, 200))
+      console.error('Telegram non-ok:', res.status, body.slice(0, 300))
     }
   } catch (err) {
-    console.error('notifyAdmin WhatsApp failed:', err)
+    console.error('notifyAdmin Telegram failed:', err)
   }
+}
+
+function escapeMarkdown(s: string): string {
+  // Markdown legacy : échapper *, _, `, [
+  return s.replace(/([*_`\[])/g, '\\$1')
 }
 
 function escapeHtml(s: string): string {
