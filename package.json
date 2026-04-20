@@ -10,6 +10,7 @@
     "pdf:generate": "tsx scripts/generate-guide-pdf.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0",
     "@react-pdf/renderer": "^4.4.1",
     "@stripe/stripe-js": "^9.2.0",
     "@supabase/supabase-js": "^2.103.1",

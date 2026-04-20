@@ -8,7 +8,58 @@ import s from './page.module.css'
 
 export default function VoyageSignaturePage() {
   const [floatShow, setFloatShow] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (submitting) return
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    const payload = {
+      prenom: String(fd.get('prenom') || '').trim(),
+      nom: String(fd.get('nom') || '').trim(),
+      email: String(fd.get('email') || '').trim(),
+      whatsapp: String(fd.get('whatsapp') || '').trim(),
+      typeVoyage: 'voyage_signature',
+      nbAdultes: String(fd.get('nbAdultes') || '2'),
+      nbEnfants: String(fd.get('nbEnfants') || '0'),
+      nbBebes: String(fd.get('nbBebes') || '0'),
+      duree: String(fd.get('duree') || ''),
+      periode: String(fd.get('periode') || ''),
+      budget: String(fd.get('budget') || ''),
+      confort: String(fd.get('confort') || ''),
+      message: [
+        fd.get('formatVoyage') ? `Format : ${fd.get('formatVoyage')}` : null,
+        fd.get('message'),
+      ]
+        .filter(Boolean)
+        .join('\n\n'),
+    }
+    if (!payload.prenom || !payload.nom || !payload.email) {
+      setSubmitError('Merci de renseigner prénom, nom et email.')
+      return
+    }
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/reservation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      console.error(err)
+      setSubmitError("Une erreur est survenue. Merci de réessayer ou de m'écrire sur WhatsApp.")
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setFloatShow(window.scrollY > 600)
@@ -281,94 +332,107 @@ export default function VoyageSignaturePage() {
               <a href="https://calendly.com/roselinengom">📅 Appel de 30 min (gratuit)</a>
             </div>
           </div>
-          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={handleSubmit}>
             <h3>Demande de devis</h3>
             <div className={s.fcSub}>Devis gratuit sous 48h. Sans engagement.</div>
-            <div className={s.frow}>
-              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
-              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
-            </div>
-            <div className={s.frow}>
-              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
-              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
-            </div>
-            <label>Type de voyage *</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>En famille (avec enfants)</option>
-              <option>En couple</option>
-              <option>Entre amis</option>
-              <option>En solo</option>
-              <option>Groupe organisé (association, entreprise)</option>
-            </select>
-            <div className={s.frow3}>
-              <div>
-                <label>Nombre d&apos;adultes *</label>
-                <select defaultValue="2">
-                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
-                </select>
+            {submitted ? (
+              <div style={{ padding: 20, background: '#f5f0e8', border: '1px solid #c9b897', borderRadius: 4, color: '#560E13', marginTop: 12 }}>
+                <strong>Merci {'!'}</strong> Votre demande est bien reçue. Je vous envoie votre devis sous 48h.
               </div>
-              <div>
-                <label>Enfants (-12 ans)</label>
-                <select defaultValue="0">
-                  <option>0</option><option>1</option><option>2</option><option>3</option><option>4+</option>
-                </select>
-              </div>
-              <div>
-                <label>Bébés (-2 ans)</label>
-                <select defaultValue="0">
-                  <option>0</option><option>1</option><option>2</option>
-                </select>
-              </div>
-            </div>
-            <div className={s.frow}>
-              <div>
-                <label>Durée souhaitée *</label>
-                <select defaultValue="">
+            ) : (
+              <>
+                <div className={s.frow}>
+                  <div><label>Prénom *</label><input type="text" name="prenom" required placeholder="Votre prénom" /></div>
+                  <div><label>Nom *</label><input type="text" name="nom" required placeholder="Votre nom" /></div>
+                </div>
+                <div className={s.frow}>
+                  <div><label>Email *</label><input type="email" name="email" required placeholder="votre@email.com" /></div>
+                  <div><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+33 6 XX XX XX XX" /></div>
+                </div>
+                <label>Type de voyage *</label>
+                <select name="formatVoyage" defaultValue="">
                   <option value="">Choisir...</option>
-                  <option>5 jours</option>
-                  <option>7 jours</option>
-                  <option>10 jours</option>
-                  <option>14 jours</option>
-                  <option>Autre (préciser dans le message)</option>
+                  <option>En famille (avec enfants)</option>
+                  <option>En couple</option>
+                  <option>Entre amis</option>
+                  <option>En solo</option>
+                  <option>Groupe organisé (association, entreprise)</option>
                 </select>
-              </div>
-              <div>
-                <label>Période envisagée *</label>
-                <select defaultValue="">
+                <div className={s.frow3}>
+                  <div>
+                    <label>Nombre d&apos;adultes *</label>
+                    <select name="nbAdultes" defaultValue="2">
+                      <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Enfants (-12 ans)</label>
+                    <select name="nbEnfants" defaultValue="0">
+                      <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Bébés (-2 ans)</label>
+                    <select name="nbBebes" defaultValue="0">
+                      <option>0</option><option>1</option><option>2</option>
+                    </select>
+                  </div>
+                </div>
+                <div className={s.frow}>
+                  <div>
+                    <label>Durée souhaitée *</label>
+                    <select name="duree" defaultValue="">
+                      <option value="">Choisir...</option>
+                      <option>5 jours</option>
+                      <option>7 jours</option>
+                      <option>10 jours</option>
+                      <option>14 jours</option>
+                      <option>Autre (préciser dans le message)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Période envisagée *</label>
+                    <select name="periode" defaultValue="">
+                      <option value="">Choisir...</option>
+                      <option>Janvier-Février 2027</option>
+                      <option>Mars-Avril 2027</option>
+                      <option>Mai-Juin 2027</option>
+                      <option>Juillet-Août 2027</option>
+                      <option>Septembre-Octobre 2027</option>
+                      <option>Novembre-Décembre 2027</option>
+                      <option>Flexible</option>
+                    </select>
+                  </div>
+                </div>
+                <label>Budget par personne</label>
+                <select name="budget" defaultValue="">
                   <option value="">Choisir...</option>
-                  <option>Janvier-Février 2027</option>
-                  <option>Mars-Avril 2027</option>
-                  <option>Mai-Juin 2027</option>
-                  <option>Juillet-Août 2027</option>
-                  <option>Septembre-Octobre 2027</option>
-                  <option>Novembre-Décembre 2027</option>
-                  <option>Flexible</option>
+                  <option>Moins de 2 000€</option>
+                  <option>2 000 – 3 000€</option>
+                  <option>3 000 – 5 000€</option>
+                  <option>5 000 – 8 000€</option>
+                  <option>Plus de 8 000€</option>
+                  <option>Je ne sais pas encore</option>
                 </select>
-              </div>
-            </div>
-            <label>Budget par personne</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>Moins de 2 000€</option>
-              <option>2 000 – 3 000€</option>
-              <option>3 000 – 5 000€</option>
-              <option>5 000 – 8 000€</option>
-              <option>Plus de 8 000€</option>
-              <option>Je ne sais pas encore</option>
-            </select>
-            <label>Niveau de confort souhaité</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>Authentique (campements, écolodges)</option>
-              <option>Confort (écolodges + hôtels 3-4★)</option>
-              <option>Premium (hôtels 4-5★, lodges haut de gamme)</option>
-              <option>Mixte (un peu de tout)</option>
-            </select>
-            <label>Ce qui vous fait rêver *</label>
-            <textarea placeholder="Racontez-moi ce que vous cherchez. L'évasion ? L'aventure ? Le repos ? Les rencontres ? La culture ? La gastronomie ? Quels endroits vous attirent ? Y a-t-il des choses que vous ne voulez surtout pas ? Plus vous me dites, plus votre voyage sera parfait..." />
-            <button className={s.fs} type="submit">Recevoir mon devis personnalisé →</button>
-            <div className={s.fmi}>Gratuit · Sans engagement · Réponse personnalisée sous 48h</div>
+                <label>Niveau de confort souhaité</label>
+                <select name="confort" defaultValue="">
+                  <option value="">Choisir...</option>
+                  <option>Authentique (campements, écolodges)</option>
+                  <option>Confort (écolodges + hôtels 3-4★)</option>
+                  <option>Premium (hôtels 4-5★, lodges haut de gamme)</option>
+                  <option>Mixte (un peu de tout)</option>
+                </select>
+                <label>Ce qui vous fait rêver *</label>
+                <textarea name="message" placeholder="Racontez-moi ce que vous cherchez. L'évasion ? L'aventure ? Le repos ? Les rencontres ? La culture ? La gastronomie ? Quels endroits vous attirent ? Y a-t-il des choses que vous ne voulez surtout pas ? Plus vous me dites, plus votre voyage sera parfait..." />
+                {submitError && (
+                  <div style={{ color: '#B00020', fontSize: 13, marginTop: 8 }}>{submitError}</div>
+                )}
+                <button className={s.fs} type="submit" disabled={submitting}>
+                  {submitting ? 'Envoi...' : 'Recevoir mon devis personnalisé →'}
+                </button>
+                <div className={s.fmi}>Gratuit · Sans engagement · Réponse personnalisée sous 48h</div>
+              </>
+            )}
           </form>
         </div>
       </section>

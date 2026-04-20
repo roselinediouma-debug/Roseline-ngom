@@ -9,7 +9,50 @@ import s from './page.module.css'
 export default function RetourAuxSourcesPage() {
   const [floatShow, setFloatShow] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (submitting) return
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    const payload = {
+      prenom: String(fd.get('prenom') || '').trim(),
+      nom: String(fd.get('nom') || '').trim(),
+      email: String(fd.get('email') || '').trim(),
+      whatsapp: String(fd.get('whatsapp') || '').trim(),
+      typeVoyage: 'retour_aux_sources',
+      departSouhaite: String(fd.get('departSouhaite') || ''),
+      nbAdultes: String(fd.get('nbAdultes') || '1'),
+      nbEnfants: String(fd.get('nbEnfants') || '0'),
+      villeResidence: String(fd.get('villeResidence') || ''),
+      message: String(fd.get('message') || ''),
+    }
+    if (!payload.prenom || !payload.nom || !payload.email) {
+      setSubmitError('Merci de renseigner prénom, nom et email.')
+      return
+    }
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/reservation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      console.error(err)
+      setSubmitError("Une erreur est survenue. Merci de réessayer ou de m'écrire sur WhatsApp.")
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setFloatShow(window.scrollY > 800)
@@ -336,39 +379,52 @@ export default function RetourAuxSourcesPage() {
               <a href="https://calendly.com/roselinengom">📅 Réserver un appel de 15 min</a>
             </div>
           </div>
-          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={handleSubmit}>
             <h3>Formulaire de réservation</h3>
-            <div className={s.fr}>
-              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
-              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
-            </div>
-            <div className={s.fr}>
-              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
-              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
-            </div>
-            <label>Départ souhaité *</label>
-            <select defaultValue="">
-              <option value="">Choisir une date...</option>
-              <option>Juillet 2026 (5-18 juil.) — 6 places</option>
-              <option>Août 2026 (2-15 août) — 10 places</option>
-              <option>Décembre 2026 (20 déc.-2 janv.) — 12 places</option>
-            </select>
-            <div className={s.fr}>
-              <div>
-                <label>Adultes *</label>
-                <select defaultValue="1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+            {submitted ? (
+              <div style={{ padding: 20, background: '#f5f0e8', border: '1px solid #c9b897', borderRadius: 4, color: '#560E13' }}>
+                <strong>Merci {'!'}</strong> Votre demande est bien reçue. Je vous recontacte sous 24h.
               </div>
-              <div>
-                <label>Enfants</label>
-                <select defaultValue="0"><option>0</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
-              </div>
-            </div>
-            <label>Ville de résidence</label>
-            <input type="text" placeholder="Paris, Bruxelles, Montréal..." />
-            <label>Message</label>
-            <textarea placeholder="Ce qui vous motive, vos questions..." />
-            <button className={s.fs} type="submit">Réserver ma place →</button>
-            <div className={s.fmi}>Vous n&apos;êtes pas encore engagé(e). Nous vous recontacterons sous 24h.</div>
+            ) : (
+              <>
+                <div className={s.fr}>
+                  <div><label>Prénom *</label><input type="text" name="prenom" required placeholder="Votre prénom" /></div>
+                  <div><label>Nom *</label><input type="text" name="nom" required placeholder="Votre nom" /></div>
+                </div>
+                <div className={s.fr}>
+                  <div><label>Email *</label><input type="email" name="email" required placeholder="votre@email.com" /></div>
+                  <div><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+33 6 XX XX XX XX" /></div>
+                </div>
+                <label>Départ souhaité *</label>
+                <select name="departSouhaite" defaultValue="">
+                  <option value="">Choisir une date...</option>
+                  <option>Juillet 2026 (5-18 juil.) — 6 places</option>
+                  <option>Août 2026 (2-15 août) — 10 places</option>
+                  <option>Décembre 2026 (20 déc.-2 janv.) — 12 places</option>
+                </select>
+                <div className={s.fr}>
+                  <div>
+                    <label>Adultes *</label>
+                    <select name="nbAdultes" defaultValue="1"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                  </div>
+                  <div>
+                    <label>Enfants</label>
+                    <select name="nbEnfants" defaultValue="0"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                  </div>
+                </div>
+                <label>Ville de résidence</label>
+                <input type="text" name="villeResidence" placeholder="Paris, Bruxelles, Montréal..." />
+                <label>Message</label>
+                <textarea name="message" placeholder="Ce qui vous motive, vos questions..." />
+                {submitError && (
+                  <div style={{ color: '#B00020', fontSize: 13, marginTop: 8 }}>{submitError}</div>
+                )}
+                <button className={s.fs} type="submit" disabled={submitting}>
+                  {submitting ? 'Envoi...' : 'Réserver ma place →'}
+                </button>
+                <div className={s.fmi}>Vous n&apos;êtes pas encore engagé(e). Nous vous recontacterons sous 24h.</div>
+              </>
+            )}
           </form>
         </div>
       </section>

@@ -14,7 +14,50 @@ export default function BackToSenegalPage() {
   const [secs, setSecs] = useState('--')
   const [floatShow, setFloatShow] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const rootRef = useRef<HTMLDivElement | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (submitting) return
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    const payload = {
+      prenom: String(fd.get('prenom') || '').trim(),
+      nom: String(fd.get('nom') || '').trim(),
+      email: String(fd.get('email') || '').trim(),
+      whatsapp: String(fd.get('whatsapp') || '').trim(),
+      ville: String(fd.get('ville') || '').trim(),
+      cohorte: String(fd.get('cohorte') || ''),
+      typeProjet: String(fd.get('typeProjet') || ''),
+      maturite: String(fd.get('maturite') || ''),
+      budget: String(fd.get('budget') || ''),
+      description: String(fd.get('description') || '').trim(),
+    }
+    if (!payload.prenom || !payload.nom || !payload.email || !payload.cohorte || !payload.typeProjet || !payload.maturite || !payload.description) {
+      setSubmitError('Merci de remplir tous les champs marqués *.')
+      return
+    }
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/candidature-bts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      console.error(err)
+      setSubmitError("Une erreur est survenue. Merci de réessayer ou de m'écrire sur WhatsApp.")
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   useEffect(() => {
     const end = new Date('2027-02-01T00:00:00').getTime()
@@ -369,55 +412,68 @@ export default function BackToSenegalPage() {
             <div className={`${s.fmS} ${s.on}`} />
             <div className={`${s.fmS} ${s.on}`} />
           </div>
-          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
-            <div className={s.fr}>
-              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
-              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
-            </div>
-            <div className={s.fr}>
-              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
-              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
-            </div>
-            <label>Ville *</label>
-            <input type="text" placeholder="Paris, Bruxelles, Montréal..." />
-            <label>Cohorte souhaitée *</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>Cohorte 1 — Février 2027</option>
-              <option>Cohorte 2 — Juillet 2027</option>
-              <option>Peu importe</option>
-            </select>
-            <label>Type de projet *</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>Hôtellerie / Lodge</option>
-              <option>Restauration</option>
-              <option>Agence de voyage</option>
-              <option>Projet culturel</option>
-              <option>Digital / Tech</option>
-              <option>Investissement</option>
-              <option>Autre</option>
-            </select>
-            <label>Maturité du projet *</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>Idée en réflexion</option>
-              <option>Projet structuré</option>
-              <option>Déjà lancé</option>
-              <option>Capital disponible</option>
-            </select>
-            <label>Budget estimé</label>
-            <select defaultValue="">
-              <option value="">Choisir...</option>
-              <option>- de 50K€</option>
-              <option>50K – 150K€</option>
-              <option>150K – 500K€</option>
-              <option>+ de 500K€</option>
-            </select>
-            <label>Votre projet et motivation *</label>
-            <textarea placeholder="Décrivez votre projet, votre parcours, pourquoi Back to Senegal..." />
-            <button className={s.fs} type="submit">Soumettre ma candidature →</button>
-            <div className={s.fmi}>Gratuit. Sans engagement. Réponse sous 48h.</div>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={handleSubmit}>
+            {submitted ? (
+              <div style={{ padding: 20, background: '#f5f0e8', border: '1px solid #c9b897', borderRadius: 4, color: '#560E13' }}>
+                <strong>Candidature reçue {'!'}</strong> Je vous réponds sous 48h après étude de votre dossier.
+              </div>
+            ) : (
+              <>
+                <div className={s.fr}>
+                  <div><label>Prénom *</label><input type="text" name="prenom" required placeholder="Votre prénom" /></div>
+                  <div><label>Nom *</label><input type="text" name="nom" required placeholder="Votre nom" /></div>
+                </div>
+                <div className={s.fr}>
+                  <div><label>Email *</label><input type="email" name="email" required placeholder="votre@email.com" /></div>
+                  <div><label>WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+33 6 XX XX XX XX" /></div>
+                </div>
+                <label>Ville *</label>
+                <input type="text" name="ville" placeholder="Paris, Bruxelles, Montréal..." />
+                <label>Cohorte souhaitée *</label>
+                <select name="cohorte" defaultValue="" required>
+                  <option value="">Choisir...</option>
+                  <option>Cohorte 1 — Février 2027</option>
+                  <option>Cohorte 2 — Juillet 2027</option>
+                  <option>Peu importe</option>
+                </select>
+                <label>Type de projet *</label>
+                <select name="typeProjet" defaultValue="" required>
+                  <option value="">Choisir...</option>
+                  <option>Hôtellerie / Lodge</option>
+                  <option>Restauration</option>
+                  <option>Agence de voyage</option>
+                  <option>Projet culturel</option>
+                  <option>Digital / Tech</option>
+                  <option>Investissement</option>
+                  <option>Autre</option>
+                </select>
+                <label>Maturité du projet *</label>
+                <select name="maturite" defaultValue="" required>
+                  <option value="">Choisir...</option>
+                  <option>Idée en réflexion</option>
+                  <option>Projet structuré</option>
+                  <option>Déjà lancé</option>
+                  <option>Capital disponible</option>
+                </select>
+                <label>Budget estimé</label>
+                <select name="budget" defaultValue="">
+                  <option value="">Choisir...</option>
+                  <option>- de 50K€</option>
+                  <option>50K – 150K€</option>
+                  <option>150K – 500K€</option>
+                  <option>+ de 500K€</option>
+                </select>
+                <label>Votre projet et motivation *</label>
+                <textarea name="description" required placeholder="Décrivez votre projet, votre parcours, pourquoi Back to Senegal..." />
+                {submitError && (
+                  <div style={{ color: '#B00020', fontSize: 13, marginTop: 8 }}>{submitError}</div>
+                )}
+                <button className={s.fs} type="submit" disabled={submitting}>
+                  {submitting ? 'Envoi...' : 'Soumettre ma candidature →'}
+                </button>
+                <div className={s.fmi}>Gratuit. Sans engagement. Réponse sous 48h.</div>
+              </>
+            )}
           </form>
           <div className={`${s.fmCt} ${s.fi}`}>
             <a href="https://wa.me/33650329808">📱 WhatsApp</a>
