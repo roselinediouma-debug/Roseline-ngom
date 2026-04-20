@@ -43,7 +43,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-3 gap-4 mb-10">
             {[
               { icon: '💬', label: 'WhatsApp', sub: '+33 6 50 32 98 08', href: 'https://wa.me/33650329808' },
-              { icon: '📅', label: 'RDV Calendly', sub: 'Session gratuite 15 min', href: '/conseil#rdv' },
+              { icon: '📅', label: 'RDV Calendly', sub: 'Session gratuite 15 min', href: 'https://calendly.com/roselinengom' },
               { icon: '📸', label: 'Instagram', sub: '@tripafro', href: 'https://instagram.com/tripafro' },
             ].map(({ icon, label, sub, href }) => (
               <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined}
