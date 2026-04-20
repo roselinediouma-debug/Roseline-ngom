@@ -1,260 +1,217 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SectionHeader from '@/components/SectionHeader'
-import Link from 'next/link'
-
-export const metadata: Metadata = {
-  title: 'À propos | Roseline Ngom',
-  description: "Fondatrice de TripAfro, experte voyage et stratégie digitale pour l'Afrique. 10+ ans d'expérience.",
-  openGraph: {
-    title: 'À propos | Roseline Ngom',
-    description: "Fondatrice de TripAfro, experte voyage et stratégie digitale pour l'Afrique. 10+ ans d'expérience.",
-  },
-}
-
-const VOLETS = [
-  {
-    icon: '🌍',
-    title: 'TripAfro Voyages',
-    description: 'Sejours immersifs et authentiques au Senegal et en Afrique de l\'Ouest.',
-    href: '/voyages',
-  },
-  {
-    icon: '📖',
-    title: 'Guides Signatures',
-    description: 'Guides PDF complets avec itineraires, contacts verifies et adresses testees.',
-    href: '/guides',
-  },
-  {
-    icon: '🎯',
-    title: 'Consulting Strategique',
-    description: 'Accompagnement pour vos projets en Afrique : audit, strategie, execution.',
-    href: '/consulting',
-  },
-  {
-    icon: '💡',
-    title: 'Digital & IA',
-    description: 'Formation et accompagnement en strategie digitale et intelligence artificielle.',
-    href: '/digital-ia',
-  },
-  {
-    icon: '🎁',
-    title: 'Ressources Gratuites',
-    description: 'Guides gratuits, newsletter et contenus exclusifs pour preparer votre voyage.',
-    href: '/ressources',
-  },
-]
-
-const VALEURS = [
-  {
-    title: 'Authenticite',
-    description:
-      'Des experiences reelles, loin des circuits touristiques classiques. Chaque recommandation vient du terrain.',
-  },
-  {
-    title: 'Autonomie',
-    description:
-      'Rendre chaque voyageur autonome et confiant, avec toutes les informations pour voyager seul ou en groupe.',
-  },
-  {
-    title: 'Excellence',
-    description:
-      'La qualite dans chaque detail : guides, voyages, accompagnement. Aucun compromis sur l\'experience.',
-  },
-]
+import s from './page.module.css'
 
 export default function AProposPage() {
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!rootRef.current) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add(s.vis)
+        })
+      },
+      { threshold: 0.08 }
+    )
+    rootRef.current.querySelectorAll('.' + s.fi).forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <>
+    <div ref={rootRef} className={s.page}>
       <Nav />
-      <main>
-        {/* ── Hero ── */}
-        <section className="py-20 px-6 text-center" style={{ backgroundColor: '#560E13' }}>
-          <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
-            style={{
-              fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-              color: '#FEFCF9',
-            }}
-          >
-            Roseline Ngom
-          </h1>
-          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'rgba(254,252,249,0.75)' }}>
-            Fondatrice de TripAfro, experte voyage et strategie digitale pour l&apos;Afrique
-          </p>
-        </section>
 
-        {/* ── Bio ── */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-3xl mx-auto">
-            {/* Initials circle */}
-            <div className="flex justify-center mb-10">
-              <div
-                className="w-24 h-24 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#560E13' }}
-              >
-                <span
-                  className="text-3xl font-bold"
-                  style={{
-                    fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                    color: '#FEFCF9',
-                  }}
-                >
-                  RN
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-5 text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
-              <p>
-                Senegalaise de la diaspora, j&apos;ai grandi entre deux cultures avec une seule obsession :
-                rendre l&apos;Afrique de l&apos;Ouest accessible a ceux qui veulent la decouvrir vraiment,
-                au-dela des cliches.
-              </p>
-              <p>
-                Apres plus de 10 ans d&apos;experience entre la France et le Senegal, j&apos;ai fonde
-                TripAfro pour offrir une alternative aux voyages standardises. Des sejours immersifs,
-                des guides concrets, un accompagnement humain.
-              </p>
-              <p>
-                Aujourd&apos;hui, notre communaute reunit plus de 35 000 membres sur les reseaux sociaux :
-                voyageurs, entrepreneurs, membres de la diaspora et curieux du continent africain.
-              </p>
-              <p>
-                Mon approche est simple : du terrain, de l&apos;authenticite, et zero compromis sur la qualite.
-                Chaque guide, chaque voyage, chaque conseil vient de mon experience directe.
-              </p>
+      {/* HERO EDITORIAL */}
+      <section className={s.hero}>
+        <div className={s.heroLine} />
+        <div className={s.heroCt}>
+          <div>
+            <div className={s.heroLabel}>Qui est Roseline Ngom</div>
+            <h1 className={s.heroH1}>
+              Casamançaise<br />de cœur.<br /><em>Experte de<br />conviction.</em>
+            </h1>
+            <p className={s.intro}>
+              Fondatrice de TripAfro. Consultante en tourisme et développement. Spécialiste de la transformation digitale du tourisme africain. <strong>Entre Paris et Dakar depuis 10 ans.</strong>
+            </p>
+            <div className={s.meta}>
+              <div className={s.metaItem}><div className={s.mN}>10 ans</div><div className={s.mL}>de terrain au Sénégal</div></div>
+              <div className={s.metaItem}><div className={s.mN}>2 000+</div><div className={s.mL}>voyageurs accompagnés</div></div>
+              <div className={s.metaItem}><div className={s.mN}>35K</div><div className={s.mL}>communauté TripAfro</div></div>
             </div>
           </div>
-        </section>
-
-        {/* ── Les 5 volets ── */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader eyebrow="L'ECOSYSTEME" title="Les 5 volets de TripAfro" centered />
-
-            <div className="mt-12 space-y-4">
-              {VOLETS.map((v) => (
-                <Link key={v.title} href={v.href} className="block group">
-                  <div
-                    className="flex items-start gap-4 p-5 rounded-xl transition-all group-hover:scale-[1.01]"
-                    style={{
-                      backgroundColor: '#FEFCF9',
-                      border: '1px solid #e0d8d0',
-                    }}
-                  >
-                    <span className="text-2xl flex-shrink-0 mt-0.5">{v.icon}</span>
-                    <div>
-                      <h3
-                        className="text-lg font-bold mb-1"
-                        style={{
-                          fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                          color: '#0A0A0A',
-                        }}
-                      >
-                        {v.title}
-                      </h3>
-                      <p className="text-sm" style={{ color: 'rgba(10,10,10,0.6)' }}>
-                        {v.description}
-                      </p>
-                    </div>
-                    <span
-                      className="ml-auto flex-shrink-0 mt-1 opacity-30 group-hover:opacity-60 transition-opacity"
-                      style={{ color: '#560E13' }}
-                    >
-                      →
-                    </span>
-                  </div>
-                </Link>
-              ))}
+          <div className={s.heroRight}>
+            <div className={s.heroPhoto}>
+              <Image src="/images/roseline-portrait-1.jpg" alt="Roseline Ngom" width={400} height={500} priority style={{ width: '100%', height: 'auto' }} />
+              <div className={s.caption}>Tourisme · Culture · Développement</div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── Valeurs ── */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-4xl mx-auto">
-            <SectionHeader eyebrow="VALEURS" title="Ce qui nous guide" centered />
+      {/* MON HISTOIRE */}
+      <section className={s.histoire}>
+        <div className={s.histoireIn}>
+          <div className={`${s.label} ${s.fi}`}>Mon histoire</div>
+          <div className={`${s.stitle} ${s.fi}`}>
+            Tout a commencé par un pays<br />qu&apos;on m&apos;a appris à aimer.
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              {VALEURS.map((v) => (
-                <div key={v.title} className="text-center">
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-                    style={{ backgroundColor: 'rgba(86,14,19,0.08)' }}
-                  >
-                    <span
-                      className="text-xl font-bold"
-                      style={{
-                        fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                        color: '#560E13',
-                      }}
-                    >
-                      {v.title.charAt(0)}
-                    </span>
-                  </div>
-                  <h3
-                    className="text-xl font-bold mb-2"
-                    style={{
-                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                      color: '#0A0A0A',
-                    }}
-                  >
-                    {v.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(10,10,10,0.6)' }}>
-                    {v.description}
-                  </p>
-                </div>
-              ))}
+          <div className={`${s.chapter} ${s.fi}`}>
+            <div className={s.chLabel}>Les racines</div>
+            <h2>Je suis née entre deux mondes.</h2>
+            <p>Sénégalaise d&apos;origine, enracinée en Casamance, élevée en France. Comme des millions de personnes de la diaspora, j&apos;ai grandi en écoutant les histoires d&apos;un pays que je portais dans le cœur sans toujours savoir comment y revenir.</p>
+            <p><strong>Le Sénégal n&apos;était pas un lieu de vacances. C&apos;était une identité.</strong> Un goût, une musique, une manière d&apos;accueillir, une chaleur qui ne s&apos;explique pas. Et un jour, j&apos;ai décidé que cette identité méritait d&apos;être partagée. Pas dans un musée. Dans la vraie vie.</p>
+          </div>
+
+          <div className={`${s.histoirePhoto} ${s.fi}`}>
+            <Image src="/images/senegal/cover.jpg" alt="Sénégal" width={600} height={400} style={{ width: '100%', height: 'clamp(200px, 22vw, 300px)', objectFit: 'cover' }} />
+            <Image src="/images/senegal/saint-louis.jpg" alt="Saint-Louis" width={600} height={400} style={{ width: '100%', height: 'clamp(200px, 22vw, 300px)', objectFit: 'cover' }} />
+          </div>
+
+          <div className={`${s.chapter} ${s.fi}`}>
+            <div className={s.chLabel}>Le déclic</div>
+            <h2>TripAfro est né d&apos;une frustration.</h2>
+            <p>Les agences de voyage vendaient un Sénégal de carte postale. Des plages, des hôtels all-inclusive, des excursions minutées. Rien de ce que je connaissais. Rien de ce que mes grands-parents m&apos;avaient transmis.</p>
+            <p>J&apos;ai créé TripAfro pour offrir <strong>l&apos;autre Sénégal</strong>. Celui des rencontres, des saveurs, des silences. Celui où on navigue en pirogue dans les mangroves au lever du soleil. Celui où on mange thieboudienne chez une famille, pas dans un restaurant pour touristes.</p>
+            <p>En 10 ans, plus de 2 000 voyageurs m&apos;ont fait confiance. Des familles diaspora. Des couples mixtes. Des aventuriers solo. Des groupes d&apos;amis. <strong>Chacun est reparti transformé.</strong></p>
+          </div>
+
+          <div className={`${s.pullQuote} ${s.fi}`}>« Le Sénégal m&apos;a tout appris. Mon travail, c&apos;est de vous transmettre ce qu&apos;il m&apos;a donné. »</div>
+
+          <div className={`${s.chapter} ${s.fi}`}>
+            <div className={s.chLabel}>L&apos;évolution</div>
+            <h2>Du voyage à l&apos;écosystème.</h2>
+            <p>Au fil des années, j&apos;ai réalisé que le tourisme sénégalais avait besoin de plus que des voyages. Il avait besoin de <strong>stratégie, de digital, d&apos;accompagnement</strong>. Des hôtels sans site web. Des agences sans stratégie. Des porteurs de projets diaspora sans méthode.</p>
+            <p>J&apos;ai élargi mon expertise. Master en Finance à l&apos;INSEEC. Formation à l&apos;IA appliquée. Maîtrise des outils d&apos;automation (N8N, Supabase, Claude API). Aujourd&apos;hui, je combine <strong>la connaissance du terrain et la puissance du digital</strong> pour accompagner tout l&apos;écosystème touristique africain.</p>
+          </div>
+
+          <div className={`${s.histoirePhoto} ${s.single} ${s.fi}`}>
+            <Image src="/images/roseline-portrait-2.jpg" alt="Roseline au Sénégal" width={1000} height={500} style={{ width: '100%', height: 'clamp(250px, 28vw, 380px)', objectFit: 'cover' }} />
+          </div>
+
+          <div className={`${s.chapter} ${s.fi}`}>
+            <div className={s.chLabel}>Aujourd&apos;hui</div>
+            <h2>4 missions. 1 vision.</h2>
+            <p>Tout ce que je fais converge vers une seule idée : <strong>révéler le potentiel du Sénégal.</strong> À travers les voyages immersifs TripAfro. À travers le consulting stratégique pour les acteurs du tourisme et de la culture. À travers la transformation digitale. À travers les formations.</p>
+            <p>Mon rôle n&apos;est pas de vendre un pays. C&apos;est de le construire. Brique par brique, voyage par voyage, projet par projet.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* TIMELINE */}
+      <section className={s.parcours}>
+        <div className={s.parcoursIn}>
+          <div className={`${s.label} ${s.fi}`}>Parcours</div>
+          <div className={`${s.stitle} ${s.fi}`}>Les étapes clés.</div>
+          <div className={`${s.tl} ${s.fi}`}>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2015</div><h3>Premiers pas dans le tourisme sénégalais</h3><p>Premières excursions organisées pour la diaspora. Découverte du potentiel et des lacunes du secteur.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2017</div><h3>Création de TripAfro</h3><p>Lancement officiel de la marque. Premiers groupes de voyageurs. Construction de la communauté Instagram.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2019</div><h3>35 000 abonnés</h3><p>TripAfro devient une référence pour la diaspora. Expansion des offres : Retour aux Sources, Voyage Signature.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2021</div><h3>Master Finance INSEEC</h3><p>Consolidation des compétences en stratégie, finance, business plan. Pont entre le terrain et la rigueur académique.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2023</div><h3>Lancement du consulting</h3><p>Premiers audits stratégiques pour des hôtels et agences. Accompagnement de porteurs de projets diaspora.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2025</div><h3>Pivot digital &amp; IA</h3><p>Formation à l&apos;IA, maîtrise de N8N, Supabase, Claude API. Lancement des offres Digital &amp; IA pour le tourisme.</p></div>
+            <div className={s.tlItem}><div className={s.dot} /><div className={s.tlYear}>2026</div><h3>L&apos;écosystème complet</h3><p>Voyages + Consulting + Digital &amp; IA + Guides + Back to Senegal. Une seule mission : révéler le Sénégal.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* EXPERTISE */}
+      <section className={s.expertise}>
+        <div className={s.expertiseIn}>
+          <div className={`${s.label} ${s.fi}`}>Ce que je fais</div>
+          <div className={`${s.stitle} ${s.fi}`}>4 verticales. 1 écosystème.</div>
+          <div className={s.expGrid}>
+            <div className={`${s.exp} ${s.fi}`}>
+              <div className={s.eIco}>✈️</div>
+              <h3>Voyages immersifs</h3>
+              <p>Séjours authentiques au Sénégal. Retour aux Sources (14j), Voyage Signature (sur mesure), Back to Senegal (accélérateur).</p>
+              <a href="/voyages">Découvrir les voyages →</a>
+            </div>
+            <div className={`${s.exp} ${s.fi} ${s.fiD1}`}>
+              <div className={s.eIco}>📋</div>
+              <h3>Consulting stratégique</h3>
+              <p>Audit, accompagnement et conseil pour les acteurs du tourisme, de la culture et les institutions au Sénégal.</p>
+              <a href="/consulting">En savoir plus →</a>
+            </div>
+            <div className={`${s.exp} ${s.fi} ${s.fiD2}`}>
+              <div className={s.eIco}>🤖</div>
+              <h3>Digital &amp; IA</h3>
+              <p>Présence digitale, transformation, IA appliquée et formations pour hôtels, agences et opérateurs culturels.</p>
+              <a href="/digital-ia">Découvrir les offres →</a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── CTA ── */}
-        <section className="py-20 px-6 text-center" style={{ backgroundColor: '#560E13' }}>
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-6"
-            style={{
-              fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-              color: '#FEFCF9',
-            }}
-          >
-            Travaillons ensemble
-          </h2>
-          <p className="text-base mb-10 max-w-xl mx-auto" style={{ color: 'rgba(254,252,249,0.7)' }}>
-            Que vous prepariez un voyage, lanciez un projet ou cherchiez un partenaire strategique,
-            je suis la pour vous accompagner.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/consulting"
-              className="inline-block px-8 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-            >
-              Consulting
-            </Link>
-            <Link
-              href="/voyages"
-              className="inline-block px-8 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
-              style={{ backgroundColor: 'transparent', color: '#FEFCF9', border: '1.5px solid rgba(254,252,249,0.4)' }}
-            >
-              Voyages
-            </Link>
-            <a
-              href="https://calendly.com/roselinengom/decouverte"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
-              style={{ backgroundColor: 'transparent', color: '#F6C961', border: '1.5px solid rgba(246,201,97,0.4)' }}
-            >
-              Reserver un appel
-            </a>
+      {/* VALEURS */}
+      <section className={s.valeurs}>
+        <div className={s.valeursIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#F6C961' }}>Ce en quoi je crois</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>4 convictions qui guident tout ce que je fais.</div>
+          <div className={s.valGrid}>
+            <div className={`${s.val} ${s.fi}`}>
+              <div className={s.vIco}>🌱</div>
+              <div><h3>Le terrain d&apos;abord</h3><p>Pas de théorie sans vécu. Chaque recommandation, chaque itinéraire, chaque stratégie est née sur le terrain. Pas dans un bureau.</p></div>
+            </div>
+            <div className={`${s.val} ${s.fi} ${s.fiD1}`}>
+              <div className={s.vIco}>🤝</div>
+              <div><h3>La confiance se mérite</h3><p>Je ne promets que ce que je peux tenir. Chaque client, chaque voyageur, chaque institution reçoit le même niveau d&apos;engagement.</p></div>
+            </div>
+            <div className={`${s.val} ${s.fi} ${s.fiD2}`}>
+              <div className={s.vIco}>🌐</div>
+              <div><h3>L&apos;Afrique ne se visite pas, elle se vit</h3><p>Le tourisme n&apos;est pas une industrie extractive. C&apos;est un outil de développement, de fierté, de transmission. Je le pratique comme tel.</p></div>
+            </div>
+            <div className={`${s.val} ${s.fi} ${s.fiD3}`}>
+              <div className={s.vIco}>🚀</div>
+              <div><h3>Le digital au service de l&apos;humain</h3><p>L&apos;IA et l&apos;automation ne remplacent pas la teranga. Ils libèrent du temps pour ce qui compte : l&apos;accueil, la relation, l&apos;expérience.</p></div>
+            </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* PHOTOS PERSO */}
+      <section className={s.photosPerso}>
+        <div className={s.photosIn}>
+          <div className={`${s.label} ${s.fi}`}>En images</div>
+          <div className={`${s.stitle} ${s.fi}`}>Quelques moments.</div>
+          <div className={`${s.photoMosaic} ${s.fi}`}>
+            <div><Image src="/images/roseline-portrait-3.jpg" alt="Roseline — portrait" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} /></div>
+            <div><Image src="/images/senegal/cover.jpg" alt="Sénégal" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
+            <div><Image src="/images/senegal/saint-louis.jpg" alt="Saint-Louis" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
+            <div><Image src="/images/roseline-portrait-2.jpg" alt="Roseline" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
+            <div><Image src="/images/roseline.jpg" alt="Roseline" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO */}
+      <section className={s.video}>
+        <div className={`${s.videoIn} ${s.fi}`}>
+          <div className={s.label}>En vidéo</div>
+          <div className={s.stitle}>Le Monument de la Renaissance, vu par Roseline</div>
+          <div className={s.vw}>
+            <iframe src="https://www.youtube.com/embed/1mQm-hhOaws" title="Monument Renaissance" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowFullScreen />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className={s.cta}>
+        <h2 className={s.fi}>Envie de travailler ensemble ?<br /><em>Parlons-en.</em></h2>
+        <p className={s.fi}>Que vous souhaitiez voyager, entreprendre ou transformer votre activité digitale, je suis là pour vous accompagner.</p>
+        <div className={`${s.ctaBtns} ${s.fi}`}>
+          <a href="https://calendly.com/roselinengom/decouverte-15min" className={s.bg}>Réserver un échange gratuit</a>
+          <a href="https://wa.me/33650329808" className={s.bo}>Discuter sur WhatsApp →</a>
+        </div>
+      </section>
+
       <Footer />
-    </>
+    </div>
   )
 }

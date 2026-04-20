@@ -1,458 +1,383 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SalesPageHero from '@/components/SalesPageHero'
-import SectionHeader from '@/components/SectionHeader'
-import FeatureGrid from '@/components/FeatureGrid'
-import ProcessSteps from '@/components/ProcessSteps'
-import FAQAccordion from '@/components/FAQAccordion'
-
-const pourQuiFeatures = [
-  {
-    icon: '1',
-    title: 'Couples en quete d\'exception',
-    description: 'Voyage de noces, anniversaire, escapade romantique. Vous voulez vivre le Senegal a deux, dans l\'intimite et le luxe.',
-  },
-  {
-    icon: '2',
-    title: 'Familles avec des besoins specifiques',
-    description: 'Enfants en bas age, adolescents difficiles a convaincre, grands-parents a menager. Chaque detail est pense pour votre configuration.',
-  },
-  {
-    icon: '3',
-    title: 'Voyageurs solo en quete de sens',
-    description: 'Vous voulez vous retrouver, ecrire, mediter, photographier. Un voyage concu autour de votre rythme et de vos envies profondes.',
-  },
-  {
-    icon: '4',
-    title: 'Groupes d\'amis',
-    description: 'Un anniversaire, un EVJF, une reunion entre amis d\'enfance. Vous voulez vivre quelque chose d\'unique ensemble.',
-  },
-  {
-    icon: '5',
-    title: 'Professionnels en reperage',
-    description: 'Vous explorez le Senegal pour un projet, un investissement, une installation. Vous avez besoin d\'un guide qui connait le terrain.',
-  },
-]
-
-const processSteps = [
-  {
-    number: 1,
-    title: 'Nous vous ecoutons',
-    description: 'Un echange visio de 30 minutes, gratuit et sans engagement. Vous nous parlez de vos envies, vos contraintes, votre budget.',
-  },
-  {
-    number: 2,
-    title: 'Nous vous proposons',
-    description: 'En 5 jours ouvrables, vous recevez une proposition PDF detaillee : itineraire, hebergements, activites, tarif.',
-  },
-  {
-    number: 3,
-    title: 'Nous ajustons',
-    description: 'Un aller-retour maximum. On affine ensemble jusqu\'a ce que le programme soit exactement ce que vous imaginiez.',
-  },
-  {
-    number: 4,
-    title: 'Vous confirmez',
-    description: 'Acompte de 30%, signature du devis. Votre voyage est reserve. Le solde est du 30 jours avant le depart.',
-  },
-  {
-    number: 5,
-    title: 'Vous voyagez',
-    description: 'Support 24/7 pendant tout le voyage. Roseline est joignable sur WhatsApp a tout moment.',
-  },
-]
-
-const exempleItineraires = [
-  {
-    title: 'Le Senegal essentiel',
-    duree: '7 jours',
-    prix: 'A partir de 2 500 EUR/pers.',
-    description: 'Dakar, Goree, Saly, Lac Rose. L\'essentiel du Senegal pour un premier voyage ou un sejour court.',
-  },
-  {
-    title: 'Immersion profonde',
-    duree: '10 jours',
-    prix: 'A partir de 3 800 EUR/pers.',
-    description: 'Dakar, Sine Saloum, Casamance. Pour ceux qui veulent aller au-dela des sentiers battus et vivre l\'authenticite.',
-  },
-  {
-    title: 'Le grand tour',
-    duree: '14 jours',
-    prix: 'A partir de 5 200 EUR/pers.',
-    description: 'Du nord au sud, de Saint-Louis a la Casamance. Le voyage le plus complet, pour ne rien manquer.',
-  },
-  {
-    title: 'Voyage de noces exclusif',
-    duree: '10 jours',
-    prix: 'Sur devis',
-    description: 'Lodges de luxe, diner prive sur la plage, excursions en pirogue, spa et detente. Le Senegal en amoureux.',
-  },
-]
-
-const faqItems = [
-  {
-    q: 'Combien coute un voyage sur mesure ?',
-    a: 'Les tarifs varient selon la duree, le nombre de voyageurs, le niveau d\'hebergement et les activites choisies. Comptez a partir de 2 500 EUR par personne pour 7 jours. La consultation initiale est gratuite.',
-  },
-  {
-    q: 'Combien de temps a l\'avance faut-il reserver ?',
-    a: 'Idealement 2 a 3 mois avant votre depart. Pour les periodes de haute saison (decembre-janvier, juillet-aout), 4 mois est recommande.',
-  },
-  {
-    q: 'Peut-on modifier l\'itineraire en cours de voyage ?',
-    a: 'Oui, dans la limite du possible. C\'est l\'avantage du sur mesure : nous nous adaptons a vos envies sur place. Roseline est joignable 24/7.',
-  },
-  {
-    q: 'Les vols sont-ils inclus ?',
-    a: 'Non, les vols internationaux ne sont pas inclus. Cela vous permet de choisir votre compagnie et vos dates. Nous vous conseillons sur les meilleurs vols.',
-  },
-  {
-    q: 'Quel est le processus de paiement ?',
-    a: '30% a la reservation, le solde 30 jours avant le depart. Paiement par virement bancaire ou PayPal.',
-  },
-  {
-    q: 'Que se passe-t-il si je dois annuler ?',
-    a: 'Annulation gratuite jusqu\'a 60 jours avant le depart. Entre 30 et 60 jours : 50% de l\'acompte retenu. Moins de 30 jours : acompte non remboursable. Nous recommandons une assurance annulation.',
-  },
-]
-
-const BUDGET_OPTIONS = ['2 500 EUR', '3 500 EUR', '5 000 EUR', '8 000 EUR+']
-const TYPE_OPTIONS = ['Emotionnel', 'Aventure', 'Farniente', 'Culturel', 'Mix']
+import s from './page.module.css'
 
 export default function VoyageSignaturePage() {
-  const [formData, setFormData] = useState({
-    nom: '',
-    email: '',
-    telephone: '',
-    nbAdultes: '',
-    nbEnfants: '',
-    dates: '',
-    duree: '',
-    budget: '',
-    types: [] as string[],
-    contraintes: '',
-    message: '',
-  })
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [floatShow, setFloatShow] = useState(false)
+  const rootRef = useRef<HTMLDivElement | null>(null)
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  useEffect(() => {
+    const onScroll = () => setFloatShow(window.scrollY > 600)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  function handleTypeToggle(type: string) {
-    setFormData((prev) => ({
-      ...prev,
-      types: prev.types.includes(type)
-        ? prev.types.filter((t) => t !== type)
-        : [...prev.types, type],
-    }))
-  }
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    setStatus('loading')
-    setErrorMessage('')
-
-    try {
-      const res = await fetch('/api/devis', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nom: formData.nom,
-          email: formData.email,
-          telephone: formData.telephone,
-          typeVoyage: 'voyage-signature',
-          nbVoyageurs: String(Number(formData.nbAdultes || 0) + Number(formData.nbEnfants || 0)),
-          dates: formData.dates,
-          budget: formData.budget,
-          message: `Duree: ${formData.duree}\nTypes: ${formData.types.join(', ')}\nAdultes: ${formData.nbAdultes}\nEnfants: ${formData.nbEnfants}\nContraintes: ${formData.contraintes}\n\n${formData.message}`,
-        }),
-      })
-
-      if (!res.ok) throw new Error('Erreur serveur')
-      setStatus('success')
-    } catch {
-      setStatus('error')
-      setErrorMessage('Une erreur est survenue. Contactez-nous sur WhatsApp.')
-    }
-  }
-
-  const inputStyle = {
-    backgroundColor: '#FEFCF9',
-    border: '1px solid rgba(86,14,19,0.15)',
-    color: '#0A0A0A',
-  }
+  useEffect(() => {
+    if (!rootRef.current) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add(s.vis)
+        })
+      },
+      { threshold: 0.08 }
+    )
+    rootRef.current.querySelectorAll('.' + s.fi).forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
 
   return (
-    <>
+    <div ref={rootRef} className={s.page}>
       <Nav />
-      <main>
-        <SalesPageHero
-          eyebrow="SUR MESURE"
-          title="Voyage Signature"
-          subtitle="Votre Senegal. Votre rythme. Votre histoire."
-          ctaPrimary={{ label: 'Demander mon devis', href: '#devis' }}
-        />
 
-        {/* Pour Qui */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="POUR QUI"
-              title="Un voyage cree pour vous, pas pour tout le monde"
-              subtitle="Le Voyage Signature s'adresse a ceux qui refusent le standard."
-              centered
-            />
-            <div className="mt-14">
-              <FeatureGrid features={pourQuiFeatures} />
+      {/* HERO */}
+      <section className={s.hero}>
+        <div className={s.heroBg}>
+          <Image
+            src="/images/senegal/hero.jpg"
+            alt="Voyage Signature — Sénégal sur mesure"
+            fill
+            priority
+            sizes="100vw"
+          />
+        </div>
+        <div className={s.heroOv} />
+        <div className={s.heroWave}>
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0,30 C360,55 720,5 1080,35 C1260,48 1380,22 1440,30 L1440,60 L0,60Z" opacity="0.5" />
+            <path d="M0,38 C480,55 960,15 1440,42 L1440,60 L0,60Z" />
+          </svg>
+        </div>
+        <div className={s.heroCt}>
+          <div>
+            <div className={s.pill}>
+              <span>Sur mesure</span>
+              <div className={s.sep} />
+              <span>5 à 14 jours</span>
+              <div className={s.sep} />
+              <span>Toute l&apos;année</span>
             </div>
-          </div>
-        </section>
-
-        {/* Notre Methode */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="NOTRE METHODE"
-              title="Du premier echange au dernier jour de voyage"
-              subtitle="Un processus simple, clair, humain. Pas de formulaire a rallonge. Pas de robot."
-              centered
-            />
-            <div className="mt-14">
-              <ProcessSteps steps={processSteps} />
-            </div>
-          </div>
-        </section>
-
-        {/* Exemples d'Itineraires */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="EXEMPLES"
-              title="Des itineraires pour vous inspirer"
-              subtitle="Chaque voyage est unique. Voici quelques bases de depart."
-              centered
-            />
-            <div className="mt-14 grid md:grid-cols-2 gap-6">
-              {exempleItineraires.map((ex, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl p-8 flex flex-col"
-                  style={{
-                    backgroundColor: '#F8F5F0',
-                    border: '1px solid rgba(86,14,19,0.08)',
-                  }}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3
-                      className="text-xl font-bold"
-                      style={{
-                        fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                        color: '#560E13',
-                      }}
-                    >
-                      {ex.title}
-                    </h3>
-                    <span
-                      className="px-3 py-1 rounded-full text-xs font-semibold"
-                      style={{ backgroundColor: 'rgba(246,201,97,0.2)', color: '#560E13' }}
-                    >
-                      {ex.duree}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-relaxed flex-1 mb-4" style={{ color: 'rgba(10,10,10,0.65)' }}>
-                    {ex.description}
-                  </p>
-                  <p className="font-bold text-base" style={{ color: '#560E13' }}>
-                    {ex.prix}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Formulaire Devis */}
-        <section id="devis" className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
-          <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              eyebrow="VOTRE DEVIS"
-              title="Racontez-nous votre voyage ideal"
-              subtitle="Reponse personnalisee sous 48h. Consultation gratuite, sans engagement."
-              centered
-            />
-
-            {status === 'success' ? (
-              <div
-                className="mt-10 rounded-xl p-8 text-center"
-                style={{ backgroundColor: '#FEFCF9', border: '1px solid rgba(86,14,19,0.08)' }}
-              >
-                <p
-                  className="text-2xl font-bold mb-2"
-                  style={{
-                    fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                    color: '#560E13',
-                  }}
-                >
-                  Demande envoyee !
-                </p>
-                <p className="mb-6" style={{ color: 'rgba(10,10,10,0.6)' }}>
-                  Roseline vous repond sous 48h avec une proposition personnalisee.
-                </p>
-                <a
-                  href="https://wa.me/33650329808"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-6 py-3 rounded-lg font-semibold text-sm"
-                  style={{ backgroundColor: '#25D366', color: 'white' }}
-                >
-                  Contacter Roseline sur WhatsApp
-                </a>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="mt-10 rounded-xl p-6 md:p-8 space-y-5"
-                style={{ backgroundColor: '#FEFCF9', border: '1px solid rgba(86,14,19,0.08)' }}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Nom complet *</label>
-                    <input type="text" name="nom" value={formData.nom} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Email *</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Telephone / WhatsApp</label>
-                  <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} placeholder="+33 6 ..." className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Nombre d'adultes *</label>
-                    <input type="number" name="nbAdultes" min="1" max="20" value={formData.nbAdultes} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Nombre d'enfants</label>
-                    <input type="number" name="nbEnfants" min="0" max="20" value={formData.nbEnfants} onChange={handleChange} className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Dates souhaitees</label>
-                    <input type="text" name="dates" value={formData.dates} onChange={handleChange} placeholder="Ex : mars 2027, flexible" className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Duree souhaitee</label>
-                    <input type="text" name="duree" value={formData.duree} onChange={handleChange} placeholder="Ex : 7 jours, 10 jours" className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Budget indicatif *</label>
-                  <select name="budget" value={formData.budget} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg text-sm outline-none cursor-pointer" style={inputStyle}>
-                    <option value="">Selectionnez</option>
-                    {BUDGET_OPTIONS.map((b) => (
-                      <option key={b} value={b}>{b}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Type de voyage souhaite</label>
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {TYPE_OPTIONS.map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => handleTypeToggle(type)}
-                        className="px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer"
-                        style={{
-                          backgroundColor: formData.types.includes(type) ? '#560E13' : '#F8F5F0',
-                          color: formData.types.includes(type) ? '#FEFCF9' : '#560E13',
-                          border: '1px solid rgba(86,14,19,0.15)',
-                        }}
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Contraintes particulieres</label>
-                  <input type="text" name="contraintes" value={formData.contraintes} onChange={handleChange} placeholder="Allergies, mobilite reduite, regime alimentaire..." className="w-full px-4 py-3 rounded-lg text-sm outline-none" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1.5" style={{ color: '#0A0A0A' }}>Message libre</label>
-                  <textarea name="message" value={formData.message} onChange={handleChange} rows={4} placeholder="Decrivez votre voyage ideal, vos envies, vos questions..." className="w-full px-4 py-3 rounded-lg text-sm outline-none resize-y" style={inputStyle} />
-                </div>
-
-                {status === 'error' && (
-                  <p className="text-sm" style={{ color: '#c0392b' }}>{errorMessage}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="w-full px-6 py-3.5 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-90 disabled:opacity-60 cursor-pointer"
-                  style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-                >
-                  {status === 'loading' ? 'Envoi en cours...' : 'Envoyer ma demande de devis'}
-                </button>
-              </form>
-            )}
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#FEFCF9' }}>
-          <div className="max-w-4xl mx-auto">
-            <SectionHeader eyebrow="FAQ" title="Questions frequentes" centered />
-            <div className="mt-14">
-              <FAQAccordion items={faqItems} />
-            </div>
-          </div>
-        </section>
-
-        {/* CTA WhatsApp */}
-        <section className="py-20 px-6" style={{ backgroundColor: '#560E13' }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-6"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: '#FEFCF9',
-              }}
-            >
-              Vous preferez en parler de vive voix ?
-            </h2>
-            <p className="text-lg mb-10" style={{ color: 'rgba(254,252,249,0.75)' }}>
-              Roseline repond personnellement a chaque message. Pas de chatbot. Pas d'attente. Juste une conversation humaine.
+            <h1 className={s.heroH1}>
+              Voyage<br /><em>Signature</em>
+            </h1>
+            <div className={s.tagline}>L&apos;aventure qui vous ressemble.</div>
+            <p className={s.sub}>
+              Pas de circuit préfabriqué. Pas de car de touristes.{' '}
+              <strong>Votre Sénégal, conçu autour de vos envies, votre rythme, votre histoire.</strong> Un itinéraire unique, créé avec vous, du premier appel jusqu&apos;au retour.
             </p>
-            <a
-              href="https://wa.me/33650329808?text=Bonjour%20Roseline%2C%20je%20souhaite%20discuter%20d%27un%20voyage%20sur%20mesure."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 rounded-lg font-semibold text-base transition-opacity duration-200 hover:opacity-90"
-              style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-            >
-              Ecrire a Roseline sur WhatsApp
-            </a>
+            <div className={s.btns}>
+              <a href="#devis" className={s.bg}>Demander mon devis gratuit →</a>
+              <a href="#comment" className={s.bo}>Comment ça marche</a>
+            </div>
+            <div className={s.proof}>
+              <div className={s.pi}><div className={s.pn}>100%</div><div className={s.pl}>sur mesure</div></div>
+              <div className={s.pi}><div className={s.pn}>48h</div><div className={s.pl}>pour votre devis</div></div>
+              <div className={s.pi}><div className={s.pn}>2 000+</div><div className={s.pl}>voyageurs heureux</div></div>
+            </div>
           </div>
-        </section>
-      </main>
+          <div className={s.heroCard}>
+            <h3>Votre voyage en bref</h3>
+            <div className={s.hcRow}>
+              <div className={s.hcIco}>✨</div>
+              <div><div className={s.hcLabel}>Format</div><div className={s.hcVal}><em>100% sur mesure</em></div></div>
+            </div>
+            <div className={s.hcRow}>
+              <div className={s.hcIco}>📅</div>
+              <div><div className={s.hcLabel}>Durée</div><div className={s.hcVal}>5 à 14 jours</div></div>
+            </div>
+            <div className={s.hcRow}>
+              <div className={s.hcIco}>☀️</div>
+              <div><div className={s.hcLabel}>Période</div><div className={s.hcVal}><em>Toute l&apos;année</em></div></div>
+            </div>
+            <div className={s.hcRow}>
+              <div className={s.hcIco}>💰</div>
+              <div><div className={s.hcLabel}>Tarif</div><div className={s.hcVal}>Sur devis personnalisé</div></div>
+            </div>
+            <div className={s.hcRow}>
+              <div className={s.hcIco}>🧑‍💼</div>
+              <div><div className={s.hcLabel}>Création</div><div className={s.hcVal}><em>Roseline</em> · en personne</div></div>
+            </div>
+            <a href="#devis" className={s.hcCta}>Devis gratuit en 48h →</a>
+          </div>
+        </div>
+      </section>
+
+      {/* PROMESSE */}
+      <section className={s.promesse}>
+        <div className={`${s.promesseIn} ${s.fi}`}>
+          <div className={s.label}>La promesse</div>
+          <div className={s.stitle}>
+            Un voyage qui n&apos;existe nulle part.<br />Parce qu&apos;il est conçu pour vous.
+          </div>
+          <div className={s.tx}>
+            <p>
+              Les circuits organisés montrent tous la même chose. Les mêmes hôtels, les mêmes arrêts, les mêmes photos.{' '}
+              <strong>Voyage Signature, c&apos;est l&apos;inverse.</strong>
+            </p>
+            <p>
+              On commence par un appel. Vous me racontez ce que vous cherchez. L&apos;évasion ? L&apos;aventure ? Le repos ? La découverte culturelle ? Le romantisme ? L&apos;exploration en famille ? Et je construis un itinéraire qui ne ressemble à aucun autre. Parce qu&apos;il est le vôtre.
+            </p>
+            <p>
+              Chaque hébergement est choisi pour vous. Chaque expérience est calée sur votre rythme. Chaque rencontre est préparée. <strong>Vous n&apos;avez qu&apos;à vivre.</strong>
+            </p>
+          </div>
+          <div className={s.promesseQuote}>« Ce voyage n&apos;était pas un séjour. C&apos;était un film dont nous étions les héros. Roseline avait écrit le scénario parfait. »</div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section className={s.process} id="comment">
+        <div className={s.processIn}>
+          <div className={`${s.label} ${s.fi}`}>Comment ça marche</div>
+          <div className={`${s.stitle} ${s.fi}`}>
+            Du premier appel au dernier coucher de soleil.<br />En 4 étapes simples.
+          </div>
+          <div className={s.steps}>
+            <div className={`${s.step} ${s.fi}`}>
+              <div className={s.sNum}>01</div>
+              <div className={s.sIco}>📞</div>
+              <h3>On en parle</h3>
+              <p>Appel de 30 min gratuit. Vos envies, votre budget, vos dates, vos rêves. Je prends tout en note.</p>
+              <div className={s.sDur}>Gratuit · 30 min</div>
+            </div>
+            <div className={`${s.step} ${s.fi} ${s.fiD1}`}>
+              <div className={s.sNum}>02</div>
+              <div className={s.sIco}>📋</div>
+              <h3>Je crée votre voyage</h3>
+              <p>En 48h, vous recevez un itinéraire détaillé avec hébergements, expériences, tarifs. Entièrement personnalisé.</p>
+              <div className={s.sDur}>48h · Devis PDF</div>
+            </div>
+            <div className={`${s.step} ${s.fi} ${s.fiD2}`}>
+              <div className={s.sNum}>03</div>
+              <div className={s.sIco}>✅</div>
+              <h3>On ajuste ensemble</h3>
+              <p>Trop long ? Trop court ? Envie d&apos;ajouter le désert ? On ajuste jusqu&apos;à ce que ce soit parfait. Puis acompte 30%.</p>
+              <div className={s.sDur}>Illimité</div>
+            </div>
+            <div className={`${s.step} ${s.fi} ${s.fiD3}`}>
+              <div className={s.sNum}>04</div>
+              <div className={s.sIco}>✈️</div>
+              <h3>Vous vivez le voyage</h3>
+              <p>Accueil aéroport. Guide dédié. Support WhatsApp 24/7. Surprises préparées. Vous n&apos;avez qu&apos;à vivre.</p>
+              <div className={s.sDur}>5 à 14 jours</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TYPES */}
+      <section className={s.types}>
+        <div className={s.typesIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#F6C961' }}>Pour chaque envie</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>Quel voyageur êtes-vous ?</div>
+          <div className={s.typeGrid}>
+            <div className={`${s.type} ${s.fi}`}>
+              <div className={s.tIco}>👪</div>
+              <h3>En famille</h3>
+              <p>Avec vos enfants, vos parents. Des activités adaptées à tous les âges. Des moments de partage inoubliables.</p>
+              <div className={s.tFrom}>Dès 2 500€ / pers.</div>
+            </div>
+            <div className={`${s.type} ${s.fi} ${s.fiD1}`}>
+              <div className={s.tIco}>💑</div>
+              <h3>En couple</h3>
+              <p>Couchers de soleil, dîners pieds dans le sable, lodges intimistes. Le Sénégal romantique.</p>
+              <div className={s.tFrom}>Dès 3 000€ / pers.</div>
+            </div>
+            <div className={`${s.type} ${s.fi} ${s.fiD2}`}>
+              <div className={s.tIco}>🧑‍🤝‍🧑</div>
+              <h3>Entre amis</h3>
+              <p>Aventure, rires, découvertes. Un voyage qu&apos;on racontera pendant des années.</p>
+              <div className={s.tFrom}>Dès 2 200€ / pers.</div>
+            </div>
+            <div className={`${s.type} ${s.fi} ${s.fiD3}`}>
+              <div className={s.tIco}>🧘</div>
+              <h3>En solo</h3>
+              <p>Se retrouver, se déconnecter, explorer à son rythme. Le Sénégal rien que pour vous.</p>
+              <div className={s.tFrom}>Dès 2 800€ / pers.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ROSELINE */}
+      <section className={s.roseline}>
+        <div className={`${s.roselineIn} ${s.fi}`}>
+          <div className={s.roselineImg}>
+            <Image src="/images/roseline.jpg" alt="Roseline Ngom" width={400} height={500} style={{ width: '100%', height: 'auto' }} />
+          </div>
+          <div className={s.roselineTxt}>
+            <div className={s.label}>Votre créatrice de voyage</div>
+            <div className={s.stitle} style={{ fontSize: 'clamp(22px, 3vw, 28px)' }}>
+              Chaque Voyage Signature est créé<br />par Roseline. Personnellement.
+            </div>
+            <p>Pas un algorithme. Pas un formulaire. Une personne qui connaît chaque recoin du Sénégal, chaque hébergement, chaque piroguier, chaque restaurant caché.</p>
+            <p>Je ne délègue pas la création de votre voyage. Je le construis moi-même, parce que je veux que chaque détail soit à la hauteur de ce que le Sénégal peut offrir.</p>
+            <div className={s.sig}>« Le Sénégal a tout. Il est temps de le révéler. »</div>
+          </div>
+        </div>
+      </section>
+
+      {/* TEMOIGNAGES */}
+      <section className={s.temos}>
+        <div className={s.temosIn}>
+          <div className={`${s.label} ${s.fi}`}>Ils ont vécu un Voyage Signature</div>
+          <div className={`${s.stitle} ${s.fi}`}>Ce qu&apos;ils en disent</div>
+          <div className={s.temoGrid}>
+            <div className={`${s.temo} ${s.fi}`}>
+              <div className={s.stars}>★★★★★</div>
+              <q>Roseline a compris exactement ce qu&apos;on cherchait. Un mélange d&apos;aventure et de repos. Chaque jour était une surprise parfaitement calibrée.</q>
+              <div className={s.wh}>Karim &amp; Aude</div>
+              <div className={s.temoFr}>Couple · 10 jours · Février 2025</div>
+            </div>
+            <div className={`${s.temo} ${s.fi} ${s.fiD1}`}>
+              <div className={s.stars}>★★★★★</div>
+              <q>On a voyagé à 8, avec des enfants de 3 à 14 ans. Tout était pensé. Les transferts, les activités, les temps de repos. Zéro stress.</q>
+              <div className={s.wh}>Famille Diallo</div>
+              <div className={s.temoFr}>Famille · 12 jours · Décembre 2024</div>
+            </div>
+            <div className={`${s.temo} ${s.fi} ${s.fiD2}`}>
+              <div className={s.stars}>★★★★★</div>
+              <q>Je suis partie seule pour me retrouver. Roseline m&apos;a créé un parcours entre méditation, nature et rencontres locales. Le voyage de ma vie.</q>
+              <div className={s.wh}>Claire M.</div>
+              <div className={s.temoFr}>Solo · 7 jours · Mars 2025</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FORMULAIRE */}
+      <section className={s.form} id="devis">
+        <div className={s.fmIn}>
+          <div className={`${s.fmL} ${s.fi}`}>
+            <div className={s.label}>Votre devis gratuit</div>
+            <h2>Créons ensemble<br />le voyage qui<br /><em>vous ressemble</em></h2>
+            <p>
+              Remplissez ce formulaire et je vous envoie un{' '}
+              <strong>itinéraire détaillé et personnalisé sous 48h</strong>. Gratuit, sans engagement.
+            </p>
+            <p>Chaque détail compte : vos envies, votre rythme, vos contraintes, vos rêves. Plus vous me racontez, plus le voyage sera parfait.</p>
+            <div className={s.urgenceBox}>
+              ✨ <strong>Les créneaux haute saison</strong> (novembre à avril) se remplissent vite. Réservez tôt pour avoir le choix des meilleurs hébergements.
+            </div>
+            <div className={s.includes}>
+              <h4>Inclus dans chaque Voyage Signature</h4>
+              <ul>
+                <li>Itinéraire 100% personnalisé</li>
+                <li>Hébergements sélectionnés par Roseline</li>
+                <li>Transports internes (véhicule privé climatisé)</li>
+                <li>Guide francophone dédié</li>
+                <li>Expériences exclusives préparées</li>
+                <li>Support WhatsApp 24/7 pendant le séjour</li>
+                <li>Accueil et transfert aéroport</li>
+              </ul>
+            </div>
+            <div className={s.ca}>
+              <a href="https://wa.me/33650329808">📱 WhatsApp : +33 6 50 32 98 08</a>
+              <a href="mailto:roselinediouma@gmail.com">✉️ roselinediouma@gmail.com</a>
+              <a href="https://calendly.com/roselinengom/decouverte-15min">📅 Appel de 30 min (gratuit)</a>
+            </div>
+          </div>
+          <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>
+            <h3>Demande de devis</h3>
+            <div className={s.fcSub}>Devis gratuit sous 48h. Sans engagement.</div>
+            <div className={s.frow}>
+              <div><label>Prénom *</label><input type="text" placeholder="Votre prénom" /></div>
+              <div><label>Nom *</label><input type="text" placeholder="Votre nom" /></div>
+            </div>
+            <div className={s.frow}>
+              <div><label>Email *</label><input type="email" placeholder="votre@email.com" /></div>
+              <div><label>WhatsApp *</label><input type="tel" placeholder="+33 6 XX XX XX XX" /></div>
+            </div>
+            <label>Type de voyage *</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>En famille (avec enfants)</option>
+              <option>En couple</option>
+              <option>Entre amis</option>
+              <option>En solo</option>
+              <option>Groupe organisé (association, entreprise)</option>
+            </select>
+            <div className={s.frow3}>
+              <div>
+                <label>Nombre d&apos;adultes *</label>
+                <select defaultValue="2">
+                  <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
+                </select>
+              </div>
+              <div>
+                <label>Enfants (-12 ans)</label>
+                <select defaultValue="0">
+                  <option>0</option><option>1</option><option>2</option><option>3</option><option>4+</option>
+                </select>
+              </div>
+              <div>
+                <label>Bébés (-2 ans)</label>
+                <select defaultValue="0">
+                  <option>0</option><option>1</option><option>2</option>
+                </select>
+              </div>
+            </div>
+            <div className={s.frow}>
+              <div>
+                <label>Durée souhaitée *</label>
+                <select defaultValue="">
+                  <option value="">Choisir...</option>
+                  <option>5 jours</option>
+                  <option>7 jours</option>
+                  <option>10 jours</option>
+                  <option>14 jours</option>
+                  <option>Autre (préciser dans le message)</option>
+                </select>
+              </div>
+              <div>
+                <label>Période envisagée *</label>
+                <select defaultValue="">
+                  <option value="">Choisir...</option>
+                  <option>Janvier-Février 2027</option>
+                  <option>Mars-Avril 2027</option>
+                  <option>Mai-Juin 2027</option>
+                  <option>Juillet-Août 2027</option>
+                  <option>Septembre-Octobre 2027</option>
+                  <option>Novembre-Décembre 2027</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+            </div>
+            <label>Budget par personne</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>Moins de 2 000€</option>
+              <option>2 000 – 3 000€</option>
+              <option>3 000 – 5 000€</option>
+              <option>5 000 – 8 000€</option>
+              <option>Plus de 8 000€</option>
+              <option>Je ne sais pas encore</option>
+            </select>
+            <label>Niveau de confort souhaité</label>
+            <select defaultValue="">
+              <option value="">Choisir...</option>
+              <option>Authentique (campements, écolodges)</option>
+              <option>Confort (écolodges + hôtels 3-4★)</option>
+              <option>Premium (hôtels 4-5★, lodges haut de gamme)</option>
+              <option>Mixte (un peu de tout)</option>
+            </select>
+            <label>Ce qui vous fait rêver *</label>
+            <textarea placeholder="Racontez-moi ce que vous cherchez. L'évasion ? L'aventure ? Le repos ? Les rencontres ? La culture ? La gastronomie ? Quels endroits vous attirent ? Y a-t-il des choses que vous ne voulez surtout pas ? Plus vous me dites, plus votre voyage sera parfait..." />
+            <button className={s.fs} type="submit">Recevoir mon devis personnalisé →</button>
+            <div className={s.fmi}>Gratuit · Sans engagement · Réponse personnalisée sous 48h</div>
+          </form>
+        </div>
+      </section>
+
       <Footer />
-    </>
+
+      <a href="#devis" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
+        Devis gratuit en 48h →
+      </a>
+    </div>
   )
 }
