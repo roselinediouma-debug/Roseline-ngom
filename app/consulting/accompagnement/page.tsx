@@ -210,7 +210,7 @@ export default function AccompagnementPage() {
             <p className="text-center mb-10 text-lg" style={{ color: 'rgba(10,10,10,0.6)' }}>
               15 minutes pour comprendre vos enjeux et identifier la bonne formule.
             </p>
-            <CalendlyEmbed url="https://calendly.com/roselinengom/decouverte-15min" />
+            <CalendlyEmbed url="https://calendly.com/roselinengom" />
           </div>
         </section>
 

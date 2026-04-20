@@ -46,7 +46,7 @@ const FAQ_ITEMS = [
 export default function GuidesPage() {
   return (
     <>
-      <Nav />
+      <Nav variant="solid" />
       <main>
         <SalesPageHero
           eyebrow="GUIDES SIGNATURES"

@@ -50,7 +50,7 @@ const testimonials = [
 export default function ConseilPage() {
   return (
     <>
-      <Nav />
+      <Nav variant="solid" />
       <main>
         {/* Hero */}
         <section

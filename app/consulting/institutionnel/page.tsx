@@ -181,7 +181,7 @@ export default function InstitutionnelPage() {
             <p className="text-center mb-10 text-lg" style={{ color: 'rgba(10,10,10,0.6)' }}>
               Echangeons sur votre mission. Nous vous adressons une proposition detaillee sous 48h.
             </p>
-            <CalendlyEmbed url="https://calendly.com/roselinengom/decouverte-15min" />
+            <CalendlyEmbed url="https://calendly.com/roselinengom" />
           </div>
         </section>
 

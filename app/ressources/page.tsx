@@ -49,7 +49,7 @@ const RESOURCES = [
 export default function RessourcesPage() {
   return (
     <>
-      <Nav />
+      <Nav variant="solid" />
       <main>
         <SalesPageHero
           eyebrow="RESSOURCES GRATUITES"

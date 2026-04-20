@@ -103,7 +103,7 @@ export default function HomePage() {
             <div className={s.heroBtns}>
               <Link href="/guide" className={s.btnGold}>Recevoir le guide gratuit</Link>
               <a
-                href="https://calendly.com/roselinengom/decouverte-15min"
+                href="https://calendly.com/roselinengom"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={s.btnOutline}
@@ -370,7 +370,7 @@ export default function HomePage() {
         <p>Que vous souhaitiez voyager, entreprendre ou transformer votre activité, je suis là pour vous accompagner.</p>
         <div className={s.ctaBtns}>
           <a
-            href="https://calendly.com/roselinengom/decouverte-15min"
+            href="https://calendly.com/roselinengom"
             target="_blank"
             rel="noopener noreferrer"
             className={s.btnGold}

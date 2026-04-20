@@ -333,7 +333,7 @@ export default function RetourAuxSourcesPage() {
             <div className={s.ca}>
               <a href="https://wa.me/33650329808">📱 WhatsApp : +33 6 50 32 98 08</a>
               <a href="mailto:roselinediouma@gmail.com">✉️ roselinediouma@gmail.com</a>
-              <a href="https://calendly.com/roselinengom/decouverte-15min">📅 Réserver un appel de 15 min</a>
+              <a href="https://calendly.com/roselinengom">📅 Réserver un appel de 15 min</a>
             </div>
           </div>
           <form className={`${s.fc} ${s.fi}`} onSubmit={(e) => e.preventDefault()}>

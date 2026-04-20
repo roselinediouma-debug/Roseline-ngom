@@ -207,7 +207,7 @@ export default function AuditStrategiquePage() {
             <p className="text-center mb-10 text-lg" style={{ color: 'rgba(10,10,10,0.6)' }}>
               15 minutes pour comprendre votre projet et voir si l'audit est adapte.
             </p>
-            <CalendlyEmbed url="https://calendly.com/roselinengom/decouverte-15min" />
+            <CalendlyEmbed url="https://calendly.com/roselinengom" />
           </div>
         </section>
 

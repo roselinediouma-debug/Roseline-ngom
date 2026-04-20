@@ -225,7 +225,7 @@ export default function IAAppliqueePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="https://calendly.com/roselinengom/decouverte-15min"
+                href="https://calendly.com/roselinengom"
                 className="inline-block px-8 py-3.5 rounded-lg font-semibold text-base transition-all duration-200 hover:opacity-90"
                 style={{
                   backgroundColor: '#F6C961',

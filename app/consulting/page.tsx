@@ -59,7 +59,7 @@ export default function ConsultingPage() {
             <h1>Vous avez la vision.<br />Il vous manque<br /><em>la stratégie.</em></h1>
             <p className={s.sub}>Audit, accompagnement et conseil pour les acteurs du tourisme, de la culture et les institutions au Sénégal et en Afrique de l&apos;Ouest. De la vision à l&apos;exécution.</p>
             <div className={s.heroBtns}>
-              <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver un échange de 30 min</a>
+              <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver un échange de 30 min</a>
               <a href="#offres" className={s.btnOutline}>Voir les offres →</a>
             </div>
             <div className={s.heroMetrics}>
@@ -131,7 +131,7 @@ export default function ConsultingPage() {
                 <li>Roadmap à 6 mois avec actions concrètes et responsables</li>
                 <li>Restitution en visio (1h30) avec session de questions</li>
               </ul>
-              <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Planifier un échange →</a>
+              <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Planifier un échange →</a>
             </div>
           </div>
 
@@ -158,7 +158,7 @@ export default function ConsultingPage() {
                 <li>Mise en relation avec mon réseau (prestataires, institutions, partenaires)</li>
                 <li>Audit de mi-parcours pour ajuster la trajectoire</li>
               </ul>
-              <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Discuter de votre projet →</a>
+              <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Discuter de votre projet →</a>
             </div>
           </div>
 
@@ -180,7 +180,7 @@ export default function ConsultingPage() {
                 <li>Participation à des jurys, comités, commissions d&apos;experts</li>
                 <li>Forfaits études complètes : 5 000 – 15 000 € (~3,3M – 9,8M FCFA)</li>
               </ul>
-              <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Demander une proposition →</a>
+              <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Demander une proposition →</a>
             </div>
           </div>
         </div>
@@ -290,7 +290,7 @@ export default function ConsultingPage() {
         <h2>La clarté ne vient pas<br />en y <em>pensant.</em><br />Elle vient en <em>agissant.</em></h2>
         <div className={s.sub}>Un premier échange de 30 minutes, gratuit, sans engagement. Je vous écoute, je vous challenge, et je vous dis honnêtement si je peux vous aider.</div>
         <div className={s.ctaBtns}>
-          <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver un échange gratuit</a>
+          <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver un échange gratuit</a>
           <a href="https://wa.me/33650329808" target="_blank" rel="noopener noreferrer" className={s.btnOutline}>Discuter sur WhatsApp →</a>
         </div>
         <div className={s.micro}>Réponse sous 24h · +33 6 50 32 98 08 · roselinediouma@gmail.com</div>

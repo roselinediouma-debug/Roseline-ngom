@@ -422,7 +422,7 @@ export default function BackToSenegalPage() {
           <div className={`${s.fmCt} ${s.fi}`}>
             <a href="https://wa.me/33650329808">📱 WhatsApp</a>
             <a href="mailto:roselinediouma@gmail.com">✉️ Email</a>
-            <a href="https://calendly.com/roselinengom/decouverte-15min">📅 Appel 15 min</a>
+            <a href="https://calendly.com/roselinengom">📅 Appel 15 min</a>
           </div>
         </div>
       </section>

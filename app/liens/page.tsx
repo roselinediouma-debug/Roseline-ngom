@@ -344,7 +344,7 @@ export default function HomePage() {
           </div>
 
           {/* Session découverte */}
-          <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className="block">
+          <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer" className="block">
             <div
               className="w-full rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all hover:scale-[1.01]"
               style={{ border: '1.5px dashed #560E13', backgroundColor: 'rgba(86,14,19,0.04)' }}

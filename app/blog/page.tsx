@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
-      <Nav />
+      <Nav variant="solid" />
       <main>
         <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-4xl mx-auto">

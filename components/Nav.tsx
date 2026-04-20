@@ -35,18 +35,26 @@ const navItems: NavItem[] = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
+interface NavProps {
+  variant?: 'overlay' | 'solid'
+}
+
+export default function Nav({ variant = 'overlay' }: NavProps) {
+  const [scrolled, setScrolled] = useState(variant === 'solid')
   const [menuOpen, setMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
+    if (variant === 'solid') {
+      setScrolled(true)
+      return
+    }
     const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [variant])
 
   useEffect(() => {
     const onResize = () => {

@@ -125,7 +125,7 @@ const faqItems = [
 export default function OffresPage() {
   return (
     <>
-      <Nav />
+      <Nav variant="solid" />
       <main>
         {/* 1. Hero */}
         <SalesPageHero

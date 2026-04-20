@@ -206,7 +206,7 @@ export default function AProposPage() {
         <h2 className={s.fi}>Envie de travailler ensemble ?<br /><em>Parlons-en.</em></h2>
         <p className={s.fi}>Que vous souhaitiez voyager, entreprendre ou transformer votre activité digitale, je suis là pour vous accompagner.</p>
         <div className={`${s.ctaBtns} ${s.fi}`}>
-          <a href="https://calendly.com/roselinengom/decouverte-15min" className={s.bg}>Réserver un échange gratuit</a>
+          <a href="https://calendly.com/roselinengom" className={s.bg}>Réserver un échange gratuit</a>
           <a href="https://wa.me/33650329808" className={s.bo}>Discuter sur WhatsApp →</a>
         </div>
       </section>

@@ -48,7 +48,7 @@ export default function DigitalIaPage() {
               Hôtels, agences de voyage, lodges, restaurants, opérateurs culturels : vos concurrents installent des chatbots IA qui répondent en 10 secondes. Ils automatisent leurs devis, leurs relances, leur contenu. <strong>Ils captent vos clients. Chaque. Jour.</strong>
             </p>
             <div className={s.heroBtns}>
-              <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Audit flash gratuit →</a>
+              <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Audit flash gratuit →</a>
               <a href="#solutions" className={s.btnOutline}>Voir les offres</a>
             </div>
             <div className={s.heroProof}>
@@ -137,7 +137,7 @@ export default function DigitalIaPage() {
                   <li>1 visio stratégique par mois (1h)</li>
                   <li>Support WhatsApp continu</li>
                 </ul>
-                <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Planifier un audit flash gratuit →</a>
+                <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Planifier un audit flash gratuit →</a>
               </div>
             </div>
             <div className={s.sol}>
@@ -154,7 +154,7 @@ export default function DigitalIaPage() {
                   <li>Formation de votre équipe (2 sessions de 2h)</li>
                   <li>30 jours de support post-lancement inclus</li>
                 </ul>
-                <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Discuter de votre projet →</a>
+                <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Discuter de votre projet →</a>
               </div>
             </div>
             <div className={s.sol}>
@@ -171,7 +171,7 @@ export default function DigitalIaPage() {
                   <li>Dashboard de suivi en temps réel</li>
                   <li>Formation + documentation pour votre équipe</li>
                 </ul>
-                <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Identifier vos cas d&apos;usage →</a>
+                <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Identifier vos cas d&apos;usage →</a>
               </div>
             </div>
             <div className={s.sol}>
@@ -188,7 +188,7 @@ export default function DigitalIaPage() {
                   <li>Communauté WhatsApp post-formation (3 mois)</li>
                   <li>Certification délivrée</li>
                 </ul>
-                <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer">Réserver une formation →</a>
+                <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Réserver une formation →</a>
               </div>
             </div>
           </div>
@@ -258,7 +258,7 @@ export default function DigitalIaPage() {
           L&apos;audit flash est gratuit. 30 minutes. Sans engagement. Je vous montre exactement combien de clients vous perdez chaque mois et comment les récupérer. Les places sont limitées : je n&apos;accompagne que 5 nouveaux projets par trimestre.
         </div>
         <div className={s.ctaBtns}>
-          <a href="https://calendly.com/roselinengom/decouverte-15min" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver mon audit gratuit →</a>
+          <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer" className={s.btnGold}>Réserver mon audit gratuit →</a>
           <a href="https://wa.me/33650329808" target="_blank" rel="noopener noreferrer" className={s.btnOutline}>Discuter sur WhatsApp</a>
         </div>
         <div className={s.micro}>Réponse sous 24h · +33 6 50 32 98 08 · roselinediouma@gmail.com</div>
