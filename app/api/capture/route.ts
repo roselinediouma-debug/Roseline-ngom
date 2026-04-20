@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
 import { createBrevoContact, sendTransactionalEmail } from '@/lib/brevo'
 import { guideDeliveryEmail } from '@/lib/emails/guideDelivery'
+import { notifyAdmin } from '@/lib/notifications'
 
 export async function POST(req: Request) {
   try {
@@ -66,6 +67,13 @@ export async function POST(req: Request) {
         // Le fallback /guide/merci affiche un lien de téléchargement direct
       }
     }
+
+    // Notification Roseline
+    await notifyAdmin({
+      subject: `Nouveau lead — Guide gratuit`,
+      message: `${prenom || 'Voyageur'} (${emailLower}) vient de télécharger le guide.\nSource : ${source}`,
+      priority: 'normal',
+    })
 
     return NextResponse.json({ success: true, redirect: '/guide/merci' })
   } catch (err) {

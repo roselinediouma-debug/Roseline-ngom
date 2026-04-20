@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
-import { sendTransactionalEmail, createBrevoContact } from '@/lib/brevo'
+import { createBrevoContact } from '@/lib/brevo'
+import { notifyAdmin } from '@/lib/notifications'
 
 export async function POST(req: Request) {
   try {
@@ -31,42 +32,36 @@ export async function POST(req: Request) {
       }
     }
 
-    // Email de notification à Roseline
-    if (process.env.BREVO_API_KEY) {
+    // Ajouter le contact à la liste Brevo candidatures
+    if (process.env.BREVO_API_KEY && process.env.BREVO_CANDIDATURE_LIST_ID) {
       try {
-        await sendTransactionalEmail({
-          to: process.env.ADMIN_EMAIL || 'roselinediouma@gmail.com',
-          subject: `Nouvelle candidature Back to Senegal — ${nom}`,
-          htmlContent: `
-            <h2>Nouvelle candidature Back to Senegal</h2>
-            <p><strong>Nom :</strong> ${nom}</p>
-            <p><strong>Email :</strong> ${email}</p>
-            <p><strong>Telephone :</strong> ${telephone || 'Non renseigne'}</p>
-            <p><strong>Nationalite :</strong> ${nationalite || 'Non renseignee'}</p>
-            <p><strong>Lieu de residence :</strong> ${lieuResidence || 'Non renseigne'}</p>
-            <p><strong>Projet :</strong><br>${descriptionProjet || '—'}</p>
-            <p><strong>Motivation :</strong><br>${motivation || '—'}</p>
-            <p><strong>LinkedIn :</strong> ${linkedinUrl || 'Non renseigne'}</p>
-          `,
+        await createBrevoContact({
+          email,
+          attributes: { NOM: nom, TELEPHONE: telephone || '' },
+          listIds: [parseInt(process.env.BREVO_CANDIDATURE_LIST_ID)],
         })
       } catch (err) {
-        console.error('Brevo notification error:', err)
-      }
-
-      // Ajouter le contact à la liste Brevo candidatures
-      const listId = process.env.BREVO_CANDIDATURE_LIST_ID
-      if (listId) {
-        try {
-          await createBrevoContact({
-            email,
-            attributes: { NOM: nom, TELEPHONE: telephone || '' },
-            listIds: [parseInt(listId)],
-          })
-        } catch (err) {
-          console.error('Brevo contact error:', err)
-        }
+        console.error('Brevo contact error:', err)
       }
     }
+
+    // Notification Roseline (email + WhatsApp)
+    await notifyAdmin({
+      subject: `Candidature Back to Senegal — ${nom}`,
+      message: [
+        `Nom : ${nom}`,
+        `Email : ${email}`,
+        `Téléphone : ${telephone || '—'}`,
+        `Nationalité : ${nationalite || '—'}`,
+        `Résidence : ${lieuResidence || '—'}`,
+        `LinkedIn : ${linkedinUrl || '—'}`,
+        '',
+        `Projet : ${descriptionProjet || '—'}`,
+        '',
+        `Motivation : ${motivation || '—'}`,
+      ].join('\n'),
+      priority: 'high',
+    })
 
     return NextResponse.json({ success: true })
   } catch (err) {

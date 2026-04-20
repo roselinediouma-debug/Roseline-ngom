@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
-import { sendTransactionalEmail } from '@/lib/brevo'
+import { notifyAdmin } from '@/lib/notifications'
 
 export async function POST(req: Request) {
   try {
@@ -12,13 +12,11 @@ export async function POST(req: Request) {
       await supabase.from('contacts').insert({ nom, email, objet, message, status: 'nouveau' })
     }
 
-    if (process.env.BREVO_API_KEY) {
-      await sendTransactionalEmail({
-        to: process.env.ADMIN_EMAIL || 'roselinediouma@gmail.com',
-        subject: `✉️ Nouveau message — ${objet} — ${nom}`,
-        htmlContent: `<p><strong>De :</strong> ${nom} (${email})</p><p><strong>Objet :</strong> ${objet}</p><p>${message}</p>`,
-      })
-    }
+    await notifyAdmin({
+      subject: `Nouveau message — ${objet || 'sans objet'}`,
+      message: `De : ${nom || 'anonyme'} (${email})\n\nObjet : ${objet || '—'}\n\n${message}`,
+      priority: 'normal',
+    })
 
     return NextResponse.json({ success: true })
   } catch (err) {
