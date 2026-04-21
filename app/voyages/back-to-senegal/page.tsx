@@ -12,7 +12,6 @@ export default function BackToSenegalPage() {
   const [hours, setHours] = useState('--')
   const [mins, setMins] = useState('--')
   const [secs, setSecs] = useState('--')
-  const [floatShow, setFloatShow] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -73,12 +72,6 @@ export default function BackToSenegalPage() {
     up()
     const id = setInterval(up, 1000)
     return () => clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    const onScroll = () => setFloatShow(window.scrollY > 600)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -484,11 +477,6 @@ export default function BackToSenegalPage() {
       </section>
 
       <Footer />
-
-      <a href="#candidature" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
-        <span className={s.pu} />
-        12 places, Candidater
-      </a>
     </div>
   )
 }

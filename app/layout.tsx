@@ -4,6 +4,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LeadPopup from "@/components/LeadPopup";
 import Analytics from "@/components/Analytics";
+import ToolChatWidget from "@/components/ToolChatWidget";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL, SITE_NAME } from "@/lib/seo/metadata";
 import {
@@ -129,6 +130,7 @@ export default function RootLayout({
         {children}
         <WhatsAppButton />
         <LeadPopup />
+        <ToolChatWidget />
         <Analytics />
       </body>
     </html>
