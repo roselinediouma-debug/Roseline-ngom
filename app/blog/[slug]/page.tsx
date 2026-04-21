@@ -11,6 +11,7 @@ import AuthorBox from '@/components/AuthorBox'
 import CommentsList from '@/components/CommentsList'
 import CommentForm from '@/components/CommentForm'
 import JsonLd from '@/components/JsonLd'
+import RelatedArticles from '@/components/RelatedArticles'
 import { createServiceClient } from '@/lib/supabase'
 import { buildMetadata, SITE_URL } from '@/lib/seo/metadata'
 import {
@@ -48,24 +49,6 @@ async function fetchPost(slug: string): Promise<BlogPost | null> {
     return (data as BlogPost) || null
   } catch {
     return null
-  }
-}
-
-async function fetchRelatedPosts(currentSlug: string, tags: string[] | null) {
-  if (!tags || tags.length === 0) return []
-  try {
-    const supabase = createServiceClient()
-    const { data } = await supabase
-      .from('blog_posts')
-      .select('id, title, slug, excerpt, cover_image, tags, published_at')
-      .eq('status', 'published')
-      .neq('slug', currentSlug)
-      .overlaps('tags', tags)
-      .order('published_at', { ascending: false })
-      .limit(3)
-    return data || []
-  } catch {
-    return []
   }
 }
 
@@ -136,7 +119,6 @@ export default async function BlogArticlePage({
   const post = await fetchPost(slug)
   if (!post) notFound()
 
-  const related = await fetchRelatedPosts(post.slug, post.tags)
   const faqs = post.content ? extractFaqFromMarkdown(post.content) : []
   const heroImage = post.cover_image || '/images/og-default.jpg'
   const publishedDate = formatDate(post.published_at)
@@ -347,66 +329,8 @@ export default async function BlogArticlePage({
             </div>
           </section>
 
-          {/* Related posts */}
-          {related.length > 0 && (
-            <section className="mt-16">
-              <h3
-                className="text-2xl font-bold mb-6"
-                style={{
-                  fontFamily:
-                    "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  color: '#560E13',
-                }}
-              >
-                À lire aussi
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {related.map((r) => (
-                  <Link
-                    key={r.id}
-                    href={`/blog/${r.slug}`}
-                    className="block group rounded-xl overflow-hidden"
-                    style={{
-                      backgroundColor: '#F8F5F0',
-                      border: '1px solid rgba(86,14,19,0.06)',
-                    }}
-                  >
-                    {r.cover_image && (
-                      <div className="relative h-36 overflow-hidden">
-                        <Image
-                          src={r.cover_image}
-                          alt={r.title}
-                          fill
-                          sizes="(max-width: 640px) 100vw, 50vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <div className="p-4">
-                      <h4
-                        className="text-lg font-bold mb-1 line-clamp-2"
-                        style={{
-                          fontFamily:
-                            "var(--font-cormorant), 'Cormorant Garamond', serif",
-                          color: '#0A0A0A',
-                        }}
-                      >
-                        {r.title}
-                      </h4>
-                      {r.excerpt && (
-                        <p
-                          className="text-xs line-clamp-2"
-                          style={{ color: 'rgba(10,10,10,0.6)' }}
-                        >
-                          {r.excerpt}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
+          {/* Related posts (fallback sur articles récents si aucun tag commun) */}
+          <RelatedArticles currentSlug={post.slug} tags={post.tags} />
 
           <div className="mt-12 text-center">
             <Link
