@@ -48,7 +48,7 @@ function AnimatedGuideButton() {
             Guide : 10 expériences secrètes au Sénégal
           </div>
           <div className="text-xs mt-0.5 opacity-65" style={{ color: '#560E13' }}>
-            PDF immédiat — 100% gratuit
+            PDF immédiat, 100% gratuit
           </div>
         </div>
         <span style={{ color: '#F6C961', animation: 'bounce-arrow 1s ease-in-out infinite' }}>→</span>
@@ -269,7 +269,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ─── BLOC 1 — Ressource gratuite ─── */}
+        {/* ─── BLOC 1, Ressource gratuite ─── */}
         <div className="mb-6">
           <div className="text-xs font-bold uppercase tracking-widest mb-3 px-1 flex items-center gap-2" style={{ color: '#16a34a' }}>
             <span
@@ -283,7 +283,7 @@ export default function HomePage() {
           <AnimatedGuideButton />
         </div>
 
-        {/* ─── BLOC 2 — Guides signatures ─── */}
+        {/* ─── BLOC 2, Guides signatures ─── */}
         <div className="mb-6">
           <div className="text-xs font-bold uppercase tracking-widest mb-3 px-1 flex items-center gap-2" style={{ color: '#b8860b' }}>
             <span
@@ -312,7 +312,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ─── BLOC 3 — Mes services ─── */}
+        {/* ─── BLOC 3, Mes services ─── */}
         <div className="mb-8">
           <div className="text-xs font-bold uppercase tracking-widest mb-3 px-1 flex items-center gap-2" style={{ color: '#560E13' }}>
             <span
@@ -357,7 +357,7 @@ export default function HomePage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-sm" style={{ color: '#560E13' }}>
-                  Session découverte — 15 min
+                  Session découverte, 15 min
                 </div>
                 <div className="text-xs mt-0.5 opacity-55">Gratuite · RDV Calendly immédiat</div>
               </div>

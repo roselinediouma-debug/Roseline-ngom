@@ -170,7 +170,7 @@ export default function ConseilPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="text-4xl mb-4">📅</div>
             <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
-              Session découverte gratuite — 15 min
+              Session découverte gratuite, 15 min
             </h2>
             <p className="text-sm opacity-60 mb-8 max-w-lg mx-auto">
               Parlons de votre projet. 15 minutes pour explorer les possibilités ensemble, sans engagement.

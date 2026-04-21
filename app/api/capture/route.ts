@@ -2,11 +2,57 @@ import { NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase'
 import { createBrevoContact, sendTransactionalEmail } from '@/lib/brevo'
 import { guideDeliveryEmail } from '@/lib/emails/guideDelivery'
+import { bledAutrementDeliveryEmail } from '@/lib/emails/bledAutrementDelivery'
+import { benchmarkInstitutionnelDeliveryEmail } from '@/lib/emails/benchmarkInstitutionnelDelivery'
 import { notifyAdmin } from '@/lib/notifications'
+
+type LeadMagnet = {
+  label: string
+  listIdEnv: string
+  tag: string
+  buildEmail: (args: { prenom: string; organisation?: string }) => {
+    subject: string
+    htmlContent: string
+  }
+}
+
+/** Mapping source → lead magnet (Brevo list, tag, email de livraison). */
+const LEAD_MAGNETS: Record<string, LeadMagnet> = {
+  'guide-pdf': {
+    label: 'Guide 15 expériences',
+    listIdEnv: 'BREVO_GUIDE_LIST_ID',
+    tag: 'lead-guide',
+    buildEmail: ({ prenom }) => guideDeliveryEmail({ prenom }),
+  },
+  'checklist-voyage': {
+    label: 'Checklist voyage',
+    listIdEnv: 'BREVO_GUIDE_LIST_ID', // même liste que le guide (checklist legacy)
+    tag: 'lead-checklist',
+    buildEmail: ({ prenom }) => guideDeliveryEmail({ prenom }),
+  },
+  'le-bled-autrement': {
+    label: 'Le Bled Autrement (diaspora)',
+    listIdEnv: 'BREVO_BLED_LIST_ID',
+    tag: 'lead-bled-autrement',
+    buildEmail: ({ prenom }) => bledAutrementDeliveryEmail({ prenom }),
+  },
+  'benchmark-institutionnel': {
+    label: 'Benchmark institutionnel',
+    listIdEnv: 'BREVO_INSTITUTIONNEL_LIST_ID',
+    tag: 'lead-institutionnel',
+    buildEmail: ({ prenom, organisation }) =>
+      benchmarkInstitutionnelDeliveryEmail({ prenom, organisation }),
+  },
+}
 
 export async function POST(req: Request) {
   try {
-    const { prenom = '', email, source = 'guide-pdf' } = await req.json()
+    const {
+      prenom = '',
+      email,
+      source = 'guide-pdf',
+      organisation = '',
+    } = await req.json()
 
     // Validation
     if (!email || !email.includes('@')) {
@@ -14,6 +60,9 @@ export async function POST(req: Request) {
     }
 
     const emailLower = email.toLowerCase().trim()
+    const prenomClean = prenom.trim()
+    const organisationClean = organisation.trim()
+    const magnet = LEAD_MAGNETS[source] || LEAD_MAGNETS['guide-pdf']
 
     // 1. Insert dans Supabase (si configuré)
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -22,9 +71,11 @@ export async function POST(req: Request) {
         const { error: dbError } = await supabase.from('leads').upsert(
           {
             email: emailLower,
-            prenom: prenom.trim(),
+            prenom: organisationClean
+              ? `${prenomClean || 'Pro'} · ${organisationClean}`
+              : prenomClean,
             source,
-            tags: ['lead-magnet'],
+            tags: ['lead-magnet', magnet.tag],
           },
           { onConflict: 'email' }
         )
@@ -34,29 +85,31 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Créer contact Brevo + ajouter à la liste "Guide PDF"
+    // 2. Créer contact Brevo + ajouter à la liste correspondant à la source
     if (process.env.BREVO_API_KEY) {
-      const listId = process.env.BREVO_GUIDE_LIST_ID
-        ? parseInt(process.env.BREVO_GUIDE_LIST_ID)
-        : undefined
+      const rawListId = process.env[magnet.listIdEnv]
+      const listId = rawListId ? parseInt(rawListId) : undefined
 
       try {
         await createBrevoContact({
           email: emailLower,
           attributes: {
-            PRENOM: prenom.trim() || 'Voyageur',
+            PRENOM: prenomClean || 'Voyageur',
             SOURCE: source,
+            ...(organisationClean ? { ORGANISATION: organisationClean } : {}),
           },
           listIds: listId ? [listId] : [],
         })
       } catch (err) {
         console.error('Brevo contact creation failed:', err)
-        // On continue même si Brevo échoue
       }
 
-      // 3. Envoyer l'email de livraison du guide
+      // 3. Envoyer l'email de livraison adapté à la source
       try {
-        const { subject, htmlContent } = guideDeliveryEmail({ prenom: prenom.trim() })
+        const { subject, htmlContent } = magnet.buildEmail({
+          prenom: prenomClean,
+          organisation: organisationClean,
+        })
         await sendTransactionalEmail({
           to: emailLower,
           subject,
@@ -64,18 +117,19 @@ export async function POST(req: Request) {
         })
       } catch (err) {
         console.error('Brevo email delivery failed:', err)
-        // Le fallback /guide/merci affiche un lien de téléchargement direct
       }
     }
 
-    // Notification Roseline
+    // 4. Notification Roseline
     await notifyAdmin({
-      subject: `Nouveau lead — Guide gratuit`,
-      message: `${prenom || 'Voyageur'} (${emailLower}) vient de télécharger le guide.\nSource : ${source}`,
+      subject: `Nouveau lead, ${magnet.label}`,
+      message: `${prenomClean || 'Visiteur'} (${emailLower}) vient de télécharger ${magnet.label}.${
+        organisationClean ? `\nOrganisation : ${organisationClean}` : ''
+      }\nSource : ${source}`,
       priority: 'normal',
     })
 
-    return NextResponse.json({ success: true, redirect: '/guide/merci' })
+    return NextResponse.json({ success: true, redirect: `/merci/${source}` })
   } catch (err) {
     console.error('Capture API error:', err)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })

@@ -49,3 +49,4 @@ public/images/senegal/*.heic
 public/images/senegal/*.HEIC
 # Backups
 *.tsx.backup
+.claude/

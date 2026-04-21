@@ -1,6 +1,6 @@
 import Stripe from 'stripe'
 
-// Instanciation lazy — uniquement quand la clé est disponible
+// Instanciation lazy, uniquement quand la clé est disponible
 export function getStripe(): Stripe {
   if (!process.env.STRIPE_SECRET_KEY) {
     throw new Error('STRIPE_SECRET_KEY non configurée')

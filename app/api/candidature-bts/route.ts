@@ -5,7 +5,7 @@ import { createBrevoContact } from '@/lib/brevo'
 import { notifyAdmin } from '@/lib/notifications'
 
 /**
- * Candidature Back to Senegal — page /voyages/back-to-senegal.
+ * Candidature Back to Senegal, page /voyages/back-to-senegal.
  * 1. Insert dans public.candidatures_bts
  * 2. Scoring IA avec Claude Haiku (score 0-100 + résumé)
  * 3. Sync Brevo + notification admin avec le score
@@ -186,17 +186,17 @@ export async function POST(req: Request) {
     const scoreLabel = scoring ? `${scoring.score}/100` : 'non scoré'
     const priority: 'high' | 'normal' = !scoring || scoring.score >= 60 ? 'high' : 'normal'
     await notifyAdmin({
-      subject: `Candidature BTS [${scoreLabel}] — ${prenom} ${nom}`,
+      subject: `Candidature BTS [${scoreLabel}], ${prenom} ${nom}`,
       message: [
         `Score IA : ${scoreLabel}`,
         scoring ? `Résumé IA : ${scoring.resume}` : null,
         '',
         `Contact : ${prenom} ${nom} · ${email} · ${whatsapp || 'pas de WhatsApp'}`,
-        `Ville : ${ville || '—'}`,
+        `Ville : ${ville || '-'}`,
         `Cohorte : ${cohorte}`,
         `Type projet : ${typeProjet}`,
         `Maturité : ${maturite}`,
-        `Budget projet : ${budget || '—'}`,
+        `Budget projet : ${budget || '-'}`,
         '',
         `Description :`,
         description,

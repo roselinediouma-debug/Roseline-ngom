@@ -118,7 +118,7 @@ export default function GuideCasamancePage() {
               <ul className="space-y-3 text-sm opacity-60">
                 {['Réservation des hébergements (vous le faites vous-même)', 'Accompagnement sur place', 'Billets d\'avion', 'Assurance voyage'].map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span>—</span>
+                    <span>-</span>
                     <span>{item}</span>
                   </li>
                 ))}

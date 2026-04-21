@@ -1,12 +1,12 @@
 import { sendTransactionalEmail } from './brevo'
 
 /**
- * Notifications admin — email (Brevo) + Telegram.
+ * Notifications admin, email (Brevo) + Telegram.
  *
  * Env vars requises :
- *   ADMIN_EMAIL              — email destinataire (ex: roselinediouma@gmail.com)
- *   TELEGRAM_BOT_TOKEN       — token donné par @BotFather (ex: 1234567890:AA...)
- *   TELEGRAM_CHAT_ID         — id de la conversation (ex: 123456789) — voir setup plus bas
+ *   ADMIN_EMAIL             , email destinataire (ex: roselinediouma@gmail.com)
+ *   TELEGRAM_BOT_TOKEN      , token donné par @BotFather (ex: 1234567890:AA...)
+ *   TELEGRAM_CHAT_ID        , id de la conversation (ex: 123456789), voir setup plus bas
  *
  * Setup Telegram (gratuit, 100% officiel, 5 minutes) :
  *   1. Dans Telegram, chercher @BotFather et lancer une conversation
@@ -18,12 +18,12 @@ import { sendTransactionalEmail } from './brevo'
  *      https://api.telegram.org/bot<TOKEN>/getUpdates
  *      → chercher "chat":{"id":123456789,...} → mettre cet id dans TELEGRAM_CHAT_ID
  *
- * Si une var manque, la notification silencieusement passe — ne bloque jamais le flux.
+ * Si une var manque, la notification silencieusement passe, ne bloque jamais le flux.
  */
 
 interface AdminNotifPayload {
   subject: string          // titre email / première ligne WhatsApp
-  message: string          // corps — peut contenir \n
+  message: string          // corps, peut contenir \n
   priority?: 'low' | 'normal' | 'high'
 }
 

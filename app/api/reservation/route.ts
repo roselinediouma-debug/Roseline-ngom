@@ -4,7 +4,7 @@ import { createBrevoContact } from '@/lib/brevo'
 import { notifyAdmin } from '@/lib/notifications'
 
 /**
- * Réservation voyage — pages /voyages/retour-aux-sources et /voyages/voyage-signature.
+ * Réservation voyage, pages /voyages/retour-aux-sources et /voyages/voyage-signature.
  * Insert dans public.reservations, sync Brevo, notifie admin (email + Telegram).
  */
 export async function POST(req: Request) {
@@ -114,18 +114,18 @@ export async function POST(req: Request) {
     const labelVoyage =
       typeVoyage === 'voyage_signature' ? 'Voyage Signature' : 'Retour aux Sources'
     await notifyAdmin({
-      subject: `Nouvelle réservation ${labelVoyage} — ${prenom} ${nom}`,
+      subject: `Nouvelle réservation ${labelVoyage}, ${prenom} ${nom}`,
       message: [
         `Type : ${labelVoyage}`,
         `Contact : ${prenom} ${nom} · ${email} · ${whatsapp || 'pas de WhatsApp'}`,
-        `Ville : ${villeResidence || '—'}`,
-        `Départ : ${departSouhaite || periode || '—'}`,
+        `Ville : ${villeResidence || '-'}`,
+        `Départ : ${departSouhaite || periode || '-'}`,
         `Voyageurs : ${nbAdultes || 1} adulte(s), ${nbEnfants || 0} enfant(s)${nbBebes ? `, ${nbBebes} bébé(s)` : ''}`,
         duree ? `Durée : ${duree}` : null,
         budget ? `Budget : ${budget}` : null,
         confort ? `Confort : ${confort}` : null,
         '',
-        `Message : ${message || '—'}`,
+        `Message : ${message || '-'}`,
       ]
         .filter(Boolean)
         .join('\n'),

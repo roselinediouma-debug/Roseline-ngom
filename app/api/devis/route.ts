@@ -26,16 +26,16 @@ export async function POST(req: Request) {
     }
 
     await notifyAdmin({
-      subject: `Demande de devis — ${nom}`,
+      subject: `Demande de devis, ${nom}`,
       message: [
-        `Type : ${typeVoyage || '—'}`,
-        `Voyageurs : ${nbVoyageurs || '—'}`,
-        `Dates : ${dates || '—'}`,
-        `Budget : ${budget || '—'}`,
+        `Type : ${typeVoyage || '-'}`,
+        `Voyageurs : ${nbVoyageurs || '-'}`,
+        `Dates : ${dates || '-'}`,
+        `Budget : ${budget || '-'}`,
         '',
         `Contact : ${nom} · ${email} · ${telephone || 'pas de tél'}`,
         '',
-        `Message : ${message || '—'}`,
+        `Message : ${message || '-'}`,
       ].join('\n'),
       priority: 'high',
     })

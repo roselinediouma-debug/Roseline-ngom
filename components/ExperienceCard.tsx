@@ -10,7 +10,7 @@ interface ExperienceCardProps {
 export function ExperienceCard({ number, category, teaser, image }: ExperienceCardProps) {
   return (
     <article className="group relative overflow-hidden rounded-[4px] shadow-md transition-all hover:shadow-2xl" style={{ aspectRatio: '4/3' }}>
-      {/* Photo d'ambiance — blur pour garder le mystère */}
+      {/* Photo d'ambiance, blur pour garder le mystère */}
       <Image
         src={image}
         alt="Expérience révélée dans le guide"

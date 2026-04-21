@@ -1,17 +1,16 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
+import { buildMetadata } from '@/lib/seo/metadata'
 
-export const metadata: Metadata = {
-  title: 'Ressources Gratuites | Roseline Ngom',
-  description: 'Guides gratuits, checklist voyage et newsletter pour préparer votre voyage au Sénégal.',
-  openGraph: {
-    title: 'Ressources Gratuites | Roseline Ngom',
-    description: 'Guides gratuits, checklist voyage et newsletter pour préparer votre voyage au Sénégal.',
-  },
-}
+export const metadata = buildMetadata({
+  title: 'Ressources gratuites, guides Sénégal & tourisme',
+  description:
+    'Guides PDF gratuits pour préparer votre Sénégal : carnet d\'adresses, guide diaspora Le Bled Autrement, benchmark institutionnel et newsletter La Teranga.',
+  path: '/ressources',
+  ogImage: '/images/og/ressources.jpg',
+})
 
 const RESOURCES = [
   {
@@ -25,13 +24,23 @@ const RESOURCES = [
     badge: 'Le plus populaire',
   },
   {
-    title: 'Checklist voyage Senegal',
-    format: 'PDF · 10 pages',
+    title: 'Le Bled Autrement',
+    format: 'PDF · 14 pages · Diaspora',
     description:
-      'Visa, vaccins, budget, valise, change, assurance. Tout ce qu\'il faut verifier avant de partir. Rien oublier. Zero stress.',
-    href: '/ressources/checklist-voyage',
+      'Le guide pour la diaspora qui veut enfin vivre le Sénégal autrement qu’en touriste. Les 3 types de retour, les blocages silencieux, comment transmettre aux enfants.',
+    href: '/ressources/le-bled-autrement',
     cta: 'Telecharger gratuitement',
-    icon: '✅',
+    icon: '🌍',
+    badge: 'Nouveau',
+  },
+  {
+    title: 'Benchmark Bénin · Maroc · Rwanda',
+    format: 'PDF · Institutionnel',
+    description:
+      'Politique touristique comparée : ce que le Sénégal peut apprendre de 3 pays africains qui ont réussi leur transformation. Pour décideurs tourisme.',
+    href: '/ressources/benchmark-institutionnel',
+    cta: 'Telecharger gratuitement',
+    icon: '📊',
     badge: null,
   },
   {
@@ -54,13 +63,13 @@ export default function RessourcesPage() {
         <SalesPageHero
           eyebrow="RESSOURCES GRATUITES"
           title="Avant de voyager avec nous, decouvrez ce que nous savons"
-          subtitle="3 ressources gratuites pour preparer votre Senegal"
+          subtitle="4 ressources gratuites pour preparer votre Senegal"
         />
 
         {/* Resource Cards */}
         <section className="py-24 px-5" style={{ backgroundColor: '#FEFCF9' }}>
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {RESOURCES.map((resource) => (
                 <div
                   key={resource.title}

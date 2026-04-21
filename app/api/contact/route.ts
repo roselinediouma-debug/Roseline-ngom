@@ -13,8 +13,8 @@ export async function POST(req: Request) {
     }
 
     await notifyAdmin({
-      subject: `Nouveau message — ${objet || 'sans objet'}`,
-      message: `De : ${nom || 'anonyme'} (${email})\n\nObjet : ${objet || '—'}\n\n${message}`,
+      subject: `Nouveau message, ${objet || 'sans objet'}`,
+      message: `De : ${nom || 'anonyme'} (${email})\n\nObjet : ${objet || '-'}\n\n${message}`,
       priority: 'normal',
     })
 

@@ -65,7 +65,7 @@ function MerciContent() {
         <p className="text-xs opacity-40 mt-3">Si le téléchargement ne démarre pas automatiquement</p>
       </div>
 
-      {/* CTA Calendly — l'étape suivante */}
+      {/* CTA Calendly, l'étape suivante */}
       <div
         className="rounded-2xl p-6 mb-4 max-w-sm w-full text-left"
         style={{ backgroundColor: '#560E13', color: '#FEFCF9' }}
@@ -77,7 +77,7 @@ function MerciContent() {
           Envie d'en discuter ?
         </div>
         <p className="text-sm opacity-80 mb-4 leading-relaxed">
-          Si vous préparez un vrai voyage, réservez 15 min avec moi — on valide votre projet ensemble.
+          Si vous préparez un vrai voyage, réservez 15 min avec moi, on valide votre projet ensemble.
           C'est gratuit, sans engagement.
         </p>
         <a

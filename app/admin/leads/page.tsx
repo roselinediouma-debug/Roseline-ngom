@@ -94,11 +94,11 @@ export default function AdminLeadsPage() {
               ) : paginated.map((lead) => (
                 <tr key={lead.id} style={{ borderBottom: '1px solid #f0ebe4' }}>
                   <td className="px-4 py-3 font-medium">{lead.email}</td>
-                  <td className="px-4 py-3 opacity-70">{lead.prenom || '—'}</td>
+                  <td className="px-4 py-3 opacity-70">{lead.prenom || '-'}</td>
                   <td className="px-4 py-3">
                     <span className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: '#f0ebe4' }}>{lead.source}</span>
                   </td>
-                  <td className="px-4 py-3 opacity-60 text-xs">{(lead.tags || []).join(', ') || '—'}</td>
+                  <td className="px-4 py-3 opacity-60 text-xs">{(lead.tags || []).join(', ') || '-'}</td>
                   <td className="px-4 py-3 opacity-50 text-xs">{formatDate(lead.created_at)}</td>
                 </tr>
               ))}

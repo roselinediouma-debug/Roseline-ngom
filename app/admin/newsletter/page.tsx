@@ -92,7 +92,7 @@ export default function NewsletterPage() {
               <span className="text-2xl">📧</span>
             </div>
             <div className="text-3xl font-bold" style={{ color: '#560E13' }}>
-              {loading ? '—' : subscribers.length}
+              {loading ? '-' : subscribers.length}
             </div>
             <div className="text-xs opacity-50 mt-1">Newsletter La Teranga</div>
           </div>
@@ -123,8 +123,8 @@ export default function NewsletterPage() {
                   {subscribers.map(s => (
                     <tr key={s.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4 font-medium">{s.email}</td>
-                      <td className="px-6 py-4">{s.prenom || '—'}</td>
-                      <td className="px-6 py-4 opacity-70">{s.source || '—'}</td>
+                      <td className="px-6 py-4">{s.prenom || '-'}</td>
+                      <td className="px-6 py-4 opacity-70">{s.source || '-'}</td>
                       <td className="px-6 py-4 opacity-50">{formatDate(s.subscribed_at)}</td>
                     </tr>
                   ))}

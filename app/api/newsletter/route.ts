@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       try {
         await sendTransactionalEmail({
           to: emailLower,
-          subject: 'Bienvenue dans La Teranga — Roseline Ngom',
+          subject: 'Bienvenue dans La Teranga, Roseline Ngom',
           htmlContent: `<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"/></head>
 <body style="margin:0;padding:0;background:#F8F5F0;font-family:sans-serif;color:#0A0A0A;">

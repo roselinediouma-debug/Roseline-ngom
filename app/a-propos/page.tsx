@@ -181,7 +181,7 @@ export default function AProposPage() {
           <div className={`${s.label} ${s.fi}`}>En images</div>
           <div className={`${s.stitle} ${s.fi}`}>Quelques moments.</div>
           <div className={`${s.photoMosaic} ${s.fi}`}>
-            <div><Image src="/images/roseline-portrait-3.jpg" alt="Roseline — portrait" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} /></div>
+            <div><Image src="/images/roseline-portrait-3.jpg" alt="Roseline, portrait" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} /></div>
             <div><Image src="/images/senegal/cover.jpg" alt="Sénégal" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
             <div><Image src="/images/senegal/saint-louis.jpg" alt="Saint-Louis" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>
             <div><Image src="/images/roseline-portrait-2.jpg" alt="Roseline" fill sizes="(max-width: 768px) 100vw, 25vw" style={{ objectFit: 'cover' }} /></div>

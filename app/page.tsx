@@ -251,7 +251,7 @@ export default function HomePage() {
           <div className={`${s.vcard} ${s.fi}`} ref={vcard3Ref}>
             <div className={s.vcardImg}>
               <Image src="/images/senegal/gallery-2.jpg" alt="Back to Senegal" fill sizes="(max-width:900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
-              <span className={s.vcardSoon}>Coming soon — Fév. 2027</span>
+              <span className={s.vcardSoon}>Coming soon, Fév. 2027</span>
               <span className={s.vcardPrice}>Dès 3 800 €</span>
             </div>
             <div className={s.vcardCt}>

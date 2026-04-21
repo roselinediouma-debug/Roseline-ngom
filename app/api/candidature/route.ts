@@ -47,18 +47,18 @@ export async function POST(req: Request) {
 
     // Notification Roseline (email + WhatsApp)
     await notifyAdmin({
-      subject: `Candidature Back to Senegal — ${nom}`,
+      subject: `Candidature Back to Senegal, ${nom}`,
       message: [
         `Nom : ${nom}`,
         `Email : ${email}`,
-        `Téléphone : ${telephone || '—'}`,
-        `Nationalité : ${nationalite || '—'}`,
-        `Résidence : ${lieuResidence || '—'}`,
-        `LinkedIn : ${linkedinUrl || '—'}`,
+        `Téléphone : ${telephone || '-'}`,
+        `Nationalité : ${nationalite || '-'}`,
+        `Résidence : ${lieuResidence || '-'}`,
+        `LinkedIn : ${linkedinUrl || '-'}`,
         '',
-        `Projet : ${descriptionProjet || '—'}`,
+        `Projet : ${descriptionProjet || '-'}`,
         '',
-        `Motivation : ${motivation || '—'}`,
+        `Motivation : ${motivation || '-'}`,
       ].join('\n'),
       priority: 'high',
     })

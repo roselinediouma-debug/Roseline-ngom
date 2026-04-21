@@ -131,7 +131,7 @@ export default function BackToSenegalPage() {
         <div className={s.heroBg}>
           <Image
             src="/images/senegal/hero.jpg"
-            alt="Sénégal — Back to Senegal"
+            alt="Sénégal, Back to Senegal"
             fill
             priority
             sizes="100vw"
@@ -335,7 +335,7 @@ export default function BackToSenegalPage() {
             <p>
               Back to Senegal, c&apos;est 7 jours pour vous donner ce que j&apos;ai mis 10 ans à construire. Un carnet d&apos;adresses. Une méthode. Et la confiance que <strong>votre projet est faisable</strong>.
             </p>
-            <div className={s.sig}>— Roseline</div>
+            <div className={s.sig}>- Roseline</div>
           </div>
         </div>
       </section>
@@ -432,8 +432,8 @@ export default function BackToSenegalPage() {
                 <label>Cohorte souhaitée *</label>
                 <select name="cohorte" defaultValue="" required>
                   <option value="">Choisir...</option>
-                  <option>Cohorte 1 — Février 2027</option>
-                  <option>Cohorte 2 — Juillet 2027</option>
+                  <option>Cohorte 1, Février 2027</option>
+                  <option>Cohorte 2, Juillet 2027</option>
                   <option>Peu importe</option>
                 </select>
                 <label>Type de projet *</label>
@@ -487,7 +487,7 @@ export default function BackToSenegalPage() {
 
       <a href="#candidature" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
         <span className={s.pu} />
-        12 places — Candidater
+        12 places, Candidater
       </a>
     </div>
   )

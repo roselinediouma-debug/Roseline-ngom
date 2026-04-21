@@ -92,7 +92,7 @@ export default function RetourAuxSourcesPage() {
       {/* HERO */}
       <section className={s.hero}>
         <div className={s.heroBg}>
-          <Image src="/images/senegal/hero.jpg" alt="Retour aux Sources — Sénégal" fill priority sizes="100vw" />
+          <Image src="/images/senegal/hero.jpg" alt="Retour aux Sources, Sénégal" fill priority sizes="100vw" />
         </div>
         <div className={s.heroOv} />
         <div className={s.heroWave}>
@@ -398,9 +398,9 @@ export default function RetourAuxSourcesPage() {
                 <label>Départ souhaité *</label>
                 <select name="departSouhaite" defaultValue="">
                   <option value="">Choisir une date...</option>
-                  <option>Juillet 2026 (5-18 juil.) — 6 places</option>
-                  <option>Août 2026 (2-15 août) — 10 places</option>
-                  <option>Décembre 2026 (20 déc.-2 janv.) — 12 places</option>
+                  <option>Juillet 2026 (5-18 juil.), 6 places</option>
+                  <option>Août 2026 (2-15 août), 10 places</option>
+                  <option>Décembre 2026 (20 déc.-2 janv.), 12 places</option>
                 </select>
                 <div className={s.fr}>
                   <div>
@@ -433,7 +433,7 @@ export default function RetourAuxSourcesPage() {
 
       <a href="#reservation" className={`${s.fl} ${floatShow ? s.sh : ''}`}>
         <span className={s.pu} />
-        Places limitées — Réserver
+        Places limitées, Réserver
       </a>
     </div>
   )

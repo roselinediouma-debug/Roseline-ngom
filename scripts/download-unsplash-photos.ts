@@ -25,7 +25,7 @@ const SIZES: Record<string, string> = {
 }
 
 const PHOTOS: Photo[] = [
-  // Hero + cover PDF — grand paysage iconique
+  // Hero + cover PDF, grand paysage iconique
   { slug: 'hero', url: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53', size: 'large' },
   { slug: 'cover', url: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53', size: 'portrait' },
 

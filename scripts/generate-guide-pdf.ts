@@ -43,7 +43,7 @@ async function main() {
     files.forEach((f) => availableImages.add(f))
     coverImageExists = existsSync(COVER_IMAGE)
   } else {
-    console.log(`⚠️  Dossier ${IMAGES_DIR} introuvable — tous les placeholders seront utilisés.`)
+    console.log(`⚠️  Dossier ${IMAGES_DIR} introuvable, tous les placeholders seront utilisés.`)
   }
 
   // Log état des images
@@ -58,7 +58,7 @@ async function main() {
   // 3. Rendu vers fichier
   console.log(`Rendu PDF vers : ${OUTPUT_PDF}`)
   const doc = React.createElement(GuideSenegal, { availableImages, coverImageExists })
-  // @ts-expect-error — React.createElement renvoie un ReactElement, renderToFile accepte ReactElement<DocumentProps>
+  // @ts-expect-error, React.createElement renvoie un ReactElement, renderToFile accepte ReactElement<DocumentProps>
   await renderToFile(doc, OUTPUT_PDF)
 
   console.log('\n✅ PDF généré avec succès !')

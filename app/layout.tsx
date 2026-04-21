@@ -3,6 +3,14 @@ import { Cormorant_Garamond, DM_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LeadPopup from "@/components/LeadPopup";
+import Analytics from "@/components/Analytics";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, SITE_NAME } from "@/lib/seo/metadata";
+import {
+  organizationSchema,
+  personSchema,
+  webSiteSchema,
+} from "@/lib/seo/jsonld";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -26,10 +34,80 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Roseline Ngom — Experte voyage Sénégal & Afrique de l'Ouest",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default:
+      "Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme",
+    template: "%s, Roseline Ngom",
+  },
   description:
-    "Découvrez le Sénégal autrement avec Roseline Ngom, fondatrice de TripAfro. Voyages immersifs, formations et conseils personnalisés.",
-  keywords: "voyage Sénégal, TripAfro, Casamance, voyage Afrique, guide Sénégal",
+    "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme. 10 ans d'expertise terrain par Roseline Ngom, fondatrice TripAfro.",
+  keywords: [
+    "voyage Sénégal",
+    "voyage sur mesure Sénégal",
+    "voyage diaspora Sénégal",
+    "Retour aux Sources Sénégal",
+    "TripAfro",
+    "Casamance",
+    "Sine Saloum",
+    "guide voyage Sénégal",
+    "consulting digital hôtel",
+    "IA tourisme",
+    "Roseline Ngom",
+  ],
+  authors: [{ name: "Roseline Ngom", url: SITE_URL }],
+  creator: "Roseline Ngom",
+  publisher: SITE_NAME,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title:
+      "Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme",
+    description:
+      "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme.",
+    images: [
+      {
+        url: "/images/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Roseline Ngom, Experte voyage Sénégal",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Roseline Ngom, Experte voyage Sénégal",
+    description:
+      "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital pour hôtels et agences.",
+    images: ["/images/og-default.jpg"],
+    creator: "@roselinengom",
+    site: "@roselinengom",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  verification: {
+    // À remplir après création de la propriété Google Search Console
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
+  category: "Travel",
 };
 
 export default function RootLayout({
@@ -38,11 +116,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${cormorant.variable} ${dmSans.variable} ${poppins.variable}`}>
-      <body className="min-h-screen antialiased" style={{ backgroundColor: '#FEFCF9', color: '#0A0A0A' }}>
+    <html
+      lang="fr"
+      className={`${cormorant.variable} ${dmSans.variable} ${poppins.variable}`}
+    >
+      <head>
+        <JsonLd data={[webSiteSchema(), organizationSchema(), personSchema()]} />
+      </head>
+      <body
+        className="min-h-screen antialiased"
+        style={{ backgroundColor: "#FEFCF9", color: "#0A0A0A" }}
+      >
         {children}
         <WhatsAppButton />
         <LeadPopup />
+        <Analytics />
       </body>
     </html>
   );

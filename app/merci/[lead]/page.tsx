@@ -42,6 +42,18 @@ const CONTENT: Record<string, { title: string; message: string; cta: { label: st
       'Vos deux guides arrivent dans votre boite email dans les prochaines minutes. Pensez a verifier vos spams.',
     cta: { label: 'Decouvrir nos voyages', href: '/voyages' },
   },
+  'le-bled-autrement': {
+    title: 'Votre guide Le Bled Autrement arrive',
+    message:
+      'Regardez votre boite email dans les prochaines minutes (pensez aux spams). Le PDF 14 pages est prêt. Si vous êtes concerné par un vrai retour, découvrez notre voyage Retour aux Sources.',
+    cta: { label: 'Découvrir Retour aux Sources', href: '/voyages/retour-aux-sources' },
+  },
+  'benchmark-institutionnel': {
+    title: 'Votre benchmark est en route',
+    message:
+      "Merci pour votre intérêt. Le rapport arrive par email dans les prochaines minutes. Si vous représentez une institution et souhaitez échanger sur votre stratégie touristique, je vous réponds personnellement sous 48h.",
+    cta: { label: 'Voir l’offre consulting institutionnel', href: '/consulting/institutionnel' },
+  },
 }
 
 const DEFAULT_CONTENT = {

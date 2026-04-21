@@ -9,7 +9,7 @@ import SectionWrapper from '@/components/SectionWrapper'
 import { ExperienceCard } from '@/components/ExperienceCard'
 import Footer from '@/components/Footer'
 
-// ─── Teasers des 15 expériences — version "verrouillée" pour créer du suspense ──
+// ─── Teasers des 15 expériences, version "verrouillée" pour créer du suspense ──
 // Le contenu réel (nom du lieu, contact, tips) est dans le PDF uniquement.
 const EXPERIENCES_PREVIEW = [
   // DAKAR & CAP-VERT
@@ -45,7 +45,7 @@ const TESTIMONIALS = [
     name: 'Marcus T.',
     country: 'New York, USA',
     image: '/images/senegal/testimonial-2.jpg',
-    text: 'Indispensable pour vivre le vrai Sénégal — pas le Sénégal des resorts. J\'ai suivi l\'itinéraire Bassari à la lettre.',
+    text: 'Indispensable pour vivre le vrai Sénégal, pas le Sénégal des resorts. J\'ai suivi l\'itinéraire Bassari à la lettre.',
   },
   {
     name: 'Sophie K.',
@@ -129,7 +129,7 @@ export default function GuidePage() {
       <Nav />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 1 — HERO (full-screen photo)
+          SECTION 1, HERO (full-screen photo)
          ═══════════════════════════════════════════════════════════ */}
       <HeroSection
         imageSrc="/images/senegal/hero.jpg"
@@ -149,7 +149,7 @@ export default function GuidePage() {
       />
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 2 — EDITORIAL (bg cream)
+          SECTION 2, EDITORIAL (bg cream)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="cream">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
@@ -225,7 +225,7 @@ export default function GuidePage() {
             </h2>
             <p className="text-base leading-relaxed mb-4 font-dm-sans" style={{ color: '#0A0A0A', opacity: 0.78 }}>
               Pendant dix ans, j&apos;ai emmené des voyageurs découvrir le Sénégal. À chaque fois, ce sont les mêmes
-              lieux, les mêmes rencontres qui transforment leur séjour. J&apos;ai rassemblé ces 15 pépites ici —
+              lieux, les mêmes rencontres qui transforment leur séjour. J&apos;ai rassemblé ces 15 pépites ici -
               pour que vous viviez un voyage, pas des vacances.
             </p>
             <p className="text-base leading-relaxed mb-4 font-dm-sans" style={{ color: '#0A0A0A', opacity: 0.78 }}>
@@ -256,7 +256,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 3 — PHOTO STRIP (bg bordeaux)
+          SECTION 3, PHOTO STRIP (bg bordeaux)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="bordeaux">
         <div className="text-center mb-10">
@@ -294,7 +294,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 4 — 15 EXPÉRIENCES GRID (bg cream)
+          SECTION 4, 15 EXPÉRIENCES GRID (bg cream)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="cream">
         <div className="text-center mb-16">
@@ -329,7 +329,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 5 — MEET ROSELINE (bg white)
+          SECTION 5, MEET ROSELINE (bg white)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="white">
         <div className="grid md:grid-cols-[auto_1fr] gap-12 items-center">
@@ -418,7 +418,7 @@ export default function GuidePage() {
 
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 6 — GALERIE MOSAÏQUE (bg bordeaux)
+          SECTION 6, GALERIE MOSAÏQUE (bg bordeaux)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="bordeaux" withHexOverlay>
         <div className="text-center mb-12">
@@ -473,7 +473,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 7 — TESTIMONIALS (bg cream)
+          SECTION 7, TESTIMONIALS (bg cream)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="cream">
         <div className="text-center mb-14">
@@ -512,7 +512,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 8 — CAPTURE FORM (bg white)
+          SECTION 8, CAPTURE FORM (bg white)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="white" id="guide-form">
         <div className="grid md:grid-cols-2 gap-0 rounded-[4px] overflow-hidden" style={{ boxShadow: '0 25px 60px rgba(86,14,19,0.12)' }}>
@@ -612,7 +612,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 9 — FAQ (bg bordeaux)
+          SECTION 9, FAQ (bg bordeaux)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="bordeaux">
         <div className="max-w-2xl mx-auto">
@@ -655,7 +655,7 @@ export default function GuidePage() {
       </SectionWrapper>
 
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 10 — FINAL CTA (bg black)
+          SECTION 10, FINAL CTA (bg black)
          ═══════════════════════════════════════════════════════════ */}
       <SectionWrapper bg="black">
         {/* Background image with low opacity */}

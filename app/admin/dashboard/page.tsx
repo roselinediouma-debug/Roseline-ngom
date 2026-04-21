@@ -74,10 +74,10 @@ export default function DashboardPage() {
 
         {/* Métriques */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <MetricCard label="Total leads" value={loading ? '—' : metrics.totalLeads} icon="👥" sub="Tous temps" />
-          <MetricCard label="Leads ce mois" value={loading ? '—' : metrics.leadsThisMonth} icon="📈" sub="Mois en cours" color="#2563eb" />
-          <MetricCard label="Commandes" value={loading ? '—' : metrics.totalCommandes} icon="💳" sub="Stripe" color="#7c3aed" />
-          <MetricCard label="CA total" value={loading ? '—' : `${(metrics.caTotal / 100).toFixed(0)} €`} icon="💰" sub="Paiements réussis" color="#16a34a" />
+          <MetricCard label="Total leads" value={loading ? '-' : metrics.totalLeads} icon="👥" sub="Tous temps" />
+          <MetricCard label="Leads ce mois" value={loading ? '-' : metrics.leadsThisMonth} icon="📈" sub="Mois en cours" color="#2563eb" />
+          <MetricCard label="Commandes" value={loading ? '-' : metrics.totalCommandes} icon="💳" sub="Stripe" color="#7c3aed" />
+          <MetricCard label="CA total" value={loading ? '-' : `${(metrics.caTotal / 100).toFixed(0)} €`} icon="💰" sub="Paiements réussis" color="#16a34a" />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
@@ -96,7 +96,7 @@ export default function DashboardPage() {
                 {recentLeads.map((lead, i) => (
                   <div key={i} className="px-6 py-3 flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-medium">{lead.prenom || '—'} · {lead.email}</div>
+                      <div className="text-sm font-medium">{lead.prenom || '-'} · {lead.email}</div>
                       <div className="text-xs opacity-50">{lead.source}</div>
                     </div>
                     <div className="text-xs opacity-40">{formatDate(lead.created_at)}</div>

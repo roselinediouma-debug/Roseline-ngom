@@ -44,7 +44,7 @@ async function createCheckoutSession(productKey: string, origin: string) {
   return session.url
 }
 
-// GET — lien direct depuis les pages (href="/api/checkout?product=guide_casamance")
+// GET, lien direct depuis les pages (href="/api/checkout?product=guide_casamance")
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
@@ -62,7 +62,7 @@ export async function GET(req: Request) {
   }
 }
 
-// POST — appel API depuis le frontend (fetch)
+// POST, appel API depuis le frontend (fetch)
 export async function POST(req: Request) {
   try {
     const { productKey } = await req.json() as { productKey: string }

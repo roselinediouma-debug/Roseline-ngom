@@ -21,9 +21,9 @@ import {
 // TYPOGRAPHIE
 // ============================================================================
 // On utilise les polices intégrées au PDF (PostScript) :
-//   Helvetica    — pour le corps (sans-serif lisible)
-//   Times-Roman  — pour les titres (serif élégant qui évoque le livre premium)
-// Aucune requête réseau, aucune dépendance externe — rendu 100% fiable.
+//   Helvetica   , pour le corps (sans-serif lisible)
+//   Times-Roman , pour les titres (serif élégant qui évoque le livre premium)
+// Aucune requête réseau, aucune dépendance externe, rendu 100% fiable.
 // Rebinding : le reste du code utilise fontFamily: 'Inter' et 'Playfair'
 // pour plus de lisibilité, mais ces aliases pointent vers les fonts intégrées.
 
@@ -746,7 +746,7 @@ export function GuideSenegal({ availableImages, coverImageExists }: GuideOptions
         <View style={styles.finalCTA}>
           <Text style={styles.finalCTATitle}>Bon voyage au Sénégal ✦</Text>
           <Text style={styles.finalCTAText}>
-            Et n&apos;hésitez pas à m&apos;écrire — j&apos;adore avoir des nouvelles de vos périples.
+            Et n&apos;hésitez pas à m&apos;écrire, j&apos;adore avoir des nouvelles de vos périples.
           </Text>
         </View>
 

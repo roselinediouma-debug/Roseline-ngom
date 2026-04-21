@@ -23,7 +23,7 @@ const C = {
 export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
   const greeting = prenom && prenom.trim() ? `Bonjour ${prenom.trim()},` : 'Bonjour,'
 
-  const subject = 'Votre guide Sénégal est prêt — Roseline Ngom'
+  const subject = 'Votre guide Sénégal est prêt, Roseline Ngom'
 
   const htmlContent = `<!DOCTYPE html>
 <html lang="fr">
@@ -51,7 +51,7 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
             <td style="padding:40px 32px 24px;">
               <p style="font-size:16px;line-height:1.6;margin:0 0 16px;color:${C.noir};">${greeting}</p>
               <p style="font-size:16px;line-height:1.6;margin:0 0 16px;color:${C.noir};">
-                Merci pour votre confiance — votre guide est prêt !
+                Merci pour votre confiance, votre guide est prêt !
               </p>
               <p style="font-size:16px;line-height:1.6;margin:0 0 24px;color:${C.noir};">
                 J'y ai rassemblé les 15 expériences que j'offre à mes amis quand ils viennent découvrir mon pays.
@@ -71,13 +71,13 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
 
               <!-- Ce que contient le guide -->
               <div style="background-color:${C.creme};border-radius:12px;padding:24px;margin:0 0 28px;">
-                <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:12px;">Au sommaire — 5 régions, 15 expériences</div>
+                <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:12px;">Au sommaire, 5 régions, 15 expériences</div>
                 <ul style="margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.9;color:${C.noir};">
-                  <li>Dakar & Cap-Vert — Gorée, Lac Rose</li>
-                  <li>Petite Côte — Bandia, Fathala, Somone, Mbour, Fadial, Fadiouth</li>
-                  <li>Sine Saloum — mangroves en pirogue UNESCO</li>
-                  <li>Nord & Désert — Saint-Louis en calèche, Lompoul sous les étoiles</li>
-                  <li>Casamance & Îles — Karabane, Nioumoune, Hitou</li>
+                  <li>Dakar & Cap-Vert, Gorée, Lac Rose</li>
+                  <li>Petite Côte, Bandia, Fathala, Somone, Mbour, Fadial, Fadiouth</li>
+                  <li>Sine Saloum, mangroves en pirogue UNESCO</li>
+                  <li>Nord & Désert, Saint-Louis en calèche, Lompoul sous les étoiles</li>
+                  <li>Casamance & Îles, Karabane, Nioumoune, Hitou</li>
                   <li>+ conseils pratiques, prix, contacts pour chaque expérience</li>
                 </ul>
               </div>
@@ -90,7 +90,7 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
                 Envie d'aller plus loin ?
               </div>
               <p style="font-size:15px;line-height:1.6;margin:0 0 20px;color:${C.noir};">
-                Si vous préparez un voyage concret, réservez 15 minutes avec moi — on valide ensemble votre projet,
+                Si vous préparez un voyage concret, réservez 15 minutes avec moi, on valide ensemble votre projet,
                 sans engagement.
               </p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0">
@@ -119,7 +119,7 @@ export function guideDeliveryEmail({ prenom }: { prenom?: string }) {
             </td>
           </tr>
 
-          <!-- FOOTER — Réseaux sociaux -->
+          <!-- FOOTER, Réseaux sociaux -->
           <tr>
             <td style="background-color:${C.creme};padding:32px 32px 16px;text-align:center;">
               <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.bordeaux};font-weight:700;margin-bottom:14px;">Retrouvez-moi</div>

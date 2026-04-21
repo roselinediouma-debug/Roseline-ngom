@@ -90,7 +90,7 @@ export default function VoyageSignaturePage() {
         <div className={s.heroBg}>
           <Image
             src="/images/senegal/hero.jpg"
-            alt="Voyage Signature — Sénégal sur mesure"
+            alt="Voyage Signature, Sénégal sur mesure"
             fill
             priority
             sizes="100vw"

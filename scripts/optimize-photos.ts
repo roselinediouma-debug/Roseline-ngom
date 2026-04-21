@@ -20,7 +20,7 @@ async function optimizeSquare(input: string, output: string, size = 800) {
   await writeFile(tmpPath, buf)
   try { await unlink(outPath) } catch {}
   await rename(tmpPath, outPath)
-  console.log(`  ✅ ${output} — ${Math.round(buf.length / 1024)} KB (from ${meta.width}x${meta.height})`)
+  console.log(`  ✅ ${output}, ${Math.round(buf.length / 1024)} KB (from ${meta.width}x${meta.height})`)
 }
 
 async function optimizeLandscape(input: string, output: string, width = 1600) {
@@ -35,7 +35,7 @@ async function optimizeLandscape(input: string, output: string, width = 1600) {
   await writeFile(tmpPath, buf)
   try { await unlink(outPath) } catch {}
   await rename(tmpPath, outPath)
-  console.log(`  ✅ ${output} — ${Math.round(buf.length / 1024)} KB (from ${meta.width}x${meta.height})`)
+  console.log(`  ✅ ${output}, ${Math.round(buf.length / 1024)} KB (from ${meta.width}x${meta.height})`)
 }
 
 async function main() {
@@ -47,13 +47,13 @@ async function main() {
   await optimizeSquare(resolve(DIR, 'gallery-3.jpg'), 'gallery-3.jpg')
   await optimizeSquare(resolve(DIR, 'gallery-4.jpg'), 'gallery-4.jpg')
 
-  // Gallery 5 — mangrove Sine Saloum (PNG → JPG carré)
+  // Gallery 5, mangrove Sine Saloum (PNG → JPG carré)
   await optimizeSquare(resolve(DIR, 'mangrove-sinesaloum.png'), 'gallery-5.jpg')
 
-  // Gallery 6 — pirogue Sine Saloum
+  // Gallery 6, pirogue Sine Saloum
   await optimizeSquare(resolve(DIR, 'SINE SALOUM', 'IMG_6938.jpg'), 'gallery-6.jpg')
 
-  // Lac Rose — remplacer par la vraie photo
+  // Lac Rose, remplacer par la vraie photo
   console.log('\nExpériences :')
   await optimizeLandscape(resolve(DIR, 'exp-01-lac-rose-new.jpg'), 'exp-01-lac-rose.jpg')
 

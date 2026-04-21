@@ -13,7 +13,7 @@ export async function GET() {
     return NextResponse.json(data)
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Erreur serveur'
-    // Supabase not configured — return empty array
+    // Supabase not configured, return empty array
     if (message.includes('non configuré')) {
       return NextResponse.json([])
     }

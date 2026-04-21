@@ -4,18 +4,18 @@ import { sendTransactionalEmail } from '@/lib/brevo'
 import { getWelcomeEmail } from '@/lib/emails/welcomeSequence'
 
 /**
- * Cron Vercel — séquence de bienvenue (5 emails).
+ * Cron Vercel, séquence de bienvenue (5 emails).
  *
  * Déclenchement : quotidien via vercel.json (cf. "crons" field).
  * Protection : header `Authorization: Bearer ${CRON_SECRET}` (Vercel l'ajoute auto).
  *
  * Planning :
  *   J+0  : guideDelivery (envoyé immédiatement depuis /api/capture)
- *   J+1  : step1 — Bienvenue + Instagram
- *   J+3  : step2 — 3 erreurs à éviter
- *   J+7  : step3 — Guide 7 jours
- *   J+14 : step4 — Casamance
- *   J+21 : step5 — Bundle
+ *   J+1  : step1, Bienvenue + Instagram
+ *   J+3  : step2, 3 erreurs à éviter
+ *   J+7  : step3, Guide 7 jours
+ *   J+14 : step4, Casamance
+ *   J+21 : step5, Bundle
  *
  * Logique : pour chaque lead non-unsubscribed,
  *   on calcule `daysSinceSignup` et on envoie le plus haut step
@@ -40,7 +40,7 @@ function daysBetween(from: Date, to: Date): number {
 }
 
 export async function GET(req: Request) {
-  // Auth — Vercel cron envoie le header Authorization: Bearer $CRON_SECRET
+  // Auth, Vercel cron envoie le header Authorization: Bearer $CRON_SECRET
   const authHeader = req.headers.get('authorization')
   if (
     process.env.CRON_SECRET &&

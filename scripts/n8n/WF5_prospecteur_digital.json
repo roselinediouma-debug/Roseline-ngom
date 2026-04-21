@@ -1,0 +1,332 @@
+﻿{
+  "name": "WF5 - Prospecteur Digital (Deep Researcher)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "cron-weekly",
+      "name": "Cron - Lundi 9h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "brief",
+              "name": "prospection_brief",
+              "type": "string",
+              "value": "Tu es un prospecteur digital pour Roseline Ngom (consultante Digital & IA tourisme au Sénégal). Trouve 10 hôtels indépendants 3-4 étoiles au Sénégal (Dakar, Saly, Saint-Louis, Cap Skirring, Sine Saloum) qui ont des faiblesses digitales exploitables. Pour chaque hôtel, diagnostique avec rigueur.\n\nCritères de sélection:\n- Hôtel indépendant (pas une chaîne internationale comme Pullman, Radisson, Accor)\n- 3 ou 4 étoiles\n- Actif (pas fermé)\n- Présence web existante mais perfectible\n\nPour chaque hôtel, produis STRICTEMENT ce JSON (tableau de 10 objets, rien avant rien après):\n[\n  {\n    \"nom_etablissement\": \"...\",\n    \"ville\": \"...\",\n    \"pays\": \"Senegal\",\n    \"type_etablissement\": \"hotel\",\n    \"etoiles\": 3 ou 4,\n    \"telephone\": \"+221 ...\",\n    \"site_web\": \"https://...\" ou null,\n    \"google_business\": true ou false,\n    \"email_contact\": \"contact@... ou gerance@...\" (le plus proche décideur possible),\n    \"instagram_url\": \"https://instagram.com/...\" ou null,\n    \"instagram_followers\": entier ou null,\n    \"faiblesses_digitales\": [\"faiblesse concrète 1\", \"faiblesse concrète 2\", \"faiblesse concrète 3\"],\n    \"opportunite\": \"1 phrase: l'action digitale prioritaire à proposer pour ce hôtel\",\n    \"score_ia\": 0-100 (qualité du prospect = plus c'est élevé, plus l'hôtel est mûr pour signer),\n    \"resume_ia\": \"2 phrases: pourquoi ce hôtel est un bon prospect maintenant\"\n  }\n]\n\nImportant: faiblesses doivent être concrètes et observées (ex: 'pas de moteur de réservation', 'site non responsive', 'Instagram inactif depuis 6 mois', 'photos floues', 'pas de Google My Business optimisé'). Pas d'affirmations vagues.\n\nRéponds UNIQUEMENT avec le JSON array, sans markdown, sans ```json, sans commentaire."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-brief",
+      "name": "Set - Brief Prospection",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/sessions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "anthropic-beta", "value": "managed-agents-2026-04-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"agent\": \"agent_011CaEwfZYzgX4HY4u3abCFa\",\n  \"environment_id\": \"env_01PTeUwmQQMqf8YG25g6NVv1\"\n}",
+        "options": {}
+      },
+      "id": "create-session",
+      "name": "Create Agent Session",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ANTHROPIC_API_KEY_HEADER",
+          "name": "Anthropic x-api-key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.anthropic.com/v1/sessions/{{ $json.id }}/events",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "anthropic-beta", "value": "managed-agents-2026-04-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"events\": [\n    {\n      \"type\": \"user.message\",\n      \"content\": [\n        { \"type\": \"text\", \"text\": {{ JSON.stringify($('Set - Brief Prospection').item.json.prospection_brief) }} }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "send-message",
+      "name": "Send User Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [800, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ANTHROPIC_API_KEY_HEADER",
+          "name": "Anthropic x-api-key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 300,
+        "unit": "seconds"
+      },
+      "id": "wait-kickoff",
+      "name": "Wait 5s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.anthropic.com/v1/sessions/{{ $('Create Agent Session').item.json.id }}/events?limit=200&order=asc",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "anthropic-beta", "value": "managed-agents-2026-04-01" },
+            { "name": "accept", "value": "application/json" }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "stream-response",
+      "name": "Stream Agent Output",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ANTHROPIC_API_KEY_HEADER",
+          "name": "Anthropic x-api-key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse JSON events (GET /v1/sessions/{id}/events), non-streaming\nconst resp = $input.first().json;\nconst events = Array.isArray(resp) ? resp : (resp.data || resp.events || []);\nif (!events.length) throw new Error('No events in session response');\n\n// Trouve le dernier event type=='agent.message' (ou 'agent') avec content text\nconst agentMessages = events.filter(e => {\n  const t = e.type || '';\n  return (t === 'agent' || t.startsWith('agent.message') || t === 'agent.turn_completed') && Array.isArray(e.content);\n});\nconst lastAgent = agentMessages[agentMessages.length - 1] || events[events.length - 1];\nif (!lastAgent || !Array.isArray(lastAgent.content)) {\n  throw new Error('No agent message with content found. Last event type: ' + (events[events.length-1]||{}).type);\n}\n\nconst textBlock = lastAgent.content.find(c => (c.type === 'text' || c.type === 'output_text') && c.text);\nif (!textBlock) throw new Error('Agent message has no text block');\n\n// Extraire le JSON array (même si entouré de markdown fences)\nlet jsonText = textBlock.text.trim();\nconst match = jsonText.match(/\\[[\\s\\S]*\\]/);\nif (!match) throw new Error('No JSON array in agent output. Raw: ' + jsonText.slice(0,500));\n\nconst prospects = JSON.parse(match[0]);\nif (!Array.isArray(prospects)) throw new Error('Parsed value is not an array');\n\nreturn prospects.map(p => ({\n  json: {\n    ...p,\n    agent_session_id: $('Create Agent Session').item.json.id,\n    source: 'deep_researcher',\n    raw_agent_output: p\n  }\n}));"
+      },
+      "id": "parse-prospects",
+      "name": "Parse Prospects JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://okyogznigbcqcwvfhihi.supabase.co/rest/v1/prospects_digital?on_conflict=site_web",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates,return=representation" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ nom_etablissement: $json.nom_etablissement, ville: $json.ville, pays: $json.pays || 'Senegal', type_etablissement: $json.type_etablissement || 'hotel', etoiles: $json.etoiles, telephone: $json.telephone, site_web: $json.site_web, google_business: $json.google_business === true, email_contact: $json.email_contact, instagram_url: $json.instagram_url, instagram_followers: $json.instagram_followers, faiblesses_digitales: $json.faiblesses_digitales || [], opportunite: $json.opportunite, score_ia: $json.score_ia, resume_ia: $json.resume_ia, agent_session_id: $json.agent_session_id, source: 'deep_researcher', raw_agent_output: $json.raw_agent_output }) }}",
+        "options": {}
+      },
+      "id": "supabase-upsert",
+      "name": "Supabase Upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1600, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "SUPABASE_SERVICE_ROLE",
+          "name": "Supabase Roseline"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filtre: garder seulement les prospects avec email valide et score >= 60\nconst items = $input.all();\nreturn items.filter(i => {\n  const p = i.json;\n  return p.email_contact && /@/.test(p.email_contact) && (p.score_ia || 0) >= 60;\n});"
+      },
+      "id": "filter-top-prospects",
+      "name": "Filter Top Prospects",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1800, 300]
+    },
+    {
+      "parameters": {
+        "model": "claude-haiku-4-5",
+        "options": {
+          "maxTokensToSample": 600,
+          "temperature": 0.7
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Tu es l'assistante de Roseline Ngom, consultante Digital & IA pour l'hôtellerie au Sénégal. Rédige un email de prospection CHAUD, personnalisé et concis pour ce hôtel:\n\nHôtel: {{ $json.nom_etablissement }} ({{ $json.ville }}, {{ $json.etoiles }}★)\nFaiblesse principale observée: {{ ($json.faiblesses_digitales || [])[0] }}\nOpportunité: {{ $json.opportunite }}\n\nContraintes:\n- FR, ton chaleureux mais professionnel\n- 120-150 mots max\n- Objet accrocheur (10 mots max) qui mentionne l'hôtel ou le Sénégal\n- 1ère phrase: mention spécifique (prouve que tu as regardé l'établissement)\n- Propose un audit express gratuit 15 min\n- CTA: lien Calendly https://calendly.com/roselinengom/audit-15min\n- Signature: Roseline Ngom · Consultante Digital & IA Tourisme · www.roselinengom.com\n\nRéponds UNIQUEMENT en JSON: {\"subject\": \"...\", \"body\": \"...\"} (body en texte brut, \\n pour sauts de ligne)."
+            }
+          ]
+        }
+      },
+      "id": "haiku-email",
+      "name": "Claude Haiku - Email Perso",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [2000, 300],
+      "credentials": {
+        "anthropicApi": {
+          "id": "ANTHROPIC_API_KEY",
+          "name": "Anthropic API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse output Claude Haiku (JSON {subject, body})\nconst items = $input.all();\nreturn items.map((i, idx) => {\n  const prospect = $('Filter Top Prospects').all()[idx].json;\n  let parsed = { subject: '', body: '' };\n  try {\n    const text = (i.json.content || i.json.text || i.json.output || '').trim();\n    const match = text.match(/\\{[\\s\\S]*\\}/);\n    if (match) parsed = JSON.parse(match[0]);\n  } catch (e) {}\n  return {\n    json: {\n      ...prospect,\n      email_subject: parsed.subject || `Un regard sur le digital de ${prospect.nom_etablissement}`,\n      email_body: parsed.body || ''\n    }\n  };\n});"
+      },
+      "id": "parse-email",
+      "name": "Parse Email Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email_contact }}",
+        "subject": "={{ $json.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "gmail-send",
+      "name": "Gmail - Send Cold Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [2400, 300],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GMAIL_OAUTH_ROSELINE",
+          "name": "Gmail Roseline"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://okyogznigbcqcwvfhihi.supabase.co/rest/v1/prospects_digital?email_contact=eq.{{ encodeURIComponent($json.email_contact) }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ statut: 'contacte', audit_envoye: true, date_audit_envoye: new Date().toISOString(), last_contact_at: new Date().toISOString(), nb_relances: 0, thread_gmail_id: ($('Gmail - Send Cold Email').item.json.threadId || '') }) }}",
+        "options": {}
+      },
+      "id": "supabase-update-contact",
+      "name": "Supabase - Mark Contacted",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2600, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "SUPABASE_SERVICE_ROLE",
+          "name": "Supabase Roseline"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Agrège stats pour Telegram\nconst contacted = $input.all().length;\nconst total = $('Parse Prospects JSON').all().length;\nreturn [{ json: { total_prospects: total, contacted, date: new Date().toISOString().slice(0,10) } }];"
+      },
+      "id": "stats",
+      "name": "Aggregate Stats",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2800, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "chatId": "5486966165",
+        "text": "=🤖 *WF5 Prospecteur Digital, {{ $json.date }}*\n\n✅ {{ $json.contacted }} hôtels contactés sur {{ $json.total_prospects }} identifiés\n📊 Admin : https://supabase.com/dashboard/project/okyogznigbcqcwvfhihi/editor",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram-notify",
+      "name": "Telegram - Notify Admin",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [3000, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_BOT_ROSELINE",
+          "name": "Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron - Lundi 9h":        { "main": [[{ "node": "Set - Brief Prospection", "type": "main", "index": 0 }]] },
+    "Set - Brief Prospection": { "main": [[{ "node": "Create Agent Session", "type": "main", "index": 0 }]] },
+    "Create Agent Session":   { "main": [[{ "node": "Send User Message", "type": "main", "index": 0 }]] },
+    "Send User Message":      { "main": [[{ "node": "Wait 5s", "type": "main", "index": 0 }]] },
+    "Wait 5s":                { "main": [[{ "node": "Stream Agent Output", "type": "main", "index": 0 }]] },
+    "Stream Agent Output":    { "main": [[{ "node": "Parse Prospects JSON", "type": "main", "index": 0 }]] },
+    "Parse Prospects JSON":   { "main": [[{ "node": "Supabase Upsert", "type": "main", "index": 0 }]] },
+    "Supabase Upsert":        { "main": [[{ "node": "Filter Top Prospects", "type": "main", "index": 0 }]] },
+    "Filter Top Prospects":   { "main": [[{ "node": "Claude Haiku - Email Perso", "type": "main", "index": 0 }]] },
+    "Claude Haiku - Email Perso": { "main": [[{ "node": "Parse Email Content", "type": "main", "index": 0 }]] },
+    "Parse Email Content":    { "main": [[{ "node": "Gmail - Send Cold Email", "type": "main", "index": 0 }]] },
+    "Gmail - Send Cold Email": { "main": [[{ "node": "Supabase - Mark Contacted", "type": "main", "index": 0 }]] },
+    "Supabase - Mark Contacted": { "main": [[{ "node": "Aggregate Stats", "type": "main", "index": 0 }]] },
+    "Aggregate Stats":        { "main": [[{ "node": "Telegram - Notify Admin", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

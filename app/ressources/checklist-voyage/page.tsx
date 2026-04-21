@@ -338,7 +338,7 @@ export default function ChecklistVoyagePage() {
 
       {/* Footer minimal */}
       <footer className="py-8 px-4 text-center text-xs opacity-40" style={{ backgroundColor: '#FEFCF9', color: '#0A0A0A' }}>
-        &copy; {new Date().getFullYear()} Roseline Ngom — TripAfro &middot;{' '}
+        &copy; {new Date().getFullYear()} Roseline Ngom, TripAfro &middot;{' '}
         <a href="/" className="underline hover:opacity-70">Retour a l&apos;accueil</a>
       </footer>
     </div>
