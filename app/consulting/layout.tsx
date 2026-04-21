@@ -1,4 +1,6 @@
 import { buildMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema, breadcrumbSchema } from '@/lib/seo/jsonld'
 
 export const metadata = buildMetadata({
   title: 'Consulting tourisme Afrique, audit stratégique et accompagnement',
@@ -9,5 +11,24 @@ export const metadata = buildMetadata({
 })
 
 export default function ConsultingLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <JsonLd
+        data={[
+          serviceSchema({
+            name: 'Consulting tourisme Afrique',
+            description:
+              'Audit stratégique, accompagnement et expertise institutionnelle pour acteurs du tourisme en Afrique.',
+            slug: '/consulting',
+            serviceType: 'Tourism strategy consulting',
+          }),
+          breadcrumbSchema([
+            { name: 'Accueil', path: '/' },
+            { name: 'Consulting', path: '/consulting' },
+          ]),
+        ]}
+      />
+      {children}
+    </>
+  )
 }
