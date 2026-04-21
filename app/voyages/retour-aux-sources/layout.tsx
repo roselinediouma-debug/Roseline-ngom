@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <JsonLd
         data={[
-          touristTripSchema({
+          ...touristTripSchema({
             name: 'Retour aux Sources, voyage diaspora au Sénégal (14 jours)',
             description:
               "Voyage immersif en groupe (8-15) de 14 jours pour la diaspora sénégalaise. Dakar, Gorée, Saint-Louis, Sine Saloum, Casamance.",

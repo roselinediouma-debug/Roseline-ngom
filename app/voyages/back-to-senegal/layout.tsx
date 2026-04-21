@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <JsonLd
         data={[
-          touristTripSchema({
+          ...touristTripSchema({
             name: 'Back to Senegal, accompagnement entrepreneurs diaspora',
             description:
               "Programme d'accompagnement 7 jours pour entrepreneurs diaspora qui veulent s'installer ou investir au Sénégal : immersion, réseau, stratégie.",

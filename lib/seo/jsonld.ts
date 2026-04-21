@@ -144,7 +144,15 @@ export function faqSchema(items: Array<{ question: string; answer: string }>) {
   }
 }
 
-/** TouristTrip, pour les pages voyages (Retour aux Sources, Voyage Signature, Back to Senegal). */
+/**
+ * Schémas pour une page voyage.
+ * Retourne un tableau de 2 schémas :
+ * 1. TouristTrip (descriptif du voyage)
+ * 2. Product avec aggregateRating (pour les étoiles dans le SERP)
+ *
+ * NOTE: Google ne supporte pas aggregateRating directement sur TouristTrip
+ * (erreur "Type d'objet non valide"). On utilise Product en parallèle.
+ */
 export function touristTripSchema(input: {
   name: string
   description: string
@@ -171,7 +179,7 @@ export function touristTripSchema(input: {
   const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
   const url = `${SITE_URL}${slug.startsWith('/') ? slug : `/${slug}`}`
 
-  return {
+  const trip = {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',
     name,
@@ -181,12 +189,15 @@ export function touristTripSchema(input: {
     provider: { '@id': `${SITE_URL}/#organization` },
     offers: {
       '@type': 'Offer',
-      price: priceFrom,
+      price: String(priceFrom),
       priceCurrency,
       availability: 'https://schema.org/InStock',
       url,
     },
-    touristType: 'Diaspora, voyageurs culturels, familles',
+    touristType: {
+      '@type': 'Audience',
+      audienceType: 'Diaspora, voyageurs culturels, familles',
+    },
     itinerary: {
       '@type': 'ItemList',
       itemListElement: itineraryPlaces.map((place, idx) => ({
@@ -196,18 +207,36 @@ export function touristTripSchema(input: {
       })),
     },
     duration: `P${durationDays}D`,
-    ...(aggregateRating
-      ? {
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: aggregateRating.ratingValue,
-            reviewCount: aggregateRating.reviewCount,
-            bestRating: 5,
-            worstRating: 1,
-          },
-        }
-      : {}),
   }
+
+  if (!aggregateRating) return [trip]
+
+  // Product parallèle pour porter les étoiles (rich snippet Review)
+  const product = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    image: [imageUrl],
+    url,
+    brand: { '@id': `${SITE_URL}/#organization` },
+    offers: {
+      '@type': 'Offer',
+      price: String(priceFrom),
+      priceCurrency,
+      availability: 'https://schema.org/InStock',
+      url,
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: aggregateRating.ratingValue,
+      reviewCount: aggregateRating.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  }
+
+  return [trip, product]
 }
 
 /** Service, pour pages consulting et digital-ia. */

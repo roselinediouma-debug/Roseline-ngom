@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <JsonLd
         data={[
-          touristTripSchema({
+          ...touristTripSchema({
             name: 'Voyage Signature, Sénégal sur-mesure',
             description:
               "Voyage privé sur-mesure au Sénégal : itinéraire unique, hébergements d'exception, rencontres authentiques. Conçu avec Roseline Ngom.",
