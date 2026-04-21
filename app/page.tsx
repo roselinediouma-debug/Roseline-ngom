@@ -6,7 +6,36 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import JsonLd from '@/components/JsonLd'
+import { faqSchema } from '@/lib/seo/jsonld'
 import s from './page.module.css'
+
+const HOMEPAGE_FAQ = [
+  {
+    question: 'Qui est Roseline Ngom ?',
+    answer: "Roseline Ngom est franco-sénégalaise, fondatrice de TripAfro, avec 10 ans d'expertise terrain au Sénégal. Elle accompagne la diaspora dans son retour aux sources et conseille hôtels et agences de tourisme sur leur transformation digitale et l'adoption de l'IA."
+  },
+  {
+    question: 'Comment se déroule un voyage sur-mesure au Sénégal ?',
+    answer: "Après un appel découverte gratuit, Roseline conçoit un itinéraire personnalisé selon vos envies, votre budget et votre durée (7 à 21 jours). Vous recevez un programme détaillé, puis elle coordonne tout sur place : logements, chauffeurs-guides, rencontres, expériences exclusives."
+  },
+  {
+    question: 'Quelle différence entre « Retour aux Sources » et « Voyage Signature » ?',
+    answer: "« Retour aux Sources » est un voyage en groupe (8-15) de 14 jours pensé pour la diaspora, avec un programme fixe. « Voyage Signature » est 100 % sur-mesure, en solo, couple ou famille, durée et itinéraire libres."
+  },
+  {
+    question: 'Faut-il un visa pour voyager au Sénégal ?',
+    answer: "Non, les ressortissants français, belges et canadiens n'ont pas besoin de visa pour un séjour touristique de moins de 90 jours. Seul un passeport valide 6 mois après la date de retour est exigé."
+  },
+  {
+    question: 'Quand partir au Sénégal ?',
+    answer: "La meilleure période est la saison sèche, de novembre à mai, avec des températures entre 25 et 30 °C et peu d'humidité. La saison des pluies (juillet à octobre) offre une nature luxuriante et moins de touristes."
+  },
+  {
+    question: 'Le consulting digital concerne quel type d\'acteurs ?',
+    answer: "Roseline conseille hôtels indépendants, lodges, agences de tourisme et institutions touristiques africaines : audit digital, stratégie contenu, automatisations, adoption pratique de l'IA générative au quotidien."
+  }
+]
 
 /* Hook fade-in au scroll */
 function useReveal<T extends HTMLElement>() {
@@ -29,17 +58,17 @@ function useReveal<T extends HTMLElement>() {
   return ref
 }
 
-const GALLERY_IMAGES = [
-  '/images/senegal/gallery-1.jpg',
-  '/images/senegal/gallery-2.jpg',
-  '/images/senegal/gallery-3.jpg',
-  '/images/senegal/gallery-4.jpg',
-  '/images/senegal/gallery-5.jpg',
-  '/images/senegal/gallery-6.jpg',
-  '/images/senegal/exp-01-lac-rose.jpg',
-  '/images/senegal/goree.jpg',
-  '/images/senegal/saint-louis.jpg',
-  '/images/senegal/Lompoul.jpeg',
+const GALLERY_IMAGES: Array<{ src: string; alt: string }> = [
+  { src: '/images/senegal/gallery-1.jpg', alt: 'Scène de vie au Sénégal, voyage immersif TripAfro' },
+  { src: '/images/senegal/gallery-2.jpg', alt: 'Paysage sénégalais, ambiance authentique' },
+  { src: '/images/senegal/gallery-3.jpg', alt: 'Rencontre locale au Sénégal, voyage culturel' },
+  { src: '/images/senegal/gallery-4.jpg', alt: 'Détail architecture et artisanat sénégalais' },
+  { src: '/images/senegal/gallery-5.jpg', alt: 'Côte atlantique sénégalaise, pirogues et océan' },
+  { src: '/images/senegal/gallery-6.jpg', alt: 'Marché et vie quotidienne au Sénégal' },
+  { src: '/images/senegal/exp-01-lac-rose.jpg', alt: 'Lac Rose du Sénégal avec ses eaux roses et pêcheurs en pirogue' },
+  { src: '/images/senegal/goree.jpg', alt: 'Île de Gorée, site UNESCO, mémoire de la traite transatlantique' },
+  { src: '/images/senegal/saint-louis.jpg', alt: 'Saint-Louis du Sénégal, ville coloniale classée UNESCO' },
+  { src: '/images/senegal/Lompoul.jpeg', alt: 'Désert de Lompoul au Sénégal, dunes de sable doré' },
 ]
 
 export default function HomePage() {
@@ -201,9 +230,9 @@ export default function HomePage() {
       {/* ═══ GALLERY SCROLL ═══ */}
       <section className={s.gallery}>
         <div className={s.galleryTrack}>
-          {galleryLoop.map((src, i) => (
+          {galleryLoop.map((img, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={i} src={src} alt="" loading="lazy" />
+            <img key={i} src={img.src} alt={img.alt} loading="lazy" />
           ))}
         </div>
       </section>
@@ -355,14 +384,73 @@ export default function HomePage() {
           </div>
           <div className={`${s.guidePhotos} ${s.fi}`} ref={guidePhotosRef}>
             <div>
-              <Image src="/images/senegal/exp-01-lac-rose.jpg" alt="" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
+              <Image src="/images/senegal/exp-01-lac-rose.jpg" alt="Lac Rose du Sénégal, destination phare du guide gratuit" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
             </div>
             <div>
-              <Image src="/images/senegal/gallery-5.jpg" alt="" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
+              <Image src="/images/senegal/gallery-5.jpg" alt="Côte atlantique sénégalaise, aperçu du guide gratuit 15 expériences" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
             </div>
           </div>
         </div>
       </section>
+
+      {/* ═══ MAILLAGE INTERNE (SEO) ═══ */}
+      <section style={{ padding: '60px 24px', maxWidth: 1100, margin: '0 auto', borderTop: '1px solid rgba(86,14,19,0.1)' }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 600, textAlign: 'center', marginBottom: 12, color: '#560E13' }}>
+          Pour aller plus loin
+        </h2>
+        <p style={{ textAlign: 'center', opacity: 0.7, marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.7 }}>
+          Préparez votre voyage, découvrez le Sénégal en profondeur, ou explorez mes ressources pour les professionnels du tourisme.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
+          <div>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Voyages signature</h3>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
+              <li>→ <Link href="/voyages/retour-aux-sources" style={{ color: '#560E13', textDecoration: 'underline' }}>Retour aux Sources : voyage diaspora 14 jours</Link></li>
+              <li>→ <Link href="/voyages/voyage-signature" style={{ color: '#560E13', textDecoration: 'underline' }}>Voyage sur-mesure au Sénégal</Link></li>
+              <li>→ <Link href="/voyages/back-to-senegal" style={{ color: '#560E13', textDecoration: 'underline' }}>Back to Senegal pour entrepreneurs</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Ressources & lecture</h3>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
+              <li>→ <Link href="/guide" style={{ color: '#560E13', textDecoration: 'underline' }}>Guide gratuit : 15 expériences secrètes</Link></li>
+              <li>→ <Link href="/blog/voyage-senegal-guide-complet-2026" style={{ color: '#560E13', textDecoration: 'underline' }}>Voyage au Sénégal en 2026, guide complet</Link></li>
+              <li>→ <Link href="/blog/rentrer-au-senegal-diaspora" style={{ color: '#560E13', textDecoration: 'underline' }}>Rentrer au Sénégal, conseils diaspora</Link></li>
+              <li>→ <Link href="/blog" style={{ color: '#560E13', textDecoration: 'underline' }}>Tous les articles du blog</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Pour les pros du tourisme</h3>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
+              <li>→ <Link href="/digital-ia" style={{ color: '#560E13', textDecoration: 'underline' }}>Consulting digital & IA tourisme</Link></li>
+              <li>→ <Link href="/digital-ia/formations" style={{ color: '#560E13', textDecoration: 'underline' }}>Formations IA appliquée au tourisme</Link></li>
+              <li>→ <Link href="/ressources/benchmark-institutionnel" style={{ color: '#560E13', textDecoration: 'underline' }}>Benchmark institutionnel Bénin · Maroc · Rwanda</Link></li>
+              <li>→ <Link href="/a-propos" style={{ color: '#560E13', textDecoration: 'underline' }}>À propos de Roseline Ngom</Link></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FAQ (SEO + GEO) ═══ */}
+      <section style={{ padding: '80px 24px', maxWidth: 900, margin: '0 auto' }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 600, textAlign: 'center', marginBottom: 48, color: '#560E13' }}>
+          Questions fréquentes
+        </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {HOMEPAGE_FAQ.map((item, idx) => (
+            <details key={idx} style={{ border: '1px solid rgba(86,14,19,0.15)', borderRadius: 8, padding: '16px 20px', backgroundColor: '#FEFCF9' }}>
+              <summary style={{ cursor: 'pointer', fontWeight: 600, color: '#560E13', fontSize: 16, listStyle: 'none' }}>
+                {item.question}
+              </summary>
+              <p style={{ marginTop: 12, lineHeight: 1.7, color: '#0A0A0A', opacity: 0.85 }}>
+                {item.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <JsonLd data={faqSchema(HOMEPAGE_FAQ)} />
 
       {/* ═══ CTA FINAL ═══ */}
       <section className={s.ctaFinal}>

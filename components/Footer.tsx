@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import FooterRecentPosts from './FooterRecentPosts'
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="h-1 w-full" style={{ backgroundColor: '#F6C961' }} />
 
       <div className="max-w-6xl mx-auto px-6 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
           {/* Column 1: Brand */}
           <div className="sm:col-span-2 md:col-span-1">
             <h3
@@ -210,6 +211,9 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Column 6: Articles récents (SEO, maillage interne) */}
+          <FooterRecentPosts />
         </div>
 
         {/* Bottom bar */}

@@ -36,12 +36,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme",
+    default: "Roseline Ngom, voyages Sénégal & consulting tourisme",
     template: "%s, Roseline Ngom",
   },
   description:
-    "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme. 10 ans d'expertise terrain par Roseline Ngom, fondatrice TripAfro.",
+    "Voyages immersifs au Sénégal pour la diaspora et les voyageurs curieux. Consulting digital tourisme. 10 ans d'expertise terrain par Roseline Ngom.",
   keywords: [
     "voyage Sénégal",
     "voyage sur mesure Sénégal",

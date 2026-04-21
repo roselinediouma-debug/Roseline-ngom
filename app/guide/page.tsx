@@ -432,12 +432,12 @@ export default function GuidePage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {[
-            { src: '/images/senegal/gallery-1.jpg', span: 'md:row-span-2', ratio: '3/4' },
-            { src: '/images/senegal/gallery-2.jpg', span: '', ratio: '3/2' },
-            { src: '/images/senegal/gallery-3.jpg', span: '', ratio: '3/2' },
-            { src: '/images/senegal/gallery-4.jpg', span: '', ratio: '3/2' },
-            { src: '/images/senegal/gallery-5.jpg', span: '', ratio: '3/2' },
-            { src: '/images/senegal/gallery-6.jpg', span: 'md:col-span-2', ratio: '16/9' },
+            { src: '/images/senegal/gallery-1.jpg', span: 'md:row-span-2', ratio: '3/4', alt: 'Scène de vie au Sénégal, voyage immersif' },
+            { src: '/images/senegal/gallery-2.jpg', span: '', ratio: '3/2', alt: 'Paysage sénégalais authentique' },
+            { src: '/images/senegal/gallery-3.jpg', span: '', ratio: '3/2', alt: 'Rencontre locale au Sénégal' },
+            { src: '/images/senegal/gallery-4.jpg', span: '', ratio: '3/2', alt: 'Artisanat et architecture sénégalaise' },
+            { src: '/images/senegal/gallery-5.jpg', span: '', ratio: '3/2', alt: 'Côte atlantique sénégalaise, pirogues' },
+            { src: '/images/senegal/gallery-6.jpg', span: 'md:col-span-2', ratio: '16/9', alt: 'Marché sénégalais, vie quotidienne' },
           ].map((img) => (
             <div
               key={img.src}
@@ -446,7 +446,7 @@ export default function GuidePage() {
             >
               <Image
                 src={img.src}
-                alt=""
+                alt={img.alt}
                 fill
                 sizes="(max-width: 768px) 50vw, 33vw"
                 loading="lazy"
@@ -662,7 +662,7 @@ export default function GuidePage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/senegal/hero.jpg"
-            alt=""
+            alt="Sénégal, coucher de soleil sur l'océan, voyage authentique"
             fill
             sizes="100vw"
             loading="lazy"
