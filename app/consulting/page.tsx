@@ -91,10 +91,11 @@ export default function ConsultingPage() {
               <Image
                 src="/images/roseline-portrait-3.jpg"
                 alt="Roseline Ngom, consultante tourisme"
-                width={340}
-                height={510}
+                width={1170}
+                height={1629}
                 priority
-                style={{ width: '100%', height: 'auto' }}
+                sizes="(max-width: 900px) 220px, 340px"
+                style={{ width: '100%', height: 'auto', objectFit: 'cover', display: 'block' }}
               />
             </div>
           </div>
