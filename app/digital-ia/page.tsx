@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import s from './page.module.css'
@@ -191,6 +192,137 @@ export default function DigitalIaPage() {
                 <a href="https://calendly.com/roselinengom" target="_blank" rel="noopener noreferrer">Réserver une formation →</a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OUTILS IA - demo live */}
+      <section style={{ padding: '100px 20px', background: 'linear-gradient(180deg, #FEFCF9 0%, #F8F5F0 100%)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 50 }}>
+            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8860b', marginBottom: 14 }}>
+              Nos outils IA — en ligne, testables tout de suite
+            </div>
+            <h2 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", fontSize: 'clamp(30px, 4vw, 44px)', color: '#560E13', fontWeight: 500, lineHeight: 1.15, marginBottom: 18 }}>
+              Ne croyez pas sur parole.<br /><em style={{ color: '#b8860b', fontStyle: 'italic' }}>Essayez directement.</em>
+            </h2>
+            <p style={{ maxWidth: 680, margin: '0 auto', fontSize: 15, lineHeight: 1.65, color: 'rgba(10,10,10,0.7)' }}>
+              Ces outils tournent sur ce site, en production. Ce sont des exemples concrets de ce que je peux installer chez vous en quelques semaines. Gratuits, sans compte, résultats immédiats.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, maxWidth: 1100, margin: '0 auto' }}>
+            {/* Calculateur OTA */}
+            <Link
+              href="/outils/calculateur-commission-booking"
+              style={{
+                display: 'block',
+                textDecoration: 'none',
+                padding: '36px 30px',
+                background: '#FEFCF9',
+                border: '1px solid rgba(86,14,19,0.12)',
+                borderRadius: 6,
+                transition: 'transform .3s ease, box-shadow .3s ease, border-color .3s ease',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+              className="outilCard"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 24, fontWeight: 600, color: '#F6C961', lineHeight: 1 }}>01</span>
+                <span style={{ flex: 1, height: 1, background: 'rgba(86,14,19,0.15)' }} />
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '5px 10px', background: '#560E13', color: '#F6C961', borderRadius: 2 }}>Hôteliers B2B</span>
+              </div>
+              <h3 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", fontSize: 26, color: '#560E13', fontWeight: 600, marginBottom: 12, lineHeight: 1.2 }}>
+                Calculateur de commission Booking
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'rgba(10,10,10,0.7)', marginBottom: 22 }}>
+                Combien Booking prend à votre établissement chaque année, et ce que vous pourriez récupérer en basculant 30 % des réservations en direct. Résultat chiffré en FCFA en 30 secondes.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 18, borderTop: '1px solid rgba(86,14,19,0.08)' }}>
+                <span style={{ fontSize: 11, color: 'rgba(10,10,10,0.5)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Gratuit · Sans compte</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#560E13' }}>Tester l&apos;outil →</span>
+              </div>
+            </Link>
+
+            {/* Chatbot */}
+            <div
+              style={{
+                padding: '36px 30px',
+                background: 'linear-gradient(135deg, #560E13 0%, #3d090e 100%)',
+                border: '1px solid rgba(246,201,97,0.2)',
+                borderRadius: 6,
+                color: '#FEFCF9',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 24, fontWeight: 600, color: '#F6C961', lineHeight: 1 }}>02</span>
+                <span style={{ flex: 1, height: 1, background: 'rgba(246,201,97,0.25)' }} />
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '5px 10px', background: '#F6C961', color: '#560E13', borderRadius: 2 }}>Voyageurs 24/7</span>
+              </div>
+              <h3 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", fontSize: 26, color: '#FEFCF9', fontWeight: 600, marginBottom: 12, lineHeight: 1.2 }}>
+                Assistant TripAfro — chatbot IA
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'rgba(254,252,249,0.78)', marginBottom: 22 }}>
+                Un agent Claude entraîné sur le Sénégal, la diaspora, les voyages, les visas. Il qualifie les prospects, détecte l&apos;intention, redirige vers Calendly ou WhatsApp. Présent en bas à droite de chaque page.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 18, borderTop: '1px solid rgba(246,201,97,0.15)' }}>
+                <span style={{ fontSize: 11, color: 'rgba(254,252,249,0.45)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Actif 24/7</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#F6C961' }}>↘ Essayez en bas à droite</span>
+              </div>
+            </div>
+
+            {/* Bientôt */}
+            <div
+              style={{
+                padding: '36px 30px',
+                background: 'transparent',
+                border: '1px dashed rgba(86,14,19,0.25)',
+                borderRadius: 6,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 24, fontWeight: 600, color: 'rgba(86,14,19,0.35)', lineHeight: 1 }}>03</span>
+                <span style={{ flex: 1, height: 1, background: 'rgba(86,14,19,0.12)' }} />
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '5px 10px', background: 'rgba(86,14,19,0.08)', color: '#560E13', borderRadius: 2 }}>Roadmap</span>
+              </div>
+              <h3 style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", fontSize: 26, color: '#560E13', fontWeight: 600, marginBottom: 12, lineHeight: 1.2, opacity: 0.75 }}>
+                Trois autres outils en cours
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'rgba(10,10,10,0.6)', marginBottom: 22 }}>
+                Simulateur ROI site web hôteliers, générateur de réponses aux avis, audit flash Google Business. Déployés progressivement en 2026 selon les retours terrain.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 18, borderTop: '1px solid rgba(86,14,19,0.08)' }}>
+                <span style={{ fontSize: 11, color: 'rgba(10,10,10,0.45)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Bientôt disponibles</span>
+                <Link href="/outils" style={{ fontSize: 13, fontWeight: 700, color: '#b8860b', textDecoration: 'none' }}>Voir la roadmap →</Link>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA bas */}
+          <div style={{ textAlign: 'center', marginTop: 50 }}>
+            <Link
+              href="/outils"
+              style={{
+                display: 'inline-block',
+                padding: '16px 32px',
+                background: '#560E13',
+                color: '#F6C961',
+                textDecoration: 'none',
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                borderRadius: 3,
+              }}
+            >
+              Voir tous les outils →
+            </Link>
+            <p style={{ marginTop: 18, fontSize: 12, color: 'rgba(10,10,10,0.5)', letterSpacing: '0.1em' }}>
+              Tout ce que vous testez ici, je peux l&apos;installer chez vous.
+            </p>
           </div>
         </div>
       </section>
