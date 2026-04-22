@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import FeatureGrid from '@/components/FeatureGrid'
 import ProcessSteps from '@/components/ProcessSteps'
 import FAQAccordion from '@/components/FAQAccordion'
 
-export const metadata: Metadata = {
-  title: 'IA Appliquée | 3 500-12 000 €',
+export const metadata = buildMetadata({
+  title: 'IA Appliquée : 3 500-12 000 €',
   description: "Intégrez l'intelligence artificielle dans votre entreprise. Chatbots, automatisation, analyse données.",
-  openGraph: {
-    title: 'IA Appliquée | 3 500-12 000 €',
-    description: "Intégrez l'intelligence artificielle dans votre entreprise. Chatbots, automatisation, analyse données.",
-  },
-}
+  path: '/digital-ia/ia-appliquee',
+})
 
 const features = [
   {

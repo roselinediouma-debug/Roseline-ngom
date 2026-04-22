@@ -60,6 +60,10 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   alternates: {
     canonical: SITE_URL,
+    languages: {
+      'fr-FR': SITE_URL,
+      'x-default': SITE_URL,
+    },
   },
   robots: {
     index: true,

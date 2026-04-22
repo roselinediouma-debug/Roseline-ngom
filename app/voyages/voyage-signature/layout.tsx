@@ -5,7 +5,7 @@ import { touristTripSchema, breadcrumbSchema } from '@/lib/seo/jsonld'
 export const metadata = buildMetadata({
   title: 'Voyage sur-mesure au Sénégal, Voyage Signature',
   description:
-    "Voyage privé sur-mesure au Sénégal, conçu avec vous : itinéraire unique, hébergements d'exception, rencontres authentiques. 10 ans d'expertise terrain Roseline Ngom.",
+    "Voyage privé sur-mesure au Sénégal : itinéraire unique, hébergements d'exception, rencontres authentiques. 10 ans d'expertise terrain.",
   path: '/voyages/voyage-signature',
   ogImage: '/images/og/voyage-signature.jpg',
   keywords: [

@@ -8,10 +8,10 @@ import CalendlyEmbed from '@/components/CalendlyEmbed'
 import FAQAccordion from '@/components/FAQAccordion'
 
 export const metadata: Metadata = {
-  title: 'Conseil Institutionnel | Roseline Ngom',
+  title: 'Conseil Institutionnel Afrique',
   description: 'Missions de conseil pour institutions et organisations. Expertise Afrique de l\'Ouest, diaspora, développement.',
   openGraph: {
-    title: 'Conseil Institutionnel | Roseline Ngom',
+    title: 'Conseil Institutionnel Afrique',
     description: 'Missions de conseil pour institutions et organisations. Expertise Afrique de l\'Ouest, diaspora, développement.',
   },
 }

@@ -26,7 +26,7 @@ export default function BlogCard({ slug, title, excerpt, coverImage, tags, publi
           {coverImage ? (
             <Image
               src={coverImage}
-              alt={title}
+              alt={title.length > 100 ? title.slice(0, 97).trimEnd() + '…' : title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />

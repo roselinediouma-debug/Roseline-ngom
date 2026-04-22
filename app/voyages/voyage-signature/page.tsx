@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import Icon from '@/components/Icon'
 import s from './page.module.css'
 
 export default function VoyageSignaturePage() {
@@ -115,11 +116,7 @@ export default function VoyageSignaturePage() {
             <h1 className={s.heroH1}>
               Voyage<br /><em>Signature</em>
             </h1>
-            <div className={s.tagline}>L&apos;aventure qui vous ressemble.</div>
-            <p className={s.sub}>
-              Pas de circuit préfabriqué. Pas de car de touristes.{' '}
-              <strong>Votre Sénégal, conçu autour de vos envies, votre rythme, votre histoire.</strong> Un itinéraire unique, créé avec vous, du premier appel jusqu&apos;au retour.
-            </p>
+            <div className={s.tagline}>Votre Sénégal, conçu autour de vous.</div>
             <div className={s.btns}>
               <a href="#devis" className={s.bg}>Demander mon devis gratuit →</a>
               <a href="#comment" className={s.bo}>Comment ça marche</a>
@@ -131,25 +128,17 @@ export default function VoyageSignaturePage() {
             </div>
           </div>
           <div className={s.heroCard}>
-            <h3>Votre voyage en bref</h3>
+            <h3>En bref</h3>
             <div className={s.hcRow}>
-              <div className={s.hcIco}>✨</div>
+              <div className={s.hcIco}><Icon name="sparkles" size={18} color="#F6C961" /></div>
               <div><div className={s.hcLabel}>Format</div><div className={s.hcVal}><em>100% sur mesure</em></div></div>
             </div>
             <div className={s.hcRow}>
-              <div className={s.hcIco}>📅</div>
+              <div className={s.hcIco}><Icon name="calendar" size={18} color="#F6C961" /></div>
               <div><div className={s.hcLabel}>Durée</div><div className={s.hcVal}>5 à 14 jours</div></div>
             </div>
             <div className={s.hcRow}>
-              <div className={s.hcIco}>☀️</div>
-              <div><div className={s.hcLabel}>Période</div><div className={s.hcVal}><em>Toute l&apos;année</em></div></div>
-            </div>
-            <div className={s.hcRow}>
-              <div className={s.hcIco}>💰</div>
-              <div><div className={s.hcLabel}>Tarif</div><div className={s.hcVal}>Sur devis personnalisé</div></div>
-            </div>
-            <div className={s.hcRow}>
-              <div className={s.hcIco}>🧑‍💼</div>
+              <div className={s.hcIco}><Icon name="heart" size={18} color="#F6C961" /></div>
               <div><div className={s.hcLabel}>Création</div><div className={s.hcVal}><em>Roseline</em> · en personne</div></div>
             </div>
             <a href="#devis" className={s.hcCta}>Devis gratuit en 48h →</a>
@@ -190,28 +179,28 @@ export default function VoyageSignaturePage() {
           <div className={s.steps}>
             <div className={`${s.step} ${s.fi}`}>
               <div className={s.sNum}>01</div>
-              <div className={s.sIco}>📞</div>
+              <div className={s.sIco}><Icon name="phone" size={28} color="#560E13" /></div>
               <h3>On en parle</h3>
               <p>Appel de 30 min gratuit. Vos envies, votre budget, vos dates, vos rêves. Je prends tout en note.</p>
               <div className={s.sDur}>Gratuit · 30 min</div>
             </div>
             <div className={`${s.step} ${s.fi} ${s.fiD1}`}>
               <div className={s.sNum}>02</div>
-              <div className={s.sIco}>📋</div>
+              <div className={s.sIco}><Icon name="clipboard" size={28} color="#560E13" /></div>
               <h3>Je crée votre voyage</h3>
               <p>En 48h, vous recevez un itinéraire détaillé avec hébergements, expériences, tarifs. Entièrement personnalisé.</p>
               <div className={s.sDur}>48h · Devis PDF</div>
             </div>
             <div className={`${s.step} ${s.fi} ${s.fiD2}`}>
               <div className={s.sNum}>03</div>
-              <div className={s.sIco}>✅</div>
+              <div className={s.sIco}><Icon name="check-circle" size={28} color="#560E13" /></div>
               <h3>On ajuste ensemble</h3>
               <p>Trop long ? Trop court ? Envie d&apos;ajouter le désert ? On ajuste jusqu&apos;à ce que ce soit parfait. Puis acompte 30%.</p>
               <div className={s.sDur}>Illimité</div>
             </div>
             <div className={`${s.step} ${s.fi} ${s.fiD3}`}>
               <div className={s.sNum}>04</div>
-              <div className={s.sIco}>✈️</div>
+              <div className={s.sIco}><Icon name="plane" size={28} color="#560E13" /></div>
               <h3>Vous vivez le voyage</h3>
               <p>Accueil aéroport. Guide dédié. Support WhatsApp 24/7. Surprises préparées. Vous n&apos;avez qu&apos;à vivre.</p>
               <div className={s.sDur}>5 à 14 jours</div>
@@ -227,25 +216,25 @@ export default function VoyageSignaturePage() {
           <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>Quel voyageur êtes-vous ?</div>
           <div className={s.typeGrid}>
             <div className={`${s.type} ${s.fi}`}>
-              <div className={s.tIco}>👪</div>
+              <div className={s.tIco}><Icon name="users" size={32} color="#F6C961" /></div>
               <h3>En famille</h3>
               <p>Avec vos enfants, vos parents. Des activités adaptées à tous les âges. Des moments de partage inoubliables.</p>
               <div className={s.tFrom}>Dès 2 500€ / pers.</div>
             </div>
             <div className={`${s.type} ${s.fi} ${s.fiD1}`}>
-              <div className={s.tIco}>💑</div>
+              <div className={s.tIco}><Icon name="heart" size={32} color="#F6C961" /></div>
               <h3>En couple</h3>
               <p>Couchers de soleil, dîners pieds dans le sable, lodges intimistes. Le Sénégal romantique.</p>
               <div className={s.tFrom}>Dès 3 000€ / pers.</div>
             </div>
             <div className={`${s.type} ${s.fi} ${s.fiD2}`}>
-              <div className={s.tIco}>🧑‍🤝‍🧑</div>
+              <div className={s.tIco}><Icon name="sparkles" size={32} color="#F6C961" /></div>
               <h3>Entre amis</h3>
               <p>Aventure, rires, découvertes. Un voyage qu&apos;on racontera pendant des années.</p>
               <div className={s.tFrom}>Dès 2 200€ / pers.</div>
             </div>
             <div className={`${s.type} ${s.fi} ${s.fiD3}`}>
-              <div className={s.tIco}>🧘</div>
+              <div className={s.tIco}><Icon name="leaf" size={32} color="#F6C961" /></div>
               <h3>En solo</h3>
               <p>Se retrouver, se déconnecter, explorer à son rythme. Le Sénégal rien que pour vous.</p>
               <div className={s.tFrom}>Dès 2 800€ / pers.</div>
@@ -311,8 +300,9 @@ export default function VoyageSignaturePage() {
               <strong>itinéraire détaillé et personnalisé sous 48h</strong>. Gratuit, sans engagement.
             </p>
             <p>Chaque détail compte : vos envies, votre rythme, vos contraintes, vos rêves. Plus vous me racontez, plus le voyage sera parfait.</p>
-            <div className={s.urgenceBox}>
-              ✨ <strong>Les créneaux haute saison</strong> (novembre à avril) se remplissent vite. Réservez tôt pour avoir le choix des meilleurs hébergements.
+            <div className={s.urgenceBox} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <Icon name="info" size={18} color="#F6C961" style={{ flexShrink: 0, marginTop: 2 }} />
+              <span><strong>Les créneaux haute saison</strong> (novembre à avril) se remplissent vite. Réservez tôt pour avoir le choix des meilleurs hébergements.</span>
             </div>
             <div className={s.includes}>
               <h4>Inclus dans chaque Voyage Signature</h4>
@@ -327,9 +317,15 @@ export default function VoyageSignaturePage() {
               </ul>
             </div>
             <div className={s.ca}>
-              <a href="https://wa.me/33650329808">📱 WhatsApp : +33 6 50 32 98 08</a>
-              <a href="mailto:roselinediouma@gmail.com">✉️ roselinediouma@gmail.com</a>
-              <a href="https://calendly.com/roselinengom">📅 Appel de 30 min (gratuit)</a>
+              <a href="https://wa.me/33650329808" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <Icon name="whatsapp" size={16} /> WhatsApp : +33 6 50 32 98 08
+              </a>
+              <a href="mailto:roselinediouma@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <Icon name="mail" size={16} /> roselinediouma@gmail.com
+              </a>
+              <a href="https://calendly.com/roselinengom" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <Icon name="calendar" size={16} /> Appel de 30 min (gratuit)
+              </a>
             </div>
           </div>
           <form className={`${s.fc} ${s.fi}`} onSubmit={handleSubmit}>

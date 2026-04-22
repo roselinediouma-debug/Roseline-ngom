@@ -165,9 +165,18 @@ export default function LeBledAutrementPage() {
                 <span style={{ color: '#F6C961', fontStyle: 'italic' }}>
                   Ou tu n’es jamais rentré.
                 </span>
-                <br />
-                Les deux se comprennent.
               </h1>
+              <p
+                style={{
+                  marginTop: 12,
+                  fontSize: 20,
+                  color: '#F6C961',
+                  fontStyle: 'italic',
+                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                }}
+              >
+                Les deux se comprennent.
+              </p>
 
               <p
                 className="text-base md:text-lg mb-8 leading-relaxed max-w-xl"
@@ -252,11 +261,13 @@ export default function LeBledAutrementPage() {
             style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", color: '#560E13' }}
           >
             Rentrer, ce n’est pas revenir.
-            <br />
-            <span style={{ fontStyle: 'italic', color: '#b8860b' }}>
-              C’est rencontrer un pays qui a continué sans toi.
-            </span>
           </h2>
+          <p
+            className="text-xl md:text-2xl italic mb-10"
+            style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", color: '#b8860b' }}
+          >
+            C’est rencontrer un pays qui a continué sans toi.
+          </p>
           <div className="space-y-5 text-base md:text-lg leading-relaxed" style={{ color: 'rgba(10,10,10,0.78)' }}>
             <p>
               La plupart des enfants de la diaspora reproduisent, sans le vouloir, le même voyage

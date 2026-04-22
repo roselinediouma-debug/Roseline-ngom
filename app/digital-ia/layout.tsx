@@ -3,7 +3,7 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo/jsonld'
 
 export const metadata = buildMetadata({
-  title: 'Consulting digital & IA pour hôtels et agences de tourisme',
+  title: 'Consulting digital & IA, tourisme',
   description:
     "Audit, stratégie digitale et IA appliquée au tourisme. Accompagnement d'hôtels, agences et institutions pour accélérer leur transformation numérique.",
   path: '/digital-ia',

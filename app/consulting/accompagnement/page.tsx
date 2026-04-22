@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -9,14 +9,11 @@ import TestimonialCard from '@/components/TestimonialCard'
 import CalendlyEmbed from '@/components/CalendlyEmbed'
 import FAQAccordion from '@/components/FAQAccordion'
 
-export const metadata: Metadata = {
-  title: 'Accompagnement Stratégique | 3 à 12 mois',
+export const metadata = buildMetadata({
+  title: 'Accompagnement Stratégique : 3 à 12 mois',
   description: "Accompagnement personnalisé pour réussir votre projet en Afrique de l'Ouest. 3 formules de 3 500 à 10 000 €.",
-  openGraph: {
-    title: 'Accompagnement Stratégique | 3 à 12 mois',
-    description: "Accompagnement personnalisé pour réussir votre projet en Afrique de l'Ouest. 3 formules de 3 500 à 10 000 €.",
-  },
-}
+  path: '/consulting/accompagnement',
+})
 
 const tiers = [
   {

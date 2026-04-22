@@ -1,17 +1,14 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
 import NewsletterForm from '@/components/NewsletterForm'
 
-export const metadata: Metadata = {
-  title: 'Newsletter La Teranga | Roseline Ngom',
+export const metadata = buildMetadata({
+  title: 'Newsletter La Teranga',
   description: 'Recevez 2 fois par mois destinations, conseils pratiques et coulisses de mes projets au Sénégal.',
-  openGraph: {
-    title: 'Newsletter La Teranga | Roseline Ngom',
-    description: 'Recevez 2 fois par mois destinations, conseils pratiques et coulisses de mes projets au Sénégal.',
-  },
-}
+  path: '/ressources/newsletter',
+})
 
 const TOPICS = [
   {
@@ -38,9 +35,53 @@ export default function NewsletterPage() {
       <main>
         <SalesPageHero
           eyebrow="NEWSLETTER LA TERANGA"
-          title="Deux fois par mois, je vous envoie ce que je garde pour mes lecteurs les plus fideles"
+          title="Ce que je garde pour mes lecteurs les plus fideles"
           subtitle="Des recits, des bons plans, des coulisses. Pas de spam. Jamais."
         />
+
+        {/* Editorial intro */}
+        <section className="py-20 px-5" style={{ backgroundColor: '#F8F5F0' }}>
+          <div className="max-w-3xl mx-auto">
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-6 text-center"
+              style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif", color: '#560E13' }}
+            >
+              Pourquoi cette newsletter existe
+            </h2>
+            <div className="space-y-4 text-[15px] md:text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
+              <p>
+                La Teranga, au Sénégal, ne se traduit pas. C&rsquo;est l&rsquo;art d&rsquo;accueillir, le geste qui dit
+                &laquo; tu es ici chez toi &raquo;. Cette newsletter porte ce nom parce qu&rsquo;elle est pensée comme
+                ça : un espace où je partage ce que je garde habituellement pour mes clients, mes proches, mes
+                rendez-vous privés. Pas un canal de promotion, pas une séquence automatique qui tente de vendre
+                quelque chose. Un dialogue lent, deux fois par mois, avec les voyageurs et les professionnels du
+                tourisme qui suivent sérieusement mon travail sur le Sénégal et l&rsquo;Afrique de l&rsquo;Ouest.
+              </p>
+              <p>
+                Concrètement, chaque édition contient trois blocs. Un récit court sur un lieu, une rencontre ou une
+                observation faite sur le terrain, souvent inédite. Une adresse testée récemment : chambre d&rsquo;hôte,
+                restaurant, guide, atelier d&rsquo;artisan, avec le contact direct et le prix réel en FCFA. Une
+                recommandation plus stratégique pour celles et ceux qui préparent un projet, un voyage long, un
+                retour aux sources, ou qui travaillent dans l&rsquo;hôtellerie et le tourisme institutionnel. J&rsquo;y
+                intègre aussi, de temps en temps, des extraits de mes benchmarks et de mes audits digitaux.
+              </p>
+              <p>
+                Je ne relaie pas ce que tout le monde dit déjà. Je n&rsquo;écris pas &laquo; les 10 plages secrètes
+                du Sénégal &raquo;. Les plages secrètes ne le restent pas quand on en fait un listicle. Ce que je
+                partage, c&rsquo;est une lecture continue du pays, au fil de mes voyages, de mes missions de conseil,
+                de mes conversations avec les acteurs locaux. Une forme d&rsquo;abonnement à mon point de vue, si vous
+                voulez. Beaucoup de lecteurs me disent qu&rsquo;ils gardent les éditions et s&rsquo;y réfèrent au
+                moment de préparer leur séjour ou de lancer un projet.
+              </p>
+              <p>
+                Vous pouvez vous désinscrire en un clic, à tout moment, et vos données ne sont jamais revendues.
+                Cette liste m&rsquo;appartient, elle ne passe pas par un outil de tracking agressif. Si l&rsquo;écriture
+                ne vous parle plus, vous partez. Si elle vous accompagne longtemps, tant mieux. C&rsquo;est exactement
+                la relation que je cherche à construire.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* What you get */}
         <section className="py-24 px-5" style={{ backgroundColor: '#FEFCF9' }}>

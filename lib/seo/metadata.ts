@@ -70,11 +70,17 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
   const imageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`
 
   return {
-    title: fullTitle,
+    // `absolute` empêche l'application du template racine `%s, Roseline Ngom`
+    // (sinon double suffixe : "Titre, Roseline Ngom, Roseline Ngom")
+    title: { absolute: fullTitle },
     description,
     keywords: keywords?.join(', '),
     alternates: {
       canonical,
+      languages: {
+        'fr-FR': canonical,
+        'x-default': canonical,
+      },
     },
     robots: noindex
       ? { index: false, follow: false, nocache: true }

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import TestimonialCard from '@/components/TestimonialCard'
 import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Bundle Découverte | 2 guides pour 49 €',
+export const metadata = buildMetadata({
+  title: 'Bundle Découverte : 2 guides pour 49 €',
   description: 'Les guides Casamance et Sénégal en 7 jours ensemble. 120+ pages, 200+ adresses, économie de 9 €.',
-  openGraph: {
-    title: 'Bundle Découverte | 2 guides pour 49 €',
-    description: 'Les guides Casamance et Sénégal en 7 jours ensemble. 120+ pages, 200+ adresses, économie de 9 €.',
-  },
-}
+  path: '/guides/bundle-decouverte',
+})
 
 const FAQ = [
   { q: 'Dans quel format sont les guides ?', a: 'Les deux guides sont en PDF haute qualité, optimisés pour mobile et tablette. Lisibles hors ligne, livrés immédiatement par email.' },

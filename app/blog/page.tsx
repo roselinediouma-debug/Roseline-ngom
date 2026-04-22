@@ -1,6 +1,5 @@
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import SectionHeader from '@/components/SectionHeader'
 import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
 import { createServiceClient } from '@/lib/supabase'
@@ -64,12 +63,46 @@ export default async function BlogPage() {
       <main>
         <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-6xl mx-auto">
-            <SectionHeader
-              eyebrow="BLOG"
-              title="Le Journal de Roseline"
-              subtitle="Guides, conseils et récits de voyage au Sénégal, par une franco-sénégalaise qui y retourne chaque année."
-              centered
-            />
+            <div className="text-center mb-2">
+              <p
+                className="text-xs font-semibold uppercase tracking-[0.3em]"
+                style={{ color: '#b8860b' }}
+              >
+                BLOG
+              </p>
+            </div>
+            <h1
+              className="text-4xl md:text-5xl font-bold text-center leading-tight"
+              style={{
+                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                color: '#560E13',
+              }}
+            >
+              Le Journal de Roseline
+            </h1>
+            <p
+              className="max-w-2xl mx-auto text-center mt-4 text-base md:text-lg"
+              style={{ color: 'rgba(10,10,10,0.72)' }}
+            >
+              Guides, conseils et récits de voyage au Sénégal, par une franco-sénégalaise qui y retourne chaque année.
+            </p>
+
+            <div className="max-w-3xl mx-auto mt-10 space-y-4 text-[15px] md:text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.72)' }}>
+              <p>
+                Ici, pas de contenu recyclé. Chaque article est écrit après une visite récente, avec des contacts
+                vérifiés, des prix en FCFA actualisés et des conseils que je n&rsquo;aurais pas pu donner sans être moi-même
+                sur place. Les sujets couvrent autant la préparation concrète du voyage (visa, budget, transports,
+                saisons, santé) que les régions clés : Dakar et sa presqu&rsquo;île, Gorée, Saint-Louis, le Sine Saloum, la
+                Casamance, Podor, la petite côte.
+              </p>
+              <p>
+                Si vous préparez votre premier Sénégal, commencez par le guide du voyage complet. Si vous êtes de la
+                diaspora, le guide Le Bled Autrement répond à ce que personne n&rsquo;ose vraiment poser comme
+                questions. Pour les décideurs du tourisme, le benchmark institutionnel compare le Sénégal au Bénin, au
+                Maroc et au Rwanda. Et pour les hôteliers, le calculateur de commission Booking chiffre ce que votre
+                dépendance aux OTA vous coûte vraiment chaque année.
+              </p>
+            </div>
 
             {posts.length === 0 ? (
               <div className="mt-16 text-center">

@@ -131,6 +131,39 @@ export default function BenchmarkInstitutionnelPage() {
               3 pays, 3 stratégies, 3 leçons
             </h2>
           </div>
+          <div className="max-w-3xl mx-auto mb-12 space-y-4 text-[15px] md:text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
+            <p>
+              Ce benchmark est né d&rsquo;un constat simple. Quand on travaille avec les institutions touristiques
+              sénégalaises, la même question revient : &laquo; pourquoi le Bénin, le Maroc ou le Rwanda arrivent à
+              positionner leur destination et pas nous ? &raquo; Les réponses sont rarement structurées. Il y a des
+              intuitions, des extraits de rapports PNUD, des souvenirs de conférences. Mais il n&rsquo;existe pas, à
+              ma connaissance, de document synthétique qui compare factuellement ces trois modèles africains et en
+              tire des leçons opérationnelles pour le Sénégal.
+            </p>
+            <p>
+              Le rapport couvre quatre dimensions par pays : la stratégie de marque, la gouvernance publique du
+              tourisme, la chaîne de valeur (hôtellerie, aérien, artisanat, formation), et la monétisation par
+              visiteur. Chaque chapitre s&rsquo;appuie sur des données officielles (ONU Tourisme, banques centrales,
+              ministères concernés) actualisées fin 2025, et sur mes observations de terrain lors de missions au
+              Bénin et au Rwanda, ainsi que plusieurs séjours professionnels au Maroc. J&rsquo;ai volontairement
+              écarté les pays dont la trajectoire est trop atypique (Afrique du Sud, Égypte, Kenya) pour garder
+              une comparaison utile au Sénégal.
+            </p>
+            <p>
+              À qui ce document s&rsquo;adresse-t-il ? Aux cabinets ministériels Tourisme et Transport aérien, aux
+              agences nationales de promotion touristique et leurs homologues régionales, aux directions
+              stratégiques des grands groupes hôteliers implantés en Afrique de l&rsquo;Ouest, aux investisseurs qui
+              préparent un dossier d&rsquo;entrée dans le secteur, et aux équipes de coopération bilatérale (AFD,
+              GIZ, coopération suisse) qui instruisent des financements tourisme. Le ton est direct, chiffré, sans
+              concession. Je ne vends pas une recette miracle ; je montre où chacun des trois pays a choisi
+              d&rsquo;investir et avec quels résultats mesurables.
+            </p>
+            <p>
+              Vous recevrez le PDF par email dans les minutes qui suivent votre inscription. Si votre organisation
+              souhaite une présentation commentée ou un atelier de travail à partir de ce benchmark, je propose ce
+              format en mission dédiée (sur devis).
+            </p>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             {COUNTRIES.map((c) => (
               <div

@@ -7,7 +7,7 @@ import { buildMetadata } from '@/lib/seo/metadata'
 export const metadata = buildMetadata({
   title: 'Ressources gratuites — Sénégal, diaspora, tourisme',
   description:
-    'Guides PDF gratuits pour préparer votre Sénégal : 15 expériences secrètes, guide diaspora Le Bled Autrement, benchmark institutionnel, newsletter La Teranga.',
+    'Guides PDF gratuits pour préparer votre Sénégal : 15 expériences secrètes, guide diaspora, benchmark tourisme, newsletter La Teranga.',
   path: '/ressources',
   ogImage: '/images/og/ressources.jpg',
 })

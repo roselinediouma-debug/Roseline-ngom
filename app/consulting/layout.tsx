@@ -3,9 +3,9 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo/jsonld'
 
 export const metadata = buildMetadata({
-  title: 'Consulting tourisme Afrique, audit stratégique et accompagnement',
+  title: 'Consulting tourisme Afrique',
   description:
-    'Consulting pour acteurs du tourisme et décideurs institutionnels en Afrique : audit stratégique, accompagnement, expertise institutionnelle. Roseline Ngom, 10 ans d\'expertise.',
+    'Consulting pour acteurs du tourisme et décideurs institutionnels en Afrique : audit stratégique, accompagnement, expertise. 10 ans d\'expertise.',
   path: '/consulting',
   keywords: ['consulting tourisme Afrique', 'audit stratégique tourisme', 'conseil institutionnel tourisme'],
 })

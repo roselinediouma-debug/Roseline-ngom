@@ -7,10 +7,10 @@ import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Nos Offres | Roseline Ngom',
+  title: 'Nos Offres',
   description: "Du gratuit au premium : voyages, guides, consulting, digital & IA. Trouvez l'offre qui vous correspond.",
   openGraph: {
-    title: 'Nos Offres | Roseline Ngom',
+    title: 'Nos Offres',
     description: "Du gratuit au premium : voyages, guides, consulting, digital & IA. Trouvez l'offre qui vous correspond.",
   },
 }

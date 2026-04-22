@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import TestimonialCard from '@/components/TestimonialCard'
 import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Le Sénégal en 7 jours | Guide optimisé',
+export const metadata = buildMetadata({
+  title: 'Le Sénégal en 7 jours : guide optimisé',
   description: "Itinéraire heure par heure pour découvrir l'essentiel du Sénégal en une semaine. 3 niveaux de budget. 29 €.",
-  openGraph: {
-    title: 'Le Sénégal en 7 jours | Guide optimisé',
-    description: "Itinéraire heure par heure pour découvrir l'essentiel du Sénégal en une semaine. 3 niveaux de budget. 29 €.",
-  },
-}
+  path: '/guides/guide-senegal-7jours',
+})
 
 const ITINERAIRE = [
   { jour: 'Jour 1-2', lieu: 'Dakar', desc: 'Gorée, marché Sandaga, Ngor, Almadies, nightlife' },

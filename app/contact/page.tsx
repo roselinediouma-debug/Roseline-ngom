@@ -34,11 +34,49 @@ export default function ContactPage() {
       <main className="pt-28 pb-16 px-4 min-h-screen" style={{ backgroundColor: '#F8F5F0' }}>
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold mb-3 text-center" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
-            Contactez-nous
+            Contactez Roseline Ngom
           </h1>
           <p className="text-center text-sm opacity-60 mb-10">
             Une question, un projet, une collaboration ? Écrivez-nous.
           </p>
+
+          <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-10">
+            <h2 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
+              Pourquoi nous écrire
+            </h2>
+            <p className="text-sm md:text-base leading-relaxed mb-3" style={{ color: 'rgba(10,10,10,0.75)' }}>
+              Vous préparez un voyage immersif au Sénégal, un retour aux sources pour votre famille ou
+              un séjour sur-mesure pour une occasion spéciale ? Vous portez un projet touristique, hôtelier
+              ou institutionnel et cherchez un regard expert sur l&rsquo;Afrique de l&rsquo;Ouest ?
+              Ce formulaire est le bon endroit pour démarrer.
+            </p>
+            <p className="text-sm md:text-base leading-relaxed mb-3" style={{ color: 'rgba(10,10,10,0.75)' }}>
+              Chaque demande est lue et traitée personnellement par Roseline. Nous répondons en général
+              sous 48h ouvrées. Pour une discussion rapide, WhatsApp reste le canal le plus direct. Pour
+              un échange structuré (audit, benchmark, accompagnement), privilégiez un créneau Calendly de 30
+              minutes où nous clarifions vos objectifs et les prochaines étapes.
+            </p>
+          </section>
+
+          <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm mb-10">
+            <h2 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#560E13' }}>
+              Questions fréquentes
+            </h2>
+            <div className="space-y-4 text-sm md:text-base" style={{ color: 'rgba(10,10,10,0.75)' }}>
+              <div>
+                <p className="font-semibold" style={{ color: '#560E13' }}>Combien de temps pour organiser un voyage sur-mesure ?</p>
+                <p>Idéalement 8 à 12 semaines avant le départ. Des demandes de dernière minute peuvent être traitées selon la saison.</p>
+              </div>
+              <div>
+                <p className="font-semibold" style={{ color: '#560E13' }}>Je représente un hôtel, quels sujets pouvez-vous traiter ?</p>
+                <p>Stratégie digitale, dépendance aux OTA, direct booking, positionnement, contenu, IA appliquée à la relation client, formation des équipes.</p>
+              </div>
+              <div>
+                <p className="font-semibold" style={{ color: '#560E13' }}>Proposez-vous des missions pour institutions publiques ?</p>
+                <p>Oui, notamment en matière de benchmark sectoriel, politique touristique et coopération avec la diaspora. Voir la page Consulting institutionnel.</p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid md:grid-cols-3 gap-4 mb-10">
             {[

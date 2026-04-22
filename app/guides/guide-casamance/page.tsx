@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import TestimonialCard from '@/components/TestimonialCard'
 import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Guide Casamance | 50-70 pages, contacts vérifiés',
-  description: 'Le guide complet pour organiser votre voyage en Casamance. 200+ adresses, contacts WhatsApp vérifiés, itinéraires testés. 29 €.',
-  openGraph: {
-    title: 'Guide Casamance | 50-70 pages, contacts vérifiés',
-    description: 'Le guide complet pour organiser votre voyage en Casamance. 200+ adresses, contacts WhatsApp vérifiés, itinéraires testés. 29 €.',
-  },
-}
+export const metadata = buildMetadata({
+  title: 'Guide Casamance : 50-70 pages, contacts vérifiés',
+  description: 'Le guide complet pour votre voyage en Casamance. 200+ adresses, contacts WhatsApp vérifiés, itinéraires testés. 29 €.',
+  path: '/guides/guide-casamance',
+})
 
 const SOMMAIRE = [
   'Introduction : pourquoi la Casamance est différente',

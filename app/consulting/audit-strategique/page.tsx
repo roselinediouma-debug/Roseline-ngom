@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import ProcessSteps from '@/components/ProcessSteps'
 import CalendlyEmbed from '@/components/CalendlyEmbed'
 import FAQAccordion from '@/components/FAQAccordion'
 
-export const metadata: Metadata = {
-  title: 'Audit Stratégique | 1 800 €',
+export const metadata = buildMetadata({
+  title: 'Audit Stratégique : 1 800 €',
   description: "Audit complet de votre projet Afrique : marché, positionnement, plan d'action. Livrables en 3 semaines.",
-  openGraph: {
-    title: 'Audit Stratégique | 1 800 €',
-    description: "Audit complet de votre projet Afrique : marché, positionnement, plan d'action. Livrables en 3 semaines.",
-  },
-}
+  path: '/consulting/audit-strategique',
+})
 
 const livrables = [
   {

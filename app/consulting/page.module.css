@@ -14,13 +14,13 @@
 .heroBtns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
 .btnGold { display: inline-flex; align-items: center; gap: 8px; background: #F6C961; color: #3A0A0D; padding: 15px 30px; font-size: 12px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; transition: all 0.3s; cursor: pointer; border: none; }
 .btnGold:hover { background: white; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(246,201,97,0.2); }
-.btnOutline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); padding: 14px 26px; font-size: 12px; font-weight: 400; letter-spacing: 0.8px; transition: all 0.3s; }
+.btnOutline { display: inline-flex; align-items: center; gap: 8px; background: rgba(10,10,10,0.4); color: #F6C961; border: 1px solid rgba(246,201,97,0.6); padding: 14px 26px; font-size: 12px; font-weight: 600; letter-spacing: 1.2px; transition: all 0.3s; }
 .btnOutline:hover { border-color: #F6C961; color: #F6C961; }
 .heroMetrics { display: flex; gap: 40px; }
 .heroMetrics .m { position: relative; padding-left: 16px; }
 .heroMetrics .m::before { content: ''; position: absolute; left: 0; top: 2px; bottom: 2px; width: 2px; background: #F6C961; opacity: 0.3; }
 .heroMetrics .m .n { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: #F6C961; }
-.heroMetrics .m .l { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 2px; letter-spacing: 0.3px; }
+.heroMetrics .m .l { font-size: 10.5px; color: #D6CAB8; margin-top: 3px; letter-spacing: 0.8px; text-transform: uppercase; }
 .heroRight { display: flex; justify-content: center; }
 .heroPortrait { position: relative; width: 340px; }
 .heroPortrait img { width: 100%; border-radius: 4px; box-shadow: 12px 12px 50px rgba(0,0,0,0.4); position: relative; z-index: 1; display: block; }
@@ -57,8 +57,8 @@
 .offre .side .num { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 60px; font-weight: 700; color: rgba(246,201,97,0.08); position: absolute; top: 10px; right: 14px; line-height: 1; }
 .offre .side .icon { font-size: 32px; margin-bottom: 12px; position: relative; z-index: 1; }
 .offre .side .price { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: #F6C961; position: relative; z-index: 1; }
-.offre .side .priceCfa { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 3px; position: relative; z-index: 1; }
-.offre .side .duration { font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 8px; letter-spacing: 1px; text-transform: uppercase; position: relative; z-index: 1; }
+.offre .side .priceCfa { font-size: 10.5px; color: #E8DED5; margin-top: 3px; position: relative; z-index: 1; }
+.offre .side .duration { font-size: 10.5px; color: #D6CAB8; margin-top: 8px; letter-spacing: 1px; text-transform: uppercase; position: relative; z-index: 1; }
 .offre .body { padding: 36px 32px; }
 .offre .body .tags { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .offre .body .tags span { font-size: 9px; font-weight: 500; padding: 3px 10px; border-radius: 2px; letter-spacing: 0.5px; }
@@ -88,7 +88,7 @@
 .pq:hover { border-color: #F6C961; transform: translateY(-3px); }
 .pq .icon { font-size: 24px; margin-bottom: 10px; }
 .pq h3 { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: white; margin-bottom: 6px; }
-.pq p { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+.pq p { font-size: 12px; color: #E8DED5; line-height: 1.65; }
 
 /* METHODE */
 .methode { background: #FAF8F5; padding: 90px 50px; }
@@ -127,7 +127,7 @@
 .arg { display: flex; gap: 14px; align-items: flex-start; }
 .arg .numA { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: #F6C961; min-width: 28px; opacity: 0.5; }
 .arg h4 { font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; }
-.arg p { font-size: 12.5px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+.arg p { font-size: 12.5px; color: #E8DED5; line-height: 1.65; }
 
 /* TEMOIGNAGES */
 .temos { background: #FAF8F5; padding: 80px 50px; }
@@ -153,9 +153,9 @@
 .ctaFinal { background: #3A0A0D; padding: 80px 50px; text-align: center; position: relative; }
 .ctaFinal h2 { font-family: var(--font-cormorant), 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600; color: white; margin-bottom: 10px; position: relative; }
 .ctaFinal h2 em { color: #F6C961; font-style: italic; font-weight: 400; }
-.ctaFinal .sub { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.75; position: relative; }
+.ctaFinal .sub { font-size: 14px; color: #E8DED5; margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.75; position: relative; }
 .ctaBtns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; margin-bottom: 16px; }
-.ctaFinal .micro { font-size: 11px; color: rgba(255,255,255,0.15); position: relative; }
+.ctaFinal .micro { font-size: 11.5px; color: #D6CAB8; position: relative; }
 
 /* Fade-in */
 .fi { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }

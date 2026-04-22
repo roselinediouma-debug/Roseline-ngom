@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import FeatureGrid from '@/components/FeatureGrid'
 import ProcessSteps from '@/components/ProcessSteps'
 import FAQAccordion from '@/components/FAQAccordion'
 
-export const metadata: Metadata = {
-  title: 'Présence Digitale | 1 500 €/mois',
+export const metadata = buildMetadata({
+  title: 'Présence Digitale : 1 500 €/mois',
   description: 'Gestion complète de votre présence en ligne. Réseaux sociaux, contenu, communauté. Engagement 3 mois.',
-  openGraph: {
-    title: 'Présence Digitale | 1 500 €/mois',
-    description: 'Gestion complète de votre présence en ligne. Réseaux sociaux, contenu, communauté. Engagement 3 mois.',
-  },
-}
+  path: '/digital-ia/presence-digitale',
+})
 
 const features = [
   {

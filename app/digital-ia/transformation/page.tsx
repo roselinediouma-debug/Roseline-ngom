@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import { buildMetadata } from '@/lib/seo/metadata'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SalesPageHero from '@/components/SalesPageHero'
@@ -8,14 +8,11 @@ import FeatureGrid from '@/components/FeatureGrid'
 import ProcessSteps from '@/components/ProcessSteps'
 import FAQAccordion from '@/components/FAQAccordion'
 
-export const metadata: Metadata = {
-  title: 'Transformation Digitale | 8 500-15 000 €',
+export const metadata = buildMetadata({
+  title: 'Transformation Digitale : 8 500-15 000 €',
   description: 'Modernisez votre entreprise. Site web, CRM, automatisation, formation équipe. Accompagnement complet.',
-  openGraph: {
-    title: 'Transformation Digitale | 8 500-15 000 €',
-    description: 'Modernisez votre entreprise. Site web, CRM, automatisation, formation équipe. Accompagnement complet.',
-  },
-}
+  path: '/digital-ia/transformation',
+})
 
 const features = [
   {

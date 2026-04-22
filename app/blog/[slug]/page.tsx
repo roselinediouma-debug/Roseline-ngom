@@ -98,9 +98,16 @@ export async function generateMetadata({
       noindex: true,
     })
   }
+  // Limites SEO : title ≤ 54 chars avant suffixe " , Roseline Ngom" (16) = 70 total
+  // description 150-160 chars idéal
+  const safeTitle =
+    post.title.length > 54 ? post.title.slice(0, 51).trimEnd() + '…' : post.title
+  const rawDesc = post.excerpt || post.title
+  const safeDesc =
+    rawDesc.length > 158 ? rawDesc.slice(0, 155).trimEnd() + '…' : rawDesc
   return buildMetadata({
-    title: post.title,
-    description: post.excerpt || post.title,
+    title: safeTitle,
+    description: safeDesc,
     path: `/blog/${post.slug}`,
     ogImage: post.cover_image || undefined,
     ogType: 'article',
@@ -154,7 +161,7 @@ export default async function BlogArticlePage({
             <div className="relative w-full h-[340px] md:h-[480px] overflow-hidden">
               <Image
                 src={heroImage}
-                alt={post.title}
+                alt={post.title.length > 100 ? post.title.slice(0, 97).trimEnd() + '…' : post.title}
                 fill
                 priority
                 sizes="100vw"

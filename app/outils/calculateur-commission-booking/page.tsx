@@ -15,7 +15,7 @@ const PATH = '/outils/calculateur-commission-booking'
 export const metadata: Metadata = buildMetadata({
   title: 'Calculateur commission Booking hôtel (gratuit)',
   description:
-    "Calculez en 30 secondes combien Booking prend sur votre hôtel chaque année, et ce que vous économisez en passant 30 % des réservations en direct. Gratuit.",
+    "Calculez en 30 secondes combien Booking vous coûte par an, et ce que vous économisez en passant 30 % des résas en direct. Outil gratuit.",
   path: PATH,
   keywords: [
     'commission booking hôtel',

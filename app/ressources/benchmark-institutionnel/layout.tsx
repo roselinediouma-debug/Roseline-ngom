@@ -1,9 +1,9 @@
 import { buildMetadata } from '@/lib/seo/metadata'
 
 export const metadata = buildMetadata({
-  title: 'Benchmark Bénin · Maroc · Rwanda : politique touristique (PDF)',
+  title: 'Benchmark Bénin · Maroc · Rwanda (PDF)',
   description:
-    "Benchmark institutionnel gratuit : ce que le Sénégal peut apprendre du Bénin, du Maroc et du Rwanda en matière de stratégie touristique. Pour décideurs tourisme.",
+    "Benchmark institutionnel gratuit : ce que le Sénégal peut apprendre du Bénin, Maroc, Rwanda en stratégie touristique. Pour décideurs.",
   path: '/ressources/benchmark-institutionnel',
   ogImage: '/images/og/benchmark.jpg',
   keywords: [

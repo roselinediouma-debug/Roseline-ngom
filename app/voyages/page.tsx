@@ -7,10 +7,10 @@ import FeatureGrid from '@/components/FeatureGrid'
 import FAQAccordion from '@/components/FAQAccordion'
 
 export const metadata: Metadata = {
-  title: 'Voyages TripAfro | Roseline Ngom',
+  title: 'Voyages TripAfro au Sénégal',
   description: 'Découvrez nos voyages immersifs au Sénégal : Retour aux Sources, Voyage Signature, Back to Senegal. Organisés par Roseline Ngom.',
   openGraph: {
-    title: 'Voyages TripAfro | Roseline Ngom',
+    title: 'Voyages TripAfro au Sénégal',
     description: 'Découvrez nos voyages immersifs au Sénégal : Retour aux Sources, Voyage Signature, Back to Senegal. Organisés par Roseline Ngom.',
   },
 }
