@@ -1,368 +1,343 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import NewsletterForm from '@/components/NewsletterForm'
-
-const BORDEAUX = '#560E13'
-const OR = '#F6C961'
-const IVOIRE = '#FEFCF9'
-const CREME = '#F8F5F0'
-const NOIR = '#0A0A0A'
-
-const CONCEPT = [
-  {
-    title: 'Pourquoi',
-    text:
-      "Chaque année, la diaspora africaine envoie des milliards d'euros au pays. Très peu deviennent des projets productifs. Pas par manque d'argent : par manque de réseau, d'information et de méthode.",
-  },
-  {
-    title: 'Pour qui',
-    text:
-      "Les porteurs de projet de la diaspora qui envisagent de s'installer, d'investir ou de lancer une activité au Sénégal : hôtellerie, restauration, agence réceptive, projet culturel, immobilier, tech, agro-alimentaire.",
-  },
-  {
-    title: 'La promesse',
-    text:
-      "7 jours sur le terrain pour passer de l'idée au plan d'action. Rencontres institutionnelles, entrepreneurs locaux, experts foncier, prestataires vérifiés, atelier business plan. Vous repartez avec une roadmap, pas un rêve.",
-  },
-]
-
-const PILIERS = [
-  {
-    title: 'Institutions & dispositifs',
-    text:
-      "APIX, DER/FJ, FAISE, ADEPME, banques de la diaspora. En face à face, pas en visio. Les bons interlocuteurs, rencontrés au bon moment.",
-  },
-  {
-    title: 'Entrepreneurs locaux',
-    text:
-      "Ceux qui ont déjà fait le chemin. Retour d'expérience brut, sans filtre. Ce qui fonctionne, ce qui casse, ce qu'ils auraient aimé savoir avant.",
-  },
-  {
-    title: 'Terrain & foncier',
-    text:
-      "Visites ciblées, expert foncier, notaire, prestataires locaux (architecte, artisan, fournisseur) vérifiés au préalable. Plus de recherche Google à l'aveugle.",
-  },
-  {
-    title: 'Business plan & pitch',
-    text:
-      "Atelier intensif pour confronter votre projet au terrain. Chiffrage, séquençage, scénarios. Pitch final devant un jury d'experts et d'investisseurs.",
-  },
-  {
-    title: 'Communauté alumni',
-    text:
-      "12 porteurs de projets par cohorte. Groupe privé à vie. Entraide, partage de contacts, investissements croisés. On avance à plusieurs, on tient dans la durée.",
-  },
-  {
-    title: 'Suivi post-programme',
-    text:
-      "Le programme ne s'arrête pas au retour. Plusieurs visios de suivi avec moi dans les mois qui suivent, pour débloquer ce qui coince une fois rentré·e.",
-  },
-]
+import s from './page.module.css'
 
 export default function BackToSenegalPage() {
+  const [days, setDays] = useState('--')
+  const [hours, setHours] = useState('--')
+  const [mins, setMins] = useState('--')
+  const [secs, setSecs] = useState('--')
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  // Countdown towards opening of applications — keep it live for urgency
+  useEffect(() => {
+    const end = new Date('2027-02-01T00:00:00').getTime()
+    const pad = (n: number) => (n < 10 ? '0' + n : '' + n)
+    const tick = () => {
+      const diff = end - Date.now()
+      if (diff <= 0) return
+      setDays(String(Math.floor(diff / 864e5)))
+      setHours(pad(Math.floor((diff % 864e5) / 36e5)))
+      setMins(pad(Math.floor((diff % 36e5) / 6e4)))
+      setSecs(pad(Math.floor((diff % 6e4) / 1e3)))
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  // Fade-in on scroll
+  useEffect(() => {
+    if (!rootRef.current) return
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add(s.vis)
+        })
+      },
+      { threshold: 0.08 }
+    )
+    rootRef.current.querySelectorAll('.' + s.fi).forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <>
-      <Nav variant="solid" />
-      <main style={{ backgroundColor: IVOIRE }}>
-        {/* HERO — Coming Soon */}
-        <section
-          className="px-5 pt-32 pb-24 md:pt-40 md:pb-32 relative overflow-hidden"
-          style={{ backgroundColor: IVOIRE }}
-        >
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div
-              className="inline-block px-4 py-2 rounded-full text-xs font-bold tracking-[0.25em] mb-8"
-              style={{ backgroundColor: CREME, color: BORDEAUX, border: `1px solid ${OR}` }}
-            >
-              BIENTÔT DISPONIBLE
-            </div>
+    <div ref={rootRef} className={s.page}>
+      <Nav />
 
-            <h1
-              className="text-4xl md:text-6xl lg:text-7xl leading-[1.05] mb-7"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: NOIR,
-                fontWeight: 500,
-              }}
-            >
-              Back to Senegal{' '}
-              <em style={{ fontStyle: 'italic', color: BORDEAUX }}>arrive.</em>
+      {/* HERO */}
+      <section className={s.hero}>
+        <div className={s.heroBg}>
+          <Image src="/images/senegal/hero.jpg" alt="Sénégal, Back to Senegal" fill priority sizes="100vw" />
+        </div>
+        <div className={s.heroOv} />
+        <div className={s.heroAccent} />
+        <div className={s.heroCt}>
+          <div className={s.heroLeft}>
+            <div className={s.topline}>
+              <span className={s.chip}>Prochaine cohorte</span>
+              <span className={s.chipOutline}>7 jours · Dakar & région</span>
+            </div>
+            <h1 className={s.heroH1}>
+              BACK TO<br /><span>SENEGAL</span>
             </h1>
-
-            <p
-              className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-4"
-              style={{ color: 'rgba(10,10,10,0.7)' }}
-            >
-              Le programme d&rsquo;accélération sur 7 jours pour les porteurs de projet
-              de la diaspora qui veulent passer de l&rsquo;idée à l&rsquo;action au Sénégal.
+            <div className={s.tagline}>
+              L&apos;accélérateur de projets pour la diaspora.
+            </div>
+            <p className={s.heroSub}>
+              Sept jours sur le terrain pour transformer un projet qui dort depuis des années
+              en plan d&apos;action exécutable.{' '}
+              <strong>
+                Rencontres institutionnelles, entrepreneurs locaux, expertise foncière,
+                business plan, pitch devant jury.
+              </strong>{' '}
+              Vous repartez avec une roadmap, un carnet d&apos;adresses et une communauté.
             </p>
-
-            <p
-              className="text-base max-w-xl mx-auto"
-              style={{ color: 'rgba(10,10,10,0.55)' }}
-            >
-              Je finalise la première cohorte. Les candidatures ouvriront bientôt.
-            </p>
-          </div>
-        </section>
-
-        {/* CONCEPT */}
-        <section className="px-5 py-20 md:py-24" style={{ backgroundColor: CREME }}>
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-14">
-              <div className="text-xs font-bold tracking-[0.25em] mb-4" style={{ color: OR }}>
-                LE CONCEPT
+            <div className={s.btns}>
+              <a href="#waitlist" className={s.btnAcc}>Rejoindre la liste d&apos;attente →</a>
+              <a href="#programme" className={s.btnGhost}>Voir le programme</a>
+            </div>
+            <div className={s.proof}>
+              <div className={s.proofItem}>
+                <div className={s.pN}>15+</div>
+                <div className={s.pL}>décideurs rencontrés</div>
               </div>
-              <h2
-                className="text-3xl md:text-5xl leading-tight"
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  color: NOIR,
-                  fontWeight: 500,
-                }}
-              >
-                Dix ans de terrain,{' '}
-                <em style={{ fontStyle: 'italic', color: BORDEAUX }}>
-                  condensés en 7 jours.
-                </em>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {CONCEPT.map((item, i) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl p-8"
-                  style={{
-                    backgroundColor: IVOIRE,
-                    border: '1px solid rgba(86,14,19,0.08)',
-                  }}
-                >
-                  <div
-                    className="mb-5 flex items-center gap-3"
-                    style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif" }}
-                  >
-                    <span style={{ fontSize: 22, fontWeight: 600, color: OR, lineHeight: 1 }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(86,14,19,0.15)' }} />
-                  </div>
-                  <h3
-                    className="text-xl font-bold mb-3"
-                    style={{
-                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                      color: BORDEAUX,
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(10,10,10,0.7)' }}>
-                    {item.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* LETTRE — Pourquoi */}
-        <section className="px-5 py-20 md:py-28" style={{ backgroundColor: IVOIRE }}>
-          <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-10 items-center">
-            <div className="rounded-2xl overflow-hidden" style={{ aspectRatio: '4/5', position: 'relative' }}>
-              <Image
-                src="/images/roseline-portrait-1.jpg"
-                alt="Roseline Ngom"
-                fill
-                sizes="(max-width: 768px) 100vw, 400px"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <div>
-              <div className="text-xs font-bold tracking-[0.25em] mb-4" style={{ color: OR }}>
-                POURQUOI J&rsquo;AI CRÉÉ CE PROGRAMME
+              <div className={s.proofItem}>
+                <div className={s.pN}>12</div>
+                <div className={s.pL}>places par cohorte</div>
               </div>
-              <h2
-                className="text-3xl md:text-4xl leading-tight mb-6"
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  color: NOIR,
-                  fontWeight: 500,
-                }}
-              >
-                Pas par manque d&rsquo;argent.{' '}
-                <em style={{ fontStyle: 'italic', color: BORDEAUX }}>
-                  Par manque de méthode.
-                </em>
-              </h2>
-              <div className="space-y-4 text-[15px] md:text-base leading-relaxed" style={{ color: 'rgba(10,10,10,0.75)' }}>
-                <p>
-                  Depuis dix ans, je reçois le même message :{' '}
-                  <em>« Roseline, j&rsquo;ai un projet au Sénégal. Mais je ne sais pas par où commencer. »</em>
-                </p>
-                <p>
-                  J&rsquo;ai vu des dizaines de projets s&rsquo;essouffler dans les emails sans réponse,
-                  les notaires opaques, les business plans jamais confrontés au terrain. Le capital
-                  n&rsquo;était jamais le vrai problème.
-                </p>
-                <p>
-                  Back to Senegal, c&rsquo;est sept jours pour transmettre ce que j&rsquo;ai mis dix ans
-                  à construire : un carnet d&rsquo;adresses, une méthode, et la conviction que votre projet
-                  est faisable, si on l&rsquo;attaque bien.
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                    fontSize: 22,
-                    fontStyle: 'italic',
-                    color: BORDEAUX,
-                    marginTop: 20,
-                  }}
-                >
-                  — Roseline
-                </p>
+              <div className={s.proofItem}>
+                <div className={s.pN}>3 mois</div>
+                <div className={s.pL}>de suivi post-programme</div>
               </div>
             </div>
           </div>
-        </section>
 
-        {/* PILIERS */}
-        <section className="px-5 py-20 md:py-24" style={{ backgroundColor: CREME }}>
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-14">
-              <div className="text-xs font-bold tracking-[0.25em] mb-4" style={{ color: OR }}>
-                CE QUE CONTIENT LE PROGRAMME
+          <div className={s.heroCard}>
+            <div className={s.hcCountdown}>
+              <div className={s.hcTitle}>Ouverture Cohorte 1 dans</div>
+              <div className={s.cdRow}>
+                <div className={s.cdBox}><div className={s.cdN}>{days}</div><div className={s.cdL}>Jours</div></div>
+                <div className={s.cdBox}><div className={s.cdN}>{hours}</div><div className={s.cdL}>Heures</div></div>
+                <div className={s.cdBox}><div className={s.cdN}>{mins}</div><div className={s.cdL}>Min</div></div>
+                <div className={s.cdBox}><div className={s.cdN} style={{ color: '#F6C961' }}>{secs}</div><div className={s.cdL}>Sec</div></div>
               </div>
-              <h2
-                className="text-3xl md:text-4xl leading-tight"
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  color: NOIR,
-                  fontWeight: 500,
-                }}
-              >
-                Six piliers. Une{' '}
-                <em style={{ fontStyle: 'italic', color: BORDEAUX }}>transformation.</em>
-              </h2>
             </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {PILIERS.map((item, i) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl p-7"
-                  style={{
-                    backgroundColor: IVOIRE,
-                    border: '1px solid rgba(86,14,19,0.08)',
-                  }}
-                >
-                  <div
-                    className="mb-4 flex items-center gap-3"
-                    style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif" }}
-                  >
-                    <span style={{ fontSize: 22, fontWeight: 600, color: OR, lineHeight: 1 }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(86,14,19,0.15)' }} />
-                  </div>
-                  <h3
-                    className="text-lg font-bold mb-2"
-                    style={{
-                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                      color: BORDEAUX,
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(10,10,10,0.65)' }}>
-                    {item.text}
-                  </p>
-                </div>
-              ))}
+            <div className={s.hcCohortes}>
+              <div className={s.coh}>
+                <div className={s.cLabel}>Cohorte 1</div>
+                <div className={s.cDate}>Février 2027</div>
+                <div className={`${s.cPlaces} ${s.hot}`}>Liste d&apos;attente</div>
+                <a href="#waitlist" className={s.cCta}>Être prévenu·e</a>
+              </div>
+              <div className={`${s.coh} ${s.cohGold}`}>
+                <div className={s.cLabel}>Cohorte 2</div>
+                <div className={s.cDate}>Juillet 2027</div>
+                <div className={`${s.cPlaces} ${s.open}`}>Liste d&apos;attente</div>
+                <a href="#waitlist" className={s.cCta}>Être prévenu·e</a>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* WAITLIST */}
-        <section className="px-5 py-24 md:py-28" style={{ backgroundColor: BORDEAUX }}>
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="text-xs font-bold tracking-[0.25em] mb-5" style={{ color: OR }}>
-              LISTE D&rsquo;ATTENTE
-            </div>
-            <h2
-              className="text-3xl md:text-5xl leading-tight mb-5"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: IVOIRE,
-                fontWeight: 500,
-              }}
-            >
-              Soyez prévenu·e{' '}
-              <em style={{ fontStyle: 'italic', color: OR }}>à l&rsquo;ouverture.</em>
-            </h2>
-            <p
-              className="text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed"
-              style={{ color: 'rgba(254,252,249,0.8)' }}
-            >
-              Douze places par cohorte. Les candidatures seront d&rsquo;abord ouvertes à la liste
-              d&rsquo;attente, avec un tarif préférentiel pour les premiers inscrits.
-              Laissez votre email, je vous écris dès que tout est prêt.
-            </p>
-
-            <div className="max-w-md mx-auto">
-              <NewsletterForm />
-            </div>
-
-            <p className="text-xs mt-6" style={{ color: 'rgba(254,252,249,0.5)' }}>
-              Pas de spam. Désinscription en 1 clic. Vous serez informé·e en priorité.
-            </p>
+      {/* DOULEUR */}
+      <section className={s.douleur}>
+        <div className={s.douleurIn}>
+          <div className={`${s.label} ${s.fi}`}>Le constat</div>
+          <div className={`${s.stitle} ${s.fi}`}>
+            Des milliards d&apos;euros envoyés au pays chaque année.<br />
+            Très peu deviennent des projets productifs.
           </div>
-        </section>
-
-        {/* EN ATTENDANT */}
-        <section className="px-5 py-20 md:py-24" style={{ backgroundColor: IVOIRE }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="text-xs font-bold tracking-[0.25em] mb-4" style={{ color: OR }}>
-              EN ATTENDANT
+          <div className={`${s.intro} ${s.fi}`}>
+            Pas par manque d&apos;argent. Par manque de{' '}
+            <strong>réseau, d&apos;information et de méthode</strong>. Voici ce qui bloque les porteurs de projets diaspora :
+          </div>
+          <div className={s.douleurGrid}>
+            <div className={`${s.doul} ${s.fi}`}>
+              <div className={s.dNum}>01</div>
+              <h3>Pas de réseau local</h3>
+              <p>Vous ne connaissez personne à l&apos;APIX, à la DER, au FAISE. Les emails restent sans réponse.</p>
             </div>
-            <h2
-              className="text-3xl md:text-4xl mb-6"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                color: NOIR,
-                fontWeight: 500,
-              }}
-            >
-              Explorez le reste du travail
-            </h2>
-            <p
-              className="text-base leading-relaxed mb-10 max-w-2xl mx-auto"
-              style={{ color: 'rgba(10,10,10,0.65)' }}
-            >
-              Si votre projet est déjà avancé, je propose aussi un accompagnement stratégique
-              individuel. Sinon, le blog et les ressources gratuites sont un bon point de départ.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/consulting/accompagnement"
-                className="px-7 py-3.5 rounded-full font-bold text-sm transition-opacity hover:opacity-90"
-                style={{ backgroundColor: BORDEAUX, color: OR }}
-              >
-                Voir l&rsquo;accompagnement individuel
-              </a>
-              <a
-                href="/blog"
-                className="px-7 py-3.5 rounded-full font-semibold text-sm transition-opacity hover:opacity-80"
-                style={{ border: `1px solid ${BORDEAUX}`, color: BORDEAUX }}
-              >
-                Lire le blog
-              </a>
+            <div className={`${s.doul} ${s.fi} ${s.fiD1}`}>
+              <div className={s.dNum}>02</div>
+              <h3>Pas de méthode</h3>
+              <p>Business plan théorique, jamais confronté au terrain. Pricing au doigt mouillé.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD2}`}>
+              <div className={s.dNum}>03</div>
+              <h3>Des années perdues</h3>
+              <p>Le projet traîne depuis 3, 5, 10 ans. Vous tournez en rond. Seul·e derrière votre écran.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD3}`}>
+              <div className={s.dNum}>04</div>
+              <h3>Foncier opaque</h3>
+              <p>Comment sécuriser un terrain ? Quel notaire ? Quels pièges ? Personne ne vous explique.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD4}`}>
+              <div className={s.dNum}>05</div>
+              <h3>Prestataires non fiables</h3>
+              <p>Architecte, artisan, fournisseur. Trouvés sur Google. Aucune garantie. Aucune référence.</p>
+            </div>
+            <div className={`${s.doul} ${s.fi} ${s.fiD5}`}>
+              <div className={s.dNum}>06</div>
+              <h3>La solitude du porteur</h3>
+              <p>Personne autour de vous ne comprend votre projet. Pas de pairs. Pas de mentors.</p>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* SPLIT */}
+      <section className={s.split}>
+        <div className={`${s.splitL} ${s.fi}`}>
+          <h3 className={s.splitH3}>
+            Sans Back to Senegal<br />vous <span>perdez du temps</span>
+          </h3>
+          <div className={s.sp}><div className={s.spI}>—</div><div className={s.spT}><strong>2 à 5 ans</strong> de démarches solitaires</div></div>
+          <div className={s.sp}><div className={s.spI}>—</div><div className={s.spT}>Des dizaines d&apos;emails sans réponse</div></div>
+          <div className={s.sp}><div className={s.spI}>—</div><div className={s.spT}>Un business plan <strong>jamais validé</strong> par le terrain</div></div>
+          <div className={s.sp}><div className={s.spI}>—</div><div className={s.spT}>Des prestataires trouvés au hasard</div></div>
+          <div className={s.sp}><div className={s.spI}>—</div><div className={s.spT}>Aucune communauté de pairs</div></div>
+        </div>
+        <div className={`${s.splitR} ${s.fi}`}>
+          <h3 className={s.splitH3}>
+            Avec Back to Senegal<br />vous <span>accélérez tout</span>
+          </h3>
+          <div className={s.sp}><div className={s.spI}>+</div><div className={s.spT}><strong>7 jours</strong> pour faire ce qui prend 2 ans</div></div>
+          <div className={s.sp}><div className={s.spI}>+</div><div className={s.spT}>15+ rencontres <strong>face à face</strong> organisées</div></div>
+          <div className={s.sp}><div className={s.spI}>+</div><div className={s.spT}>Business plan <strong>validé par un jury</strong></div></div>
+          <div className={s.sp}><div className={s.spI}>+</div><div className={s.spT}>Prestataires <strong>vérifiés</strong> par Roseline</div></div>
+          <div className={s.sp}><div className={s.spI}>+</div><div className={s.spT}>Communauté de <strong>12 porteurs de projets</strong></div></div>
+        </div>
+      </section>
+
+      {/* PROGRAMME */}
+      <section className={s.prog} id="programme">
+        <div className={s.progIn}>
+          <div className={`${s.label} ${s.fi}`}>Le programme</div>
+          <div className={`${s.stitle} ${s.fi}`}>Sept jours. Sept accélérations. Une transformation.</div>
+          <div className={s.jours}>
+            <div className={`${s.jour} ${s.fi}`}><div className={s.jNum}>J1</div><h4>Pitch &amp; cadrage</h4><p>Chaque porteur pitch son projet. Feedback immédiat du groupe et de Roseline.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD1}`}><div className={s.jNum}>J2</div><h4>Institutions</h4><p>APIX, DER/FJ, FAISE, ADEPME. Face à face, pas en visio.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD2}`}><div className={s.jNum}>J3</div><h4>Banques</h4><p>Comptes, financement, dispositifs dédiés à la diaspora.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD3}`}><div className={s.jNum}>J4</div><h4>Entrepreneurs</h4><p>Cinq fondateurs qui ont déjà fait le chemin. Retour brut.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD4}`}><div className={s.jNum}>J5</div><h4>Terrain</h4><p>Visites ciblées, expert foncier, prestataires locaux vérifiés.</p></div>
+            <div className={`${s.jour} ${s.fi} ${s.fiD5}`}><div className={s.jNum}>J6</div><h4>Business plan</h4><p>Atelier intensif. Chiffrage, séquençage, scénarios. Document final.</p></div>
+            <div className={`${s.jour} ${s.fi}`}><div className={s.jNum}>J7</div><h4>Pitch final</h4><p>Jury d&apos;experts et d&apos;investisseurs. Roadmap. Accueil alumni.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* GAINS */}
+      <section className={s.gains}>
+        <div className={s.gainsIn}>
+          <div className={`${s.label} ${s.fi}`} style={{ color: '#F6C961' }}>Ce que vous repartez avec</div>
+          <div className={`${s.stitle} ${s.fi}`} style={{ color: 'white' }}>Pas des promesses. Des livrables.</div>
+          <div className={s.gainGrid}>
+            <div className={`${s.gain} ${s.fi}`}><div className={s.gNum}>01</div><h4>Roadmap 6 mois</h4><p>Plan d&apos;action personnalisé, chiffré, séquencé.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD1}`}><div className={s.gNum}>02</div><h4>15+ contacts clés</h4><p>Décideurs, entrepreneurs, institutions.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD2}`}><div className={s.gNum}>03</div><h4>Business plan validé</h4><p>Confronté au terrain et au jury d&apos;experts.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD3}`}><div className={s.gNum}>04</div><h4>Feedback jury</h4><p>Experts et investisseurs. Sans filtre.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD4}`}><div className={s.gNum}>05</div><h4>Communauté alumni</h4><p>Groupe privé à vie. Entraide durable.</p></div>
+            <div className={`${s.gain} ${s.fi} ${s.fiD5}`}><div className={s.gNum}>06</div><h4>3 mois de suivi</h4><p>Visios mensuelles avec Roseline post-programme.</p></div>
+          </div>
+        </div>
+      </section>
+
+      {/* LETTRE */}
+      <section className={s.lettre}>
+        <div className={`${s.lettreIn} ${s.fi}`}>
+          <div className={s.lettreImg}>
+            <Image src="/images/roseline-portrait-1.jpg" alt="Roseline Ngom" width={400} height={500} style={{ width: '100%', height: 'auto' }} />
+          </div>
+          <div className={s.lettreTxt}>
+            <div className={s.salut}>Pourquoi j&apos;ai créé Back to Senegal</div>
+            <p>
+              Depuis dix ans, je reçois le même message :{' '}
+              <strong>« Roseline, j&apos;ai un projet au Sénégal. Mais je ne sais pas par où commencer. »</strong>
+            </p>
+            <p>
+              J&apos;ai vu des dizaines de projets s&apos;essouffler. Pas par manque d&apos;argent.
+              Par manque de réseau, d&apos;information, de méthode.
+            </p>
+            <p>
+              Back to Senegal, c&apos;est sept jours pour vous transmettre ce que j&apos;ai mis dix ans à construire.
+              Un carnet d&apos;adresses. Une méthode. Et la conviction que{' '}
+              <strong>votre projet est faisable, si on l&apos;attaque bien</strong>.
+            </p>
+            <div className={s.sig}>— Roseline</div>
+          </div>
+        </div>
+      </section>
+
+      {/* COHORTES — détail */}
+      <section className={s.cohDetail}>
+        <div className={s.cohDetailIn}>
+          <div className={`${s.label} ${s.fi}`}>Les cohortes 2027</div>
+          <div className={`${s.stitle} ${s.fi}`}>Deux fenêtres. Même programme. Douze places.</div>
+
+          <div className={s.cohGrid}>
+            <div className={`${s.cohCard} ${s.fi}`}>
+              <div className={s.cohBadge}>Cohorte 1</div>
+              <div className={s.cohDateBig}>Février 2027</div>
+              <div className={s.cohSeason}>Saison sèche · température idéale</div>
+              <ul className={s.cohList}>
+                <li>Programme complet sur 7 jours consécutifs</li>
+                <li>Dakar, Almadies, Diamniadio, Mbour, Saly</li>
+                <li>Hébergement, repas et transports internes inclus</li>
+                <li>Sélection sur dossier + entretien</li>
+              </ul>
+              <div className={s.cohState}>
+                <span className={s.cohDot} /> Liste d&apos;attente ouverte
+              </div>
+            </div>
+
+            <div className={`${s.cohCard} ${s.cohCardGold} ${s.fi} ${s.fiD1}`}>
+              <div className={s.cohBadge}>Cohorte 2</div>
+              <div className={s.cohDateBig}>Juillet 2027</div>
+              <div className={s.cohSeason}>Saison verte · possibilité combiner avec Retour aux Sources</div>
+              <ul className={s.cohList}>
+                <li>Programme complet sur 7 jours consécutifs</li>
+                <li>Dakar, Almadies, Diamniadio, Mbour, Saly</li>
+                <li>Hébergement, repas et transports internes inclus</li>
+                <li>Sélection sur dossier + entretien</li>
+              </ul>
+              <div className={s.cohState}>
+                <span className={s.cohDot} /> Liste d&apos;attente ouverte
+              </div>
+            </div>
+          </div>
+
+          <p className={`${s.cohFooter} ${s.fi}`}>
+            Les candidatures s&apos;ouvriront d&apos;abord aux inscrits de la liste d&apos;attente,
+            avec un tarif préférentiel réservé aux premiers confirmés.
+          </p>
+        </div>
+      </section>
+
+      {/* WAITLIST */}
+      <section className={s.waitlist} id="waitlist">
+        <div className={`${s.waitlistIn} ${s.fi}`}>
+          <div className={s.waitlistLabel}>Liste d&apos;attente</div>
+          <h2 className={s.waitlistH2}>
+            Soyez prévenu·e <span>à l&apos;ouverture.</span>
+          </h2>
+          <p className={s.waitlistSub}>
+            Douze places par cohorte, sélection sur dossier. La liste d&apos;attente reçoit
+            l&apos;information en priorité et accède au tarif préférentiel.
+          </p>
+          <div className={s.waitlistForm}>
+            <NewsletterForm />
+          </div>
+          <p className={s.waitlistMicro}>
+            Pas de spam. Désinscription en 1 clic.
+          </p>
+        </div>
+      </section>
+
+      {/* EN ATTENDANT */}
+      <section className={s.enattendant}>
+        <div className={`${s.enattendantIn} ${s.fi}`}>
+          <div className={s.label} style={{ textAlign: 'center', marginBottom: 14 }}>En attendant</div>
+          <h2 className={s.enattendantH2}>Votre projet est déjà avancé ?</h2>
+          <p className={s.enattendantP}>
+            Si vous ne pouvez pas attendre la prochaine cohorte, je propose aussi un accompagnement
+            stratégique individuel sur trois, six ou douze mois.
+          </p>
+          <div className={s.enattendantBtns}>
+            <a href="/consulting/accompagnement" className={s.btnAcc}>Voir l&apos;accompagnement individuel</a>
+            <a href="/blog" className={s.btnGhost} style={{ color: '#560E13', borderColor: '#560E13' }}>Lire le blog</a>
+          </div>
+        </div>
+      </section>
+
       <Footer />
-    </>
+    </div>
   )
 }
