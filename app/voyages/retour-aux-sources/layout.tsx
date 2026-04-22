@@ -8,12 +8,12 @@ const FAQ_ITEMS = [
     answer: "Ce voyage est conçu pour la diaspora sénégalaise et africaine francophone (France, Belgique, Canada) qui souhaite (re)découvrir le Sénégal en profondeur, avec ou sans enfants, en couple, en solo ou en famille. Il convient aussi aux voyageurs curieux sensibles au tourisme culturel et à la mémoire des origines."
   },
   {
-    question: 'Quelle est la durée et le prix du voyage ?',
-    answer: "Le voyage dure 14 jours et les tarifs commencent à 2 200 € par personne, tout compris sur place (hébergement, transport interne, accompagnement, repas listés au programme). Le vol international n'est pas inclus."
+    question: 'Quels sont les formats et les tarifs ?',
+    answer: "Deux formats : 7 jours (Nord : Dakar, Gorée, Lac Rose, Lompoul, Saint-Louis, Djoudj) à partir de 1 795 € Early Bird, ou 14 jours (Nord + Sud avec Sine Saloum, Saly, Somone, Bandia) à partir de 2 450 € Early Bird. Le départ de décembre (20 déc. - 2 janv.) applique un supplément de +45% pour la haute saison des fêtes."
   },
   {
     question: 'Quelles régions du Sénégal sont couvertes ?',
-    answer: "L'itinéraire traverse Dakar, l'île de Gorée, Saint-Louis du Sénégal, le Sine Saloum et la Casamance. C'est une immersion complète nord-sud qui combine histoire, nature et rencontres humaines."
+    answer: "Le 7 jours couvre Dakar, l'île de Gorée, le Lac Rose, le désert de Lompoul, la Langue de Barbarie, Saint-Louis du Sénégal et le Parc du Djoudj. Le 14 jours ajoute Kaolack, le Sine Saloum (Ndangane), Saly, la Somone et la réserve de Bandia."
   },
   {
     question: 'Faut-il un visa pour voyager au Sénégal depuis la France ?',
@@ -21,18 +21,18 @@ const FAQ_ITEMS = [
   },
   {
     question: 'Comment se passe l\'accompagnement sur place ?',
-    answer: "Roseline Ngom accompagne personnellement chaque groupe, avec une équipe locale de confiance (chauffeurs, guides, hôteliers). Le groupe compte 8 à 15 voyageurs maximum pour préserver l'intimité et la qualité des échanges."
+    answer: "Roseline Ngom accompagne personnellement chaque groupe, avec une équipe locale de confiance (chauffeurs, guides, hôteliers). Le groupe est limité à 15 voyageurs maximum pour préserver l'intimité et la qualité des échanges."
   },
   {
     question: 'Quand partent les prochains départs ?',
-    answer: "Les départs sont organisés plusieurs fois par an, généralement en saison sèche (novembre à mai). Contactez-nous pour connaître les dates ouvertes et réserver votre place."
+    answer: "Trois départs programmés en 2026 : juillet, août et décembre. Le départ de décembre applique un supplément de +45% haute saison. Demandez le programme détaillé pour connaître les dates précises et réserver votre place."
   }
 ]
 
 export const metadata = buildMetadata({
-  title: 'Retour aux Sources : voyage diaspora Sénégal 14 j',
+  title: 'Retour aux Sources : voyage diaspora Sénégal 7 ou 14 j',
   description:
-    "Voyage immersif en groupe (8-15) de 14 jours pour la diaspora. Dakar, Gorée, Saint-Louis, Sine Saloum, Casamance. Avec Roseline Ngom dès 2 200 €.",
+    "Voyage immersif en groupe (15 max) au Sénégal pour la diaspora. Format 7 j (Nord) dès 1 795 € ou 14 j (Nord + Sud) dès 2 450 €. Avec Roseline Ngom. Départs juillet, août et décembre 2026.",
   path: '/voyages/retour-aux-sources',
   ogImage: '/images/og/retour-aux-sources.jpg',
   keywords: [
@@ -50,14 +50,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <JsonLd
         data={[
           ...touristTripSchema({
-            name: 'Retour aux Sources, voyage diaspora au Sénégal (14 jours)',
+            name: 'Retour aux Sources, voyage diaspora au Sénégal',
             description:
-              "Voyage immersif en groupe (8-15) de 14 jours pour la diaspora sénégalaise. Dakar, Gorée, Saint-Louis, Sine Saloum, Casamance.",
+              "Voyage immersif en groupe (15 max) au Sénégal pour la diaspora sénégalaise. Deux formats au choix : 7 jours (Nord) ou 14 jours (Nord + Sud).",
             slug: '/voyages/retour-aux-sources',
             image: '/images/og/retour-aux-sources.jpg',
-            priceFrom: 2200,
-            durationDays: 14,
-            itineraryPlaces: ['Dakar', 'Île de Gorée', 'Saint-Louis', 'Sine Saloum', 'Casamance'],
+            priceFrom: 1795,
+            durationDays: 7,
+            itineraryPlaces: ['Dakar', 'Île de Gorée', 'Lac Rose', 'Lompoul', 'Saint-Louis', 'Djoudj', 'Sine Saloum'],
             aggregateRating: { ratingValue: 4.9, reviewCount: 47 },
           }),
           breadcrumbSchema([
