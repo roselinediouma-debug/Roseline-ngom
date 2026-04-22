@@ -247,7 +247,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
 
             {/* CTA */}
             <Link
-              href="/guide"
+              href="/ressources/guide-15-experiences"
               className="btn-gold-pulse font-dm-sans px-6 py-2.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300 hover:brightness-110"
               style={{
                 backgroundColor: '#F6C961',
@@ -422,7 +422,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
             style={{ animationDelay: menuOpen ? `${navItems.length * 0.08}s` : '0s' }}
           >
             <Link
-              href="/guide"
+              href="/ressources/guide-15-experiences"
               className="font-dm-sans inline-block px-8 py-3.5 text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:brightness-110"
               style={{
                 backgroundColor: '#F6C961',

@@ -262,7 +262,7 @@ export default function OffresPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/guide"
+                href="/ressources/guide-15-experiences"
                 className="inline-block px-8 py-4 rounded-xl font-semibold text-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#F6C961', color: '#560E13' }}
               >

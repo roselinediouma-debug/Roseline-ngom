@@ -153,7 +153,7 @@ export default function Footer() {
             </h4>
             <ul className="flex flex-col gap-2 text-sm opacity-80">
               <li>
-                <Link href="/guide" className="hover:opacity-60 transition-opacity">
+                <Link href="/ressources/guide-15-experiences" className="hover:opacity-60 transition-opacity">
                   Guide gratuit
                 </Link>
               </li>

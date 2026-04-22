@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: '/ressources/guide-15-experiences', destination: '/guide', permanent: true },
+      { source: '/guide', destination: '/ressources/guide-15-experiences', permanent: true },
+      { source: '/guide/merci', destination: '/ressources/guide-15-experiences/merci', permanent: true },
       { source: '/conseil', destination: '/consulting', permanent: true },
     ]
   },

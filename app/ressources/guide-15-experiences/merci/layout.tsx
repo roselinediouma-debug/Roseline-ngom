@@ -3,7 +3,7 @@ import { buildMetadata } from '@/lib/seo/metadata'
 export const metadata = buildMetadata({
   title: 'Merci, votre guide est en route',
   description: 'Votre guide gratuit Sénégal vous est envoyé par email.',
-  path: '/guide/merci',
+  path: '/ressources/guide-15-experiences/merci',
   noindex: true,
 })
 

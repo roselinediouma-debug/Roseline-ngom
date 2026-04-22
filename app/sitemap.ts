@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes: { path: string; priority: number; changeFrequency: 'daily' | 'weekly' | 'monthly' }[] = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' },
     // Main pages
-    { path: '/guide', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/ressources/guide-15-experiences', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/offres', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.7, changeFrequency: 'monthly' },
     // Outils IA

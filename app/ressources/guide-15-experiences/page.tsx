@@ -108,7 +108,7 @@ export default function GuidePage() {
       })
       const data = await res.json()
       if (data.success) {
-        router.push(`/guide/merci?prenom=${encodeURIComponent(prenom)}`)
+        router.push(`/ressources/guide-15-experiences/merci?prenom=${encodeURIComponent(prenom)}`)
       } else {
         setError('Une erreur est survenue. Réessayez.')
       }

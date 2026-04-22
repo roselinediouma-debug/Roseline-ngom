@@ -102,7 +102,7 @@ export default function HomePage() {
       })
       const data = await res.json()
       if (data.success) {
-        router.push('/guide/merci')
+        router.push('/ressources/guide-15-experiences/merci')
       }
     } catch {
       // silent
@@ -130,7 +130,7 @@ export default function HomePage() {
               Transformation digitale du tourisme africain.
             </p>
             <div className={s.heroBtns}>
-              <Link href="/guide" className={s.btnGold}>Recevoir le guide gratuit</Link>
+              <Link href="/ressources/guide-15-experiences" className={s.btnGold}>Recevoir le guide gratuit</Link>
               <a
                 href="https://calendly.com/roselinengom"
                 target="_blank"
@@ -413,7 +413,7 @@ export default function HomePage() {
           <div>
             <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Ressources & lecture</h3>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
-              <li>→ <Link href="/guide" style={{ color: '#560E13', textDecoration: 'underline' }}>Guide gratuit : 15 expériences secrètes</Link></li>
+              <li>→ <Link href="/ressources/guide-15-experiences" style={{ color: '#560E13', textDecoration: 'underline' }}>Guide gratuit : 15 expériences secrètes</Link></li>
               <li>→ <Link href="/blog/voyage-senegal-guide-complet-2026" style={{ color: '#560E13', textDecoration: 'underline' }}>Voyage au Sénégal en 2026, guide complet</Link></li>
               <li>→ <Link href="/blog/rentrer-au-senegal-diaspora" style={{ color: '#560E13', textDecoration: 'underline' }}>Rentrer au Sénégal, conseils diaspora</Link></li>
               <li>→ <Link href="/blog" style={{ color: '#560E13', textDecoration: 'underline' }}>Tous les articles du blog</Link></li>

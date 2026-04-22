@@ -285,7 +285,7 @@ export default async function BlogArticlePage({
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/guide"
+                href="/ressources/guide-15-experiences"
                 className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#F6C961', color: '#560E13' }}
               >

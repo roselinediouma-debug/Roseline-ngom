@@ -18,7 +18,7 @@ const CTA_MAP: Record<string, { label: string; href: string; external?: boolean 
     href: 'https://calendly.com/roseline-ngom',
     external: true,
   },
-  guide: { label: 'Télécharger le guide gratuit', href: '/guide' },
+  guide: { label: 'Télécharger le guide gratuit', href: '/ressources/guide-15-experiences' },
   voyage_rs: {
     label: 'Découvrir Retour aux Sources',
     href: '/voyages/retour-aux-sources',

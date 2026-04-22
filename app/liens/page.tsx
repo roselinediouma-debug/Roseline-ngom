@@ -17,7 +17,7 @@ function AnimatedGuideButton() {
   }, [])
 
   return (
-    <Link href="/guide" className="block">
+    <Link href="/ressources/guide-15-experiences" className="block">
       <div
         className="relative w-full rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all hover:scale-[1.02] hover:shadow-lg"
         style={{

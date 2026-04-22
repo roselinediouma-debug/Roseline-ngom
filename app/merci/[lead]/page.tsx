@@ -16,13 +16,13 @@ const CONTENT: Record<string, { title: string; message: string; cta: { label: st
     title: 'Checklist envoyee',
     message:
       'Consultez votre boite email pour telecharger votre checklist. Pensez a verifier vos spams si vous ne la voyez pas.',
-    cta: { label: 'Telecharger le guide gratuit', href: '/guide' },
+    cta: { label: 'Telecharger le guide gratuit', href: '/ressources/guide-15-experiences' },
   },
   newsletter: {
     title: 'Bienvenue dans La Teranga',
     message:
       'Vous etes inscrit(e) a la newsletter. Votre premier email arrive bientot avec du contenu exclusif sur le Senegal et l\'Afrique de l\'Ouest.',
-    cta: { label: 'Telecharger le guide gratuit', href: '/guide' },
+    cta: { label: 'Telecharger le guide gratuit', href: '/ressources/guide-15-experiences' },
   },
   'guide-casamance': {
     title: 'Merci pour votre achat',

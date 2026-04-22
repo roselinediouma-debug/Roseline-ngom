@@ -6,7 +6,7 @@ export const metadata = buildMetadata({
   title: 'Guide gratuit : 15 expériences secrètes au Sénégal',
   description:
     "Mon carnet d'adresses personnel. 15 lieux, contacts directs, astuces locales pour un voyage authentique au Sénégal. PDF 33 pages à télécharger gratuitement.",
-  path: '/guide',
+  path: '/ressources/guide-15-experiences',
   ogImage: '/images/og/guide.jpg',
   keywords: [
     'guide Sénégal gratuit',
@@ -50,7 +50,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         data={[
           breadcrumbSchema([
             { name: 'Accueil', path: '/' },
-            { name: 'Guide gratuit', path: '/guide' },
+            { name: 'Ressources', path: '/ressources' },
+            { name: 'Guide gratuit 15 expériences', path: '/ressources/guide-15-experiences' },
           ]),
           faqSchema(FAQ_ITEMS),
         ]}

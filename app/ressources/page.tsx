@@ -18,7 +18,7 @@ const RESOURCES = [
     format: 'PDF · 33 pages',
     description:
       'Mon carnet d\'adresses personnel. 15 lieux, contacts directs, astuces locales. Le guide que je donne a mes amis avant leur premier voyage.',
-    href: '/guide',
+    href: '/ressources/guide-15-experiences',
     cta: 'Telecharger gratuitement',
     icon: '📖',
     badge: 'Le plus populaire',
