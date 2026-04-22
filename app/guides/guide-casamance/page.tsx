@@ -9,33 +9,30 @@ import FAQAccordion from '@/components/FAQAccordion'
 import Link from 'next/link'
 
 export const metadata = buildMetadata({
-  title: 'Guide Casamance : 50-70 pages, contacts vérifiés',
-  description: 'Le guide complet pour votre voyage en Casamance. 200+ adresses, contacts WhatsApp vérifiés, itinéraires testés. 29 €.',
+  title: 'Guide Casamance : itinéraires et hébergements',
+  description: 'Le guide pratique pour votre voyage en Casamance : hôtels et campements, tarifs, transport, itinéraires et circuit combiné. 29 €.',
   path: '/guides/guide-casamance',
 })
 
 const SOMMAIRE = [
-  'Introduction : pourquoi la Casamance est différente',
-  'Quand y aller : saison par saison',
-  'Comment y aller : vol, ferry, route',
-  'Itinéraires recommandés : 5, 7 et 14 jours',
-  'Les 20 expériences incontournables',
-  'Hébergements testés et notés (contact direct)',
-  'Restaurants et adresses locales',
-  'Chauffeurs et piroguiers de confiance',
-  'Budget type par profil',
-  'Conseils culturels (codes diolas)',
-  'Carte interactive (QR code Google Maps)',
-  'Bonus : checklist Casamance, fiche sécurité, lexique diola',
+  'Introduction : pourquoi la Casamance',
+  'Quand y aller : les bonnes périodes',
+  'Comment y aller : avion, bateau, bus',
+  'Destinations à visiter en Casamance',
+  'Itinéraires recommandés (5, 7, 14 jours)',
+  'Recommandations d’hôtels et campements avec tarifs indicatifs',
+  'Le guide local partenaire (contact direct)',
+  'Circuit combiné Casamance + Sine Saloum',
+  'Conseils pratiques et culturels',
 ]
 
 const FAQ = [
-  { q: 'Dans quel format est le guide ?', a: 'PDF haute qualité, optimisé pour mobile et tablette. Lisible hors ligne.' },
-  { q: 'Les contacts sont-ils vraiment à jour ?', a: 'Oui. Chaque numéro, chaque adresse est vérifié tous les trimestres. Si un contact change, vous recevez la mise à jour gratuitement pendant 12 mois.' },
-  { q: 'Comment se passe la livraison ?', a: 'Immédiate. Après le paiement, vous recevez le guide par email en quelques secondes.' },
+  { q: 'Dans quel format est le guide ?', a: 'PDF téléchargeable, lisible sur ordinateur, tablette ou mobile. Hors ligne une fois téléchargé.' },
+  { q: 'Les hébergements recommandés sont-ils réservables en ligne ?', a: 'Pour les hôtels, la plupart oui (Booking, site direct, WhatsApp). Pour les campements villageois, la réservation se fait souvent par téléphone ou WhatsApp ; le guide donne le contact à chaque fois.' },
+  { q: 'Qui est le guide partenaire ?', a: 'Un guide local de confiance en Casamance, testé lors de mes voyages. Son contact direct figure dans le PDF avec ses spécialités (pirogue, randonnée, excursions villages).' },
+  { q: 'Les tarifs sont-ils garantis ?', a: 'Les tarifs sont indicatifs et actualisés à la date de publication du guide. Ils peuvent varier selon la saison. Les fourchettes couvrent les variations habituelles.' },
+  { q: 'Comment se passe la livraison ?', a: 'Immédiate. Après le paiement, vous recevez le guide par email en quelques minutes.' },
   { q: 'Et si le guide ne me convient pas ?', a: 'Satisfait ou remboursé 14 jours, sans condition. Un email suffit.' },
-  { q: 'Puis-je utiliser ce guide pour un usage commercial ?', a: "Non, le guide est réservé à un usage personnel. Pour un usage professionnel (agence, blog), contactez-nous." },
-  { q: 'Les hébergements sont-ils partenaires de TripAfro ?', a: "Certains oui, d'autres non. Chaque recommandation est basée sur une expérience réelle, pas sur un partenariat commercial." },
 ]
 
 export default function GuideCasamancePage() {
@@ -46,8 +43,8 @@ export default function GuideCasamancePage() {
         <SalesPageHero
           eyebrow="GUIDE SIGNATURE"
           title="Guide Casamance"
-          subtitle="50-70 pages pour organiser votre voyage en Casamance, avec les contacts directs des meilleurs prestataires"
-          badges={['50-70 pages', '200+ adresses', 'Contacts vérifiés', '29 €']}
+          subtitle="Le guide pratique pour organiser votre voyage en Casamance : destinations, hôtels, transport et itinéraires"
+          badges={['Itinéraires 5-7-14 j', 'Hôtels & campements', 'Guide partenaire', '29 €']}
           ctaPrimary={{ label: 'Acheter le guide (29 €)', href: '#acheter' }}
           ctaSecondary={{ label: 'Voir le sommaire', href: '#sommaire' }}
         />
@@ -62,10 +59,10 @@ export default function GuideCasamancePage() {
             />
             <div className="mt-12">
               <FeatureGrid features={[
-                { icon: '⏰', title: 'Des heures de recherche', description: 'Plus besoin de fouiller 50 blogs contradictoires. Tout est centralisé, vérifié, à jour.' },
-                { icon: '💸', title: 'Des erreurs de débutant', description: "Mauvais taux de change, arnaques taxis, hébergements douteux : le guide vous protège." },
-                { icon: '📞', title: 'Des contacts obsolètes', description: 'Chaque numéro de téléphone, chaque WhatsApp est vérifié tous les trimestres.' },
-                { icon: '🗺️', title: 'Du temps perdu sur place', description: "L'itinéraire est optimisé. Pas de détours inutiles, pas de mauvaises surprises." },
+                { icon: '⏰', title: 'Des heures de recherche', description: 'Plus besoin de fouiller des blogs contradictoires. Les infos essentielles sont centralisées.' },
+                { icon: '🗺️', title: 'Un itinéraire mal conçu', description: 'Les circuits recommandés sont testés sur le terrain : durée réaliste, trajets optimisés.' },
+                { icon: '🏨', title: 'Un hébergement au hasard', description: 'Hôtels et campements sélectionnés selon le profil et le budget, avec tarifs indicatifs.' },
+                { icon: '🤝', title: 'Un guide qui ne tient pas ses promesses', description: 'Le contact d’un guide local partenaire, rencontré et testé, figure dans le PDF.' },
               ]} />
             </div>
           </div>
@@ -100,7 +97,17 @@ export default function GuideCasamancePage() {
                 ✅ Ce qui est inclus
               </h3>
               <ul className="space-y-3 text-sm">
-                {['PDF téléchargeable immédiatement', 'Contacts WhatsApp vérifiés', 'Itinéraires 5, 7 et 14 jours', 'Carte interactive QR code', 'Mises à jour 12 mois', 'Bonus : checklist + lexique diola', 'Support email si question'].map((item, i) => (
+                {[
+                  'PDF téléchargeable immédiatement',
+                  'Destinations principales à visiter',
+                  'Itinéraires 5, 7 et 14 jours',
+                  'Recommandations d’hôtels avec tarifs indicatifs',
+                  'Contact direct d’un guide local partenaire',
+                  'Comparatif des modes de transport (avion, bateau, bus)',
+                  'Circuit combiné Casamance + Sine Saloum',
+                  'Conseils pratiques et culturels',
+                  'Support email si question',
+                ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span style={{ color: '#F6C961' }}>✓</span>
                     <span>{item}</span>
@@ -113,7 +120,13 @@ export default function GuideCasamancePage() {
                 Ce qui n&apos;est PAS inclus
               </h3>
               <ul className="space-y-3 text-sm opacity-60">
-                {['Réservation des hébergements (vous le faites vous-même)', 'Accompagnement sur place', 'Billets d\'avion', 'Assurance voyage'].map((item, i) => (
+                {[
+                  'Réservation des hébergements (vous le faites vous-même)',
+                  'Accompagnement sur place',
+                  'Billets d’avion ou de bateau',
+                  'Assurance voyage',
+                  'Mise à jour trimestrielle des contacts',
+                ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span>-</span>
                     <span>{item}</span>
@@ -129,8 +142,8 @@ export default function GuideCasamancePage() {
           <div className="max-w-5xl mx-auto">
             <SectionHeader eyebrow="AVIS ACHETEURS" title="Ce qu'ils en disent" centered />
             <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <TestimonialCard name="Amina K." location="Lyon" quote="Le guide Casamance m'a permis d'organiser 10 jours incroyables sans agence. Les contacts piroguiers sont en or." stars={5} />
-              <TestimonialCard name="Thomas R." location="Paris" quote="J'ai voyagé seul en Casamance grâce à ce guide. Chaque adresse était fiable, chaque conseil pertinent." stars={5} />
+              <TestimonialCard name="Amina K." location="Lyon" quote="Le guide m'a permis d'organiser 10 jours en Casamance sans agence. L'itinéraire tient la route sur le terrain." stars={5} />
+              <TestimonialCard name="Thomas R." location="Paris" quote="J'ai voyagé seul grâce à ce guide. Les recommandations d'hôtels et le contact du guide local ont fait la différence." stars={5} />
               <TestimonialCard name="Ndèye F." location="Dakar" quote="J'ai offert ce guide à ma cousine qui vit à Marseille. Elle a organisé son premier voyage en Casamance toute seule." stars={5} />
             </div>
           </div>
@@ -161,7 +174,7 @@ export default function GuideCasamancePage() {
             </h2>
             <div className="text-5xl font-bold mb-2" style={{ color: '#F6C961' }}>29 €</div>
             <p className="text-sm mb-2 opacity-60" style={{ color: '#FEFCF9' }}>Paiement unique. Pas d&apos;abonnement.</p>
-            <p className="text-xs mb-8 opacity-40" style={{ color: '#FEFCF9' }}>Satisfait ou remboursé 14 jours · Mises à jour 12 mois</p>
+            <p className="text-xs mb-8 opacity-40" style={{ color: '#FEFCF9' }}>Satisfait ou remboursé 14 jours</p>
 
             <a
               href="/api/checkout?product=guide_casamance"
