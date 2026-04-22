@@ -117,42 +117,36 @@ export default function GuidesPage() {
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  icon: '🗺️',
                   title: 'Itinéraires 5, 7 et 14 jours',
                   text:
                     'Des circuits testés sur le terrain, avec les durées réelles de trajet et les étapes logiques.',
                 },
                 {
-                  icon: '🏨',
                   title: 'Hôtels & campements',
                   text:
                     'Une sélection par gamme et par budget, avec tarifs indicatifs en FCFA.',
                 },
                 {
-                  icon: '✈️',
                   title: 'Transport : avion, bateau, bus',
                   text:
                     'Le comparatif complet pour rejoindre la Casamance depuis Dakar, avec tarifs et durées.',
                 },
                 {
-                  icon: '🤝',
                   title: 'Guide local partenaire',
                   text:
                     'Le contact direct d’un guide de confiance sur place, rencontré et testé.',
                 },
                 {
-                  icon: '🌍',
                   title: 'Circuits combinés',
                   text:
                     'Casamance + Sine Saloum pour les voyages longs, pensés pour enchaîner les régions sans perte de temps.',
                 },
                 {
-                  icon: '🧭',
                   title: 'Conseils pratiques',
                   text:
                     'Codes culturels diolas, santé, argent, connexion, lexique, checklist bagage.',
                 },
-              ].map((item) => (
+              ].map((item, i) => (
                 <div
                   key={item.title}
                   className="rounded-2xl p-7"
@@ -161,7 +155,30 @@ export default function GuidesPage() {
                     border: '1px solid rgba(86,14,19,0.08)',
                   }}
                 >
-                  <div className="text-3xl mb-3">{item.icon}</div>
+                  <div
+                    className="mb-4 flex items-center gap-3"
+                    style={{
+                      fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 600,
+                        color: OR,
+                        lineHeight: 1,
+                      }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span
+                      style={{
+                        flex: 1,
+                        height: 1,
+                        backgroundColor: 'rgba(86,14,19,0.15)',
+                      }}
+                    />
+                  </div>
                   <h3
                     className="text-lg font-bold mb-2"
                     style={{
