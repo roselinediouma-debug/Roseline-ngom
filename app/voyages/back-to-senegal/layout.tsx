@@ -1,11 +1,11 @@
 import { buildMetadata } from '@/lib/seo/metadata'
 import JsonLd from '@/components/JsonLd'
-import { touristTripSchema, breadcrumbSchema } from '@/lib/seo/jsonld'
+import { breadcrumbSchema } from '@/lib/seo/jsonld'
 
 export const metadata = buildMetadata({
-  title: 'Back to Senegal : accompagnement entrepreneurs diaspora',
+  title: 'Back to Senegal : programme diaspora, bientôt disponible',
   description:
-    "Programme d'accompagnement pour entrepreneurs et porteurs de projet de la diaspora qui veulent s'installer ou investir au Sénégal. Immersion, réseau, stratégie.",
+    "Back to Senegal, le programme d'accélération pour porteurs de projet de la diaspora qui veulent s'installer ou investir au Sénégal. Inscrivez-vous pour être informé·e de l'ouverture des candidatures.",
   path: '/voyages/back-to-senegal',
   ogImage: '/images/og/back-to-senegal.jpg',
   keywords: [
@@ -21,16 +21,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <JsonLd
         data={[
-          ...touristTripSchema({
-            name: 'Back to Senegal, accompagnement entrepreneurs diaspora',
-            description:
-              "Programme d'accompagnement 7 jours pour entrepreneurs diaspora qui veulent s'installer ou investir au Sénégal : immersion, réseau, stratégie.",
-            slug: '/voyages/back-to-senegal',
-            image: '/images/og/back-to-senegal.jpg',
-            priceFrom: 2800,
-            durationDays: 7,
-            itineraryPlaces: ['Dakar', 'Almadies', 'Diamniadio', 'Mbour', 'Saly'],
-          }),
           breadcrumbSchema([
             { name: 'Accueil', path: '/' },
             { name: 'Voyages', path: '/voyages' },
