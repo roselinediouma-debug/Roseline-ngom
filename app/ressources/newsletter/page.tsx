@@ -12,17 +12,14 @@ export const metadata = buildMetadata({
 
 const TOPICS = [
   {
-    icon: '🗺️',
     title: 'Coulisses de mes voyages',
     description: 'Les lieux que je decouvre, les rencontres que je fais, les erreurs que j\'evite. Le vrai terrain, pas le filtre Instagram.',
   },
   {
-    icon: '💡',
     title: 'Bons plans exclusifs',
     description: 'Adresses testees, contacts de confiance, offres que je negocie pour mes lecteurs. Introuvable ailleurs.',
   },
   {
-    icon: '📸',
     title: 'Recits & inspirations',
     description: 'Des histoires courtes qui donnent envie de partir. Ou de revenir. Le Senegal raconte par quelqu\'un qui le vit.',
   },
@@ -99,13 +96,22 @@ export default function NewsletterPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {TOPICS.map((topic) => (
+              {TOPICS.map((topic, i) => (
                 <div
                   key={topic.title}
                   className="rounded-2xl p-7 text-center"
                   style={{ backgroundColor: '#F8F5F0', border: '1px solid rgba(86,14,19,0.06)' }}
                 >
-                  <div className="text-4xl mb-4">{topic.icon}</div>
+                  <div
+                    className="mb-4 flex items-center justify-center gap-3"
+                    style={{ fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif" }}
+                  >
+                    <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(86,14,19,0.15)' }} />
+                    <span style={{ fontSize: 22, fontWeight: 600, color: '#b8860b', lineHeight: 1 }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(86,14,19,0.15)' }} />
+                  </div>
                   <h3 className="text-lg font-bold mb-3" style={{ color: '#560E13' }}>{topic.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'rgba(10,10,10,0.65)' }}>
                     {topic.description}
