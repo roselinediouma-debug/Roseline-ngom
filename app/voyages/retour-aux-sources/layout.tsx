@@ -34,7 +34,6 @@ export const metadata = buildMetadata({
   description:
     "Voyage immersif en groupe (15 max) au Sénégal pour la diaspora. Format 7 j (Nord) dès 1 795 € ou 14 j (Nord + Sud) dès 2 450 €. Avec Roseline Ngom. Départs juillet, août et décembre 2026.",
   path: '/voyages/retour-aux-sources',
-  ogImage: '/images/og/retour-aux-sources.jpg',
   keywords: [
     'voyage diaspora Sénégal',
     'retour au pays Sénégal',

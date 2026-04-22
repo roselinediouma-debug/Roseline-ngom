@@ -87,7 +87,7 @@ export const metadata: Metadata = {
       "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme.",
     images: [
       {
-        url: "/images/og-default.jpg",
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme')}&subtitle=${encodeURIComponent('Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme.')}`,
         width: 1200,
         height: 630,
         alt: "Roseline Ngom, Experte voyage Sénégal",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     title: "Roseline Ngom, Experte voyage Sénégal",
     description:
       "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital pour hôtels et agences.",
-    images: ["/images/og-default.jpg"],
+    images: [`${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom, Experte voyage Sénégal')}&subtitle=${encodeURIComponent('Voyages immersifs, diaspora, consulting digital tourisme.')}`],
     creator: "@roselinengom",
     site: "@roselinengom",
   },

@@ -5,7 +5,6 @@ export const metadata = buildMetadata({
   description:
     "Benchmark institutionnel gratuit : ce que le Sénégal peut apprendre du Bénin, Maroc, Rwanda en stratégie touristique. Pour décideurs.",
   path: '/ressources/benchmark-institutionnel',
-  ogImage: '/images/og/benchmark.jpg',
   keywords: [
     'politique touristique Sénégal',
     'benchmark tourisme Afrique',

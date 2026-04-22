@@ -9,7 +9,6 @@ export const metadata = buildMetadata({
   description:
     'Guides PDF gratuits pour préparer votre Sénégal : 15 expériences secrètes, guide diaspora, benchmark tourisme, newsletter La Teranga.',
   path: '/ressources',
-  ogImage: '/images/og/ressources.jpg',
 })
 
 /* ==================================================================

@@ -12,7 +12,6 @@ export const metadata = buildMetadata({
   description:
     'Articles, guides et récits de voyage au Sénégal par Roseline Ngom, franco-sénégalaise, fondatrice TripAfro.',
   path: '/blog',
-  ogImage: '/images/og/blog-cover.jpg',
   ogType: 'website',
 })
 

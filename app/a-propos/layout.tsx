@@ -5,7 +5,6 @@ export const metadata = buildMetadata({
   description:
     "Franco-sénégalaise, 10 ans d'expérience terrain, 2 000+ voyageurs accompagnés. Fondatrice TripAfro, experte voyage Sénégal et consulting digital tourisme.",
   path: '/a-propos',
-  ogImage: '/images/og/a-propos.jpg',
   ogType: 'profile',
   keywords: [
     'Roseline Ngom',

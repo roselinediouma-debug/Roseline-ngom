@@ -5,7 +5,6 @@ export const metadata = buildMetadata({
   description:
     "Le guide pour la diaspora qui veut vivre le Sénégal autrement qu'en touriste. 14 pages : 3 types de retour, blocages silencieux, transmettre aux enfants.",
   path: '/ressources/le-bled-autrement',
-  ogImage: '/images/og/le-bled-autrement.jpg',
   keywords: [
     'diaspora Sénégal',
     'retour au pays diaspora',

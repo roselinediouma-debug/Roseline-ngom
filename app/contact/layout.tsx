@@ -5,7 +5,6 @@ export const metadata = buildMetadata({
   description:
     'Prendre rendez-vous avec Roseline Ngom pour un voyage sur-mesure au Sénégal, un accompagnement diaspora ou une mission consulting digital tourisme.',
   path: '/contact',
-  ogImage: '/images/og/contact.jpg',
 })
 
 export default function Layout({ children }: { children: React.ReactNode }) {

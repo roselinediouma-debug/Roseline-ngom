@@ -7,7 +7,6 @@ export const metadata = buildMetadata({
   description:
     "Voyage privé sur-mesure au Sénégal : itinéraire unique, hébergements d'exception, rencontres authentiques. 10 ans d'expertise terrain.",
   path: '/voyages/voyage-signature',
-  ogImage: '/images/og/voyage-signature.jpg',
   keywords: [
     'voyage sur mesure Sénégal',
     'voyage privé Sénégal',

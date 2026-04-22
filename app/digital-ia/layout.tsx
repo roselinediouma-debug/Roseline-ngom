@@ -7,7 +7,6 @@ export const metadata = buildMetadata({
   description:
     "Audit, stratégie digitale et IA appliquée au tourisme. Accompagnement d'hôtels, agences et institutions pour accélérer leur transformation numérique.",
   path: '/digital-ia',
-  ogImage: '/images/og/digital-ia.jpg',
   keywords: [
     'consulting digital hôtel',
     'audit digital hôtelier',

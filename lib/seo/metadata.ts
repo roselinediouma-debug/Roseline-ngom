@@ -6,8 +6,22 @@ import type { Metadata } from 'next'
  */
 export const SITE_URL = 'https://www.roselinengom.com'
 export const SITE_NAME = 'Roseline Ngom'
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`
 export const TWITTER_HANDLE = '@roselinengom'
+
+/**
+ * Construit une URL absolue vers l'OG dynamique (route edge `/api/og`).
+ * Si `ogImage` est fourni (chemin manuel), il prime.
+ */
+function buildDynamicOgUrl(title: string, description?: string, eyebrow?: string): string {
+  const params = new URLSearchParams()
+  params.set('title', title)
+  if (description) params.set('subtitle', description)
+  if (eyebrow) params.set('eyebrow', eyebrow)
+  return `${SITE_URL}/api/og?${params.toString()}`
+}
+
+/** Fallback utilisé si jamais aucun titre/description n'est fourni. */
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og`
 
 export type BuildMetadataInput = {
   /** 50-60 caractères idéal. Sera suffixé automatiquement par ", Roseline Ngom" si pas déjà dedans. */
@@ -51,7 +65,7 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
     title,
     description,
     path = '',
-    ogImage = DEFAULT_OG_IMAGE,
+    ogImage,
     ogImageAlt = title,
     ogType = 'website',
     noindex = false,
@@ -67,7 +81,13 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
 
   const canonical = path ? `${SITE_URL}${path}` : SITE_URL
 
-  const imageUrl = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`
+  // Si ogImage fourni explicitement: on l'utilise (relatif ou absolu).
+  // Sinon: on génère dynamiquement via /api/og à partir du titre + description.
+  const imageUrl = ogImage
+    ? ogImage.startsWith('http')
+      ? ogImage
+      : `${SITE_URL}${ogImage}`
+    : buildDynamicOgUrl(title, description)
 
   return {
     // `absolute` empêche l'application du template racine `%s, Roseline Ngom`

@@ -7,7 +7,6 @@ export const metadata = buildMetadata({
   description:
     "Back to Senegal, le programme d'accélération pour porteurs de projet de la diaspora qui veulent s'installer ou investir au Sénégal. Inscrivez-vous pour être informé·e de l'ouverture des candidatures.",
   path: '/voyages/back-to-senegal',
-  ogImage: '/images/og/back-to-senegal.jpg',
   keywords: [
     'entreprendre Sénégal diaspora',
     's’installer au Sénégal',
