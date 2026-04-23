@@ -98,6 +98,43 @@ function LinkButton({
   return <Link href={href}>{inner}</Link>
 }
 
+function ComingSoonButton({
+  icon,
+  label,
+  sublabel,
+}: {
+  icon: string
+  label: string
+  sublabel: string
+}) {
+  return (
+    <div
+      className="relative w-full rounded-2xl p-4 flex items-center gap-4 bg-white"
+      style={{ border: '1px solid #e0d8d0', opacity: 0.7, cursor: 'not-allowed' }}
+    >
+      <span
+        className="absolute -top-2.5 -right-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+        style={{ backgroundColor: '#560E13', color: '#F6C961' }}
+      >
+        Bientôt
+      </span>
+      <div
+        className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 grayscale"
+        style={{ backgroundColor: '#F8F5F0' }}
+      >
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="font-medium text-sm" style={{ color: '#0A0A0A' }}>{label}</div>
+        <div className="text-xs mt-0.5 opacity-55">{sublabel}</div>
+      </div>
+      <span className="text-xs font-semibold flex-shrink-0" style={{ color: '#560E13', opacity: 0.6 }}>
+        En préparation
+      </span>
+    </div>
+  )
+}
+
 function ServiceCard({
   href,
   icon,
@@ -295,19 +332,15 @@ export default function HomePage() {
             Guides signatures
           </div>
           <div className="flex flex-col gap-3">
-            <LinkButton
-              href="/guides/guide-casamance"
+            <ComingSoonButton
               icon="📖"
               label="Guide Casamance"
               sublabel="Le guide PDF complet pour un séjour unique"
-              price="29 EUR"
             />
-            <LinkButton
-              href="/guides/guide-senegal-7jours"
+            <ComingSoonButton
               icon="🗓️"
               label="Le Sénégal en une semaine"
               sublabel="Itinéraire clé en main pour un séjour de 7 jours"
-              price="29 EUR"
             />
           </div>
         </div>
