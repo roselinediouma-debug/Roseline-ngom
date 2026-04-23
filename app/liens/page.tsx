@@ -364,7 +364,7 @@ export default function HomePage() {
               icon="🌍"
               title="Voyages TripAfro"
               description="Séjours immersifs et authentiques, de Dakar à la Casamance"
-              price="Dès 2 200 €"
+              price="Dès 1 795 €"
               dark={true}
             />
             <ServiceCard
