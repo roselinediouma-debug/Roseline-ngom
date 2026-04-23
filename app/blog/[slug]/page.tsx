@@ -262,55 +262,129 @@ export default async function BlogArticlePage({
             </ReactMarkdown>
           </div>
 
-          {/* CTAs */}
-          <section
-            className="mt-16 rounded-2xl p-6 md:p-10"
-            style={{
-              background:
-                'linear-gradient(135deg, #560E13 0%, #7a1a20 100%)',
-              color: '#FEFCF9',
-            }}
-          >
-            <div
-              className="text-xs uppercase tracking-widest mb-3 font-semibold"
-              style={{ color: '#F6C961', letterSpacing: '0.2em' }}
-            >
-              Envie d&apos;aller plus loin ?
-            </div>
-            <h2
-              className="text-2xl md:text-3xl font-bold mb-4"
-              style={{
-                fontFamily:
-                  "var(--font-cormorant), 'Cormorant Garamond', serif",
-              }}
-            >
-              Préparez votre voyage au Sénégal avec Roseline
-            </h2>
-            <p className="text-sm md:text-base mb-6 opacity-90 leading-relaxed">
-              Téléchargez le guide gratuit des 15 expériences secrètes, ou
-              construisez un voyage entièrement sur-mesure avec l&apos;équipe
-              Voyage Signature.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/ressources/guide-15-experiences"
-                className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#F6C961', color: '#560E13' }}
-              >
-                Recevoir le guide gratuit
-              </Link>
-              <Link
-                href="/voyages/voyage-signature"
-                className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
+          {/* CTAs (segmenté selon le tag de l'article) */}
+          {(() => {
+            const tags = (post.tags || []).map((t) => t.toLowerCase())
+            const isHotelier = tags.some((t) =>
+              [
+                'hotelier',
+                'hôtelier',
+                'hotellerie',
+                'hôtellerie',
+                'seo-hotel',
+                'seo hotel',
+                'marketing hotel',
+                'google business',
+                'booking',
+                'reseaux sociaux hotel',
+              ].some((k) => t.includes(k))
+            )
+
+            if (isHotelier) {
+              return (
+                <section
+                  className="mt-16 rounded-2xl p-6 md:p-10"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #560E13 0%, #7a1a20 100%)',
+                    color: '#FEFCF9',
+                  }}
+                >
+                  <div
+                    className="text-xs uppercase tracking-widest mb-3 font-semibold"
+                    style={{ color: '#F6C961', letterSpacing: '0.2em' }}
+                  >
+                    Outils gratuits pour hôteliers
+                  </div>
+                  <h2
+                    className="text-2xl md:text-3xl font-bold mb-4"
+                    style={{
+                      fontFamily:
+                        "var(--font-cormorant), 'Cormorant Garamond', serif",
+                    }}
+                  >
+                    Passe à l&apos;action maintenant
+                  </h2>
+                  <p className="text-sm md:text-base mb-6 opacity-90 leading-relaxed">
+                    Obtiens un audit IA de ta présence en ligne (score /100 + plan
+                    d&apos;action), ou génère 3 posts optimisés SEO local en 15 secondes —
+                    Google Business Profile, Instagram et LinkedIn. 100 % gratuits, sans
+                    compte.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Link
+                      href="/outils/audit-presence-en-ligne"
+                      className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
+                      style={{ backgroundColor: '#F6C961', color: '#560E13' }}
+                    >
+                      Auditer mon hôtel (gratuit)
+                    </Link>
+                    <Link
+                      href="/outils/generer-posts"
+                      className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
+                      style={{
+                        border: '1px solid rgba(246,201,97,0.5)',
+                        color: '#F6C961',
+                      }}
+                    >
+                      Générer mes posts SEO
+                    </Link>
+                  </div>
+                </section>
+              )
+            }
+
+            return (
+              <section
+                className="mt-16 rounded-2xl p-6 md:p-10"
                 style={{
-                  border: '1px solid rgba(246,201,97,0.5)',
-                  color: '#F6C961',
+                  background:
+                    'linear-gradient(135deg, #560E13 0%, #7a1a20 100%)',
+                  color: '#FEFCF9',
                 }}
               >
-                Voyage sur-mesure
-              </Link>
-            </div>
-          </section>
+                <div
+                  className="text-xs uppercase tracking-widest mb-3 font-semibold"
+                  style={{ color: '#F6C961', letterSpacing: '0.2em' }}
+                >
+                  Envie d&apos;aller plus loin ?
+                </div>
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-4"
+                  style={{
+                    fontFamily:
+                      "var(--font-cormorant), 'Cormorant Garamond', serif",
+                  }}
+                >
+                  Préparez votre voyage au Sénégal avec Roseline
+                </h2>
+                <p className="text-sm md:text-base mb-6 opacity-90 leading-relaxed">
+                  Téléchargez le guide gratuit des 15 expériences secrètes, ou
+                  construisez un voyage entièrement sur-mesure avec l&apos;équipe
+                  Voyage Signature.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/ressources/guide-15-experiences"
+                    className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: '#F6C961', color: '#560E13' }}
+                  >
+                    Recevoir le guide gratuit
+                  </Link>
+                  <Link
+                    href="/voyages/voyage-signature"
+                    className="px-6 py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90"
+                    style={{
+                      border: '1px solid rgba(246,201,97,0.5)',
+                      color: '#F6C961',
+                    }}
+                  >
+                    Voyage sur-mesure
+                  </Link>
+                </div>
+              </section>
+            )
+          })()}
 
           {/* Author box EEAT */}
           <AuthorBox />

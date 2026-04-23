@@ -33,7 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/contact', priority: 0.7, changeFrequency: 'monthly' },
     // Outils IA
     { path: '/outils', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/outils/calculateur-commission-booking', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/outils/audit-presence-en-ligne', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/outils/generer-posts', priority: 0.9, changeFrequency: 'monthly' },
     // Pillar pages
     ...pillarPages.map((p) => ({
       path: p,

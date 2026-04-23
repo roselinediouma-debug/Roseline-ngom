@@ -169,6 +169,58 @@ export default function PresenceDigitalePage() {
           </div>
         </section>
 
+        {/* Teaser outil gratuit */}
+        <section className="py-16 px-6" style={{ backgroundColor: '#FEFCF9' }}>
+          <div className="max-w-4xl mx-auto">
+            <div
+              className="rounded-2xl p-8 md:p-10 relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #F8F5F0 0%, #fff 100%)',
+                border: '1px solid rgba(86, 14, 19, 0.1)',
+              }}
+            >
+              <div
+                className="inline-block text-xs font-semibold uppercase tracking-widest mb-3 px-3 py-1 rounded-full"
+                style={{ backgroundColor: '#560E13', color: '#F6C961' }}
+              >
+                Essayer d&apos;abord · 100 % gratuit
+              </div>
+              <h3
+                className="text-2xl md:text-3xl mb-3"
+                style={{
+                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                  color: '#560E13',
+                }}
+              >
+                Teste l&apos;approche avec notre générateur de posts IA
+              </h3>
+              <p className="mb-5 opacity-80 leading-relaxed">
+                Avant de s&apos;engager sur un accompagnement mensuel, goûte la méthode.
+                Renseigne ton hôtel, ta ville et une info à mettre en avant. En 15 secondes
+                notre IA te livre 3 posts prêts à publier (Google Business Profile, Instagram,
+                LinkedIn), optimisés SEO local — le même niveau que ce qu&apos;on produirait
+                dans l&apos;accompagnement.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/outils/generer-posts"
+                  className="inline-block px-6 py-3 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: '#560E13', color: '#F6C961' }}
+                >
+                  Générer mes 3 posts gratuitement →
+                </Link>
+                <Link
+                  href="/outils/audit-presence-en-ligne"
+                  className="inline-block px-6 py-3 rounded-lg font-semibold text-sm transition-colors"
+                  style={{ color: '#560E13', border: '1.5px solid rgba(86, 14, 19, 0.2)' }}
+                >
+                  Faire l&apos;audit de ma présence
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Prix */}
         <section className="py-20 px-6" style={{ backgroundColor: '#F8F5F0' }}>
           <div className="max-w-3xl mx-auto text-center">
@@ -178,7 +230,7 @@ export default function PresenceDigitalePage() {
               centered
             />
             <div className="mt-10 inline-block rounded-xl p-8" style={{ backgroundColor: '#FEFCF9', border: '2px solid #F6C961' }}>
-              <p className="text-5xl font-bold mb-2" style={{ color: '#0A0A0A' }}>1 500 \u20ac<span className="text-2xl font-normal">/mois</span></p>
+              <p className="text-5xl font-bold mb-2" style={{ color: '#0A0A0A' }}>1 500 €<span className="text-2xl font-normal">/mois</span></p>
               <p className="text-lg mb-4" style={{ color: 'rgba(10,10,10,0.6)' }}>Engagement 3 mois minimum</p>
               <div className="rounded-lg px-4 py-2 inline-block" style={{ backgroundColor: 'rgba(246,201,97,0.15)' }}>
                 <p className="text-sm font-semibold" style={{ color: '#560E13' }}>

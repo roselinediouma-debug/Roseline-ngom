@@ -1,6 +1,10 @@
 import { createServiceClient } from '@/lib/supabase'
 
-export type ToolName = 'calculator_ota' | 'chatbot'
+export type ToolName =
+  | 'calculator_ota'
+  | 'chatbot'
+  | 'audit_presence'
+  | 'generate_posts'
 
 export type Segment =
   | 'hotelier'

@@ -178,7 +178,7 @@ export default function TransformationPage() {
               centered
             />
             <div className="mt-10 inline-block rounded-xl p-8" style={{ backgroundColor: '#FEFCF9', border: '2px solid #F6C961' }}>
-              <p className="text-5xl font-bold mb-2" style={{ color: '#0A0A0A' }}>8 500 - 15 000 \u20ac</p>
+              <p className="text-5xl font-bold mb-2" style={{ color: '#0A0A0A' }}>8 500 - 15 000 €</p>
               <p className="text-lg mb-4" style={{ color: 'rgba(10,10,10,0.6)' }}>Projet cle en main avec 6 mois de support</p>
               <div className="rounded-lg px-4 py-2 inline-block" style={{ backgroundColor: 'rgba(246,201,97,0.15)' }}>
                 <p className="text-sm font-semibold" style={{ color: '#560E13' }}>
