@@ -13,6 +13,8 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, '')
 }
 
+type PublishMode = 'draft' | 'now' | 'scheduled'
+
 interface PostForm {
   title: string
   slug: string
@@ -20,7 +22,8 @@ interface PostForm {
   content: string
   cover_image: string
   tags: string
-  status: 'draft' | 'published'
+  mode: PublishMode
+  scheduled_at: string // format datetime-local (YYYY-MM-DDTHH:mm)
 }
 
 const emptyForm: PostForm = {
@@ -30,7 +33,17 @@ const emptyForm: PostForm = {
   content: '',
   cover_image: '',
   tags: '',
-  status: 'draft',
+  mode: 'draft',
+  scheduled_at: '',
+}
+
+/** ISO UTC → valeur datetime-local (heure locale) */
+function isoToLocalInput(iso: string | null | undefined): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
 export default function AdminBlogEditorPage() {
@@ -52,6 +65,13 @@ export default function AdminBlogEditorPage() {
           if (data.error) {
             setError(data.error)
           } else {
+            const now = Date.now()
+            const pubMs = data.published_at ? new Date(data.published_at).getTime() : 0
+            let mode: PublishMode = 'draft'
+            if (data.status === 'published') {
+              mode = pubMs > now ? 'scheduled' : 'now'
+            }
+            // Pré-charge la date planifiée même en brouillon (venant du planning éditorial)
             setForm({
               title: data.title || '',
               slug: data.slug || '',
@@ -59,7 +79,8 @@ export default function AdminBlogEditorPage() {
               content: data.content || '',
               cover_image: data.cover_image || '',
               tags: Array.isArray(data.tags) ? data.tags.join(', ') : '',
-              status: data.status || 'draft',
+              mode,
+              scheduled_at: isoToLocalInput(data.published_at),
             })
           }
         })
@@ -70,7 +91,7 @@ export default function AdminBlogEditorPage() {
 
   const handleChange = (field: keyof PostForm, value: string) => {
     setForm(prev => {
-      const updated = { ...prev, [field]: value }
+      const updated = { ...prev, [field]: value } as PostForm
       if (field === 'title' && (prev.slug === '' || prev.slug === slugify(prev.title))) {
         updated.slug = slugify(value)
       }
@@ -82,6 +103,34 @@ export default function AdminBlogEditorPage() {
     setSaving(true)
     setError('')
 
+    let status: 'draft' | 'published' = 'draft'
+    let published_at: string | null = null
+
+    if (form.mode === 'draft') {
+      // Conserver la date planifiée même en brouillon (planning éditorial)
+      if (form.scheduled_at) {
+        const planned = new Date(form.scheduled_at)
+        if (!isNaN(planned.getTime())) published_at = planned.toISOString()
+      }
+    } else if (form.mode === 'now') {
+      status = 'published'
+      published_at = new Date().toISOString()
+    } else if (form.mode === 'scheduled') {
+      if (!form.scheduled_at) {
+        setError('Choisis une date/heure de publication')
+        setSaving(false)
+        return
+      }
+      const scheduled = new Date(form.scheduled_at)
+      if (isNaN(scheduled.getTime())) {
+        setError('Date/heure invalide')
+        setSaving(false)
+        return
+      }
+      status = 'published'
+      published_at = scheduled.toISOString()
+    }
+
     const payload = {
       title: form.title,
       slug: form.slug,
@@ -89,8 +138,8 @@ export default function AdminBlogEditorPage() {
       content: form.content,
       cover_image: form.cover_image || null,
       tags: form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
-      status: form.status,
-      published_at: form.status === 'published' ? new Date().toISOString() : null,
+      status,
+      published_at,
     }
 
     try {
@@ -216,16 +265,38 @@ export default function AdminBlogEditorPage() {
             </div>
 
             <div>
-              <label style={labelStyle}>Statut</label>
+              <label style={labelStyle}>Publication</label>
               <select
-                value={form.status}
-                onChange={e => handleChange('status', e.target.value)}
+                value={form.mode}
+                onChange={e => handleChange('mode', e.target.value)}
                 style={inputStyle}
               >
-                <option value="draft">Brouillon</option>
-                <option value="published">Publié</option>
+                <option value="draft">Brouillon (non publié)</option>
+                <option value="now">Publier maintenant</option>
+                <option value="scheduled">Programmer pour plus tard</option>
               </select>
             </div>
+
+            {(form.mode === 'scheduled' || form.mode === 'draft') && (
+              <div>
+                <label style={labelStyle}>
+                  {form.mode === 'scheduled'
+                    ? 'Date et heure de publication'
+                    : 'Date prévue (planning éditorial)'}
+                </label>
+                <input
+                  type="datetime-local"
+                  value={form.scheduled_at}
+                  onChange={e => handleChange('scheduled_at', e.target.value)}
+                  style={inputStyle}
+                />
+                <p className="text-xs opacity-50 mt-1">
+                  {form.mode === 'scheduled'
+                    ? "L'article apparaîtra automatiquement sur le site à cette date."
+                    : "Date de référence du planning. Passe en « Programmer » pour la rendre active."}
+                </p>
+              </div>
+            )}
 
             <div className="flex gap-3 pt-2">
               <button

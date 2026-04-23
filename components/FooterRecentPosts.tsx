@@ -14,6 +14,7 @@ export default function FooterRecentPosts() {
       .from('blog_posts')
       .select('slug, title')
       .eq('status', 'published')
+      .lte('published_at', new Date().toISOString())
       .order('published_at', { ascending: false })
       .limit(3)
       .then(({ data }) => {

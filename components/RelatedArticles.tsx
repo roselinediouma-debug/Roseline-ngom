@@ -35,6 +35,7 @@ export async function fetchRelatedArticles({
         .from('blog_posts')
         .select('id, title, slug, excerpt, cover_image, tags, published_at')
         .eq('status', 'published')
+        .lte('published_at', new Date().toISOString())
         .overlaps('tags', tags)
         .order('published_at', { ascending: false })
         .limit(limit)
@@ -50,6 +51,7 @@ export async function fetchRelatedArticles({
         .from('blog_posts')
         .select('id, title, slug, excerpt, cover_image, tags, published_at')
         .eq('status', 'published')
+        .lte('published_at', new Date().toISOString())
         .order('published_at', { ascending: false })
         .limit(limit + 3)
       const { data: recent } = await recentQ
@@ -62,6 +64,7 @@ export async function fetchRelatedArticles({
       .from('blog_posts')
       .select('id, title, slug, excerpt, cover_image, tags, published_at')
       .eq('status', 'published')
+      .lte('published_at', new Date().toISOString())
       .order('published_at', { ascending: false })
       .limit(limit + 1)
     if (currentSlug) q.neq('slug', currentSlug)

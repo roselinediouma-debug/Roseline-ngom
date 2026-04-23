@@ -10,6 +10,23 @@ interface BlogPost {
   slug: string
   status: 'draft' | 'published'
   created_at: string
+  published_at: string | null
+}
+
+type DisplayStatus = 'draft' | 'scheduled' | 'published'
+
+function getDisplayStatus(post: BlogPost): DisplayStatus {
+  if (post.status !== 'published') return 'draft'
+  if (post.published_at && new Date(post.published_at).getTime() > Date.now()) {
+    return 'scheduled'
+  }
+  return 'published'
+}
+
+const STATUS_STYLE: Record<DisplayStatus, { label: string; bg: string; color: string }> = {
+  draft:     { label: 'Brouillon', bg: '#f3f4f6', color: '#6b7280' },
+  scheduled: { label: 'Programmé', bg: '#fef3c7', color: '#92400e' },
+  published: { label: 'Publié',    bg: '#dcfce7', color: '#16a34a' },
 }
 
 export default function AdminBlogPage() {
@@ -28,6 +45,12 @@ export default function AdminBlogPage() {
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
+
+  const formatDateTime = (iso: string) =>
+    new Date(iso).toLocaleString('fr-FR', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    })
 
   return (
     <AdminLayout>
@@ -61,21 +84,25 @@ export default function AdminBlogPage() {
                 </tr>
               </thead>
               <tbody>
-                {posts.map(post => (
+                {posts.map(post => {
+                  const display = getDisplayStatus(post)
+                  const style = STATUS_STYLE[display]
+                  return (
                   <tr key={post.id} style={{ borderBottom: '1px solid #f0ebe4' }}>
                     <td className="px-6 py-3 font-medium">{post.title}</td>
                     <td className="px-6 py-3">
                       <span
                         className="text-xs px-2 py-0.5 rounded-full"
-                        style={{
-                          backgroundColor: post.status === 'published' ? '#dcfce7' : '#f3f4f6',
-                          color: post.status === 'published' ? '#16a34a' : '#6b7280',
-                        }}
+                        style={{ backgroundColor: style.bg, color: style.color }}
                       >
-                        {post.status === 'published' ? 'Publié' : 'Brouillon'}
+                        {style.label}
                       </span>
                     </td>
-                    <td className="px-6 py-3 opacity-50">{formatDate(post.created_at)}</td>
+                    <td className="px-6 py-3 opacity-50">
+                      {display === 'scheduled' && post.published_at
+                        ? `→ ${formatDateTime(post.published_at)}`
+                        : formatDate(post.created_at)}
+                    </td>
                     <td className="px-6 py-3 text-right">
                       <Link
                         href={`/admin/blog/${post.id}`}
@@ -86,7 +113,8 @@ export default function AdminBlogPage() {
                       </Link>
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           )}

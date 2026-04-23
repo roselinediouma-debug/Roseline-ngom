@@ -44,6 +44,7 @@ async function fetchPost(slug: string): Promise<BlogPost | null> {
       .select('*')
       .eq('slug', slug)
       .eq('status', 'published')
+      .lte('published_at', new Date().toISOString())
       .maybeSingle()
     if (error) throw error
     return (data as BlogPost) || null

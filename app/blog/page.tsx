@@ -32,6 +32,7 @@ async function fetchPublishedPosts(): Promise<BlogPost[]> {
       .from('blog_posts')
       .select('id, title, slug, excerpt, cover_image, tags, published_at')
       .eq('status', 'published')
+      .lte('published_at', new Date().toISOString())
       .order('published_at', { ascending: false })
     if (error) throw error
     return data || []
