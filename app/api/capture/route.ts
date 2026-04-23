@@ -24,12 +24,6 @@ const LEAD_MAGNETS: Record<string, LeadMagnet> = {
     tag: 'lead-guide',
     buildEmail: ({ prenom }) => guideDeliveryEmail({ prenom }),
   },
-  'checklist-voyage': {
-    label: 'Checklist voyage',
-    listIdEnv: 'BREVO_GUIDE_LIST_ID', // même liste que le guide (checklist legacy)
-    tag: 'lead-checklist',
-    buildEmail: ({ prenom }) => guideDeliveryEmail({ prenom }),
-  },
   'le-bled-autrement': {
     label: 'Le Bled Autrement (diaspora)',
     listIdEnv: 'BREVO_BLED_LIST_ID',

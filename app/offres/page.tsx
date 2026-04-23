@@ -72,7 +72,6 @@ const volets = [
     price: '0 €',
     features: [
       'Guide PDF : 10 expériences secrètes au Sénégal',
-      'Checklist de voyage complète',
       'Newsletter avec conseils exclusifs',
       'Accès immédiat sans engagement',
     ],
@@ -85,7 +84,7 @@ const steps = [
   {
     num: '01',
     title: 'Téléchargez le guide gratuit',
-    desc: 'Recevez immédiatement le guide PDF avec 10 expériences secrètes au Sénégal et la checklist de voyage.',
+    desc: 'Recevez immédiatement le guide PDF avec 10 expériences secrètes au Sénégal.',
   },
   {
     num: '02',

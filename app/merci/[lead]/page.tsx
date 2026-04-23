@@ -12,12 +12,6 @@ const CONTENT: Record<string, { title: string; message: string; cta: { label: st
       'Consultez votre boite email (et vos spams, au cas ou). Vous allez recevoir votre guide PDF gratuit dans les prochaines minutes.',
     cta: { label: 'Decouvrir nos guides signatures', href: '/guides' },
   },
-  checklist: {
-    title: 'Checklist envoyee',
-    message:
-      'Consultez votre boite email pour telecharger votre checklist. Pensez a verifier vos spams si vous ne la voyez pas.',
-    cta: { label: 'Telecharger le guide gratuit', href: '/ressources/guide-15-experiences' },
-  },
   newsletter: {
     title: 'Bienvenue dans La Teranga',
     message:
