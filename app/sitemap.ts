@@ -3,71 +3,39 @@ import { createServiceClient } from '@/lib/supabase'
 import { SITE_URL } from '@/lib/seo/metadata'
 
 /**
- * Sitemap dynamique : routes statiques + articles de blog publiés (Supabase).
+ * Sitemap dynamique V3 — Roseline Ngom, maison de pensée francophone.
+ * Architecture : Idée · Indice · Travaux · Interventions · Advisory · À propos.
+ * Les routes legacy (/voyages, /guides, /consulting, /digital-ia, /outils, /expertise)
+ * ont été redirigées via 301 vers tripafro.com et supprimées du site.
  * Exposé à /sitemap.xml.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE_URL
 
-  const pillarPages = [
-    '/voyages',
-    '/guides',
-    '/consulting',
-    '/digital-ia',
-    '/expertise',
-    '/ressources',
-  ]
-
-  const lowPriorityPages = [
-    '/blog',
-    '/a-propos',
-    '/ressources/newsletter',
-    '/mentions-legales',
-    '/politique-confidentialite',
-  ]
-
-  const routes: { path: string; priority: number; changeFrequency: 'daily' | 'weekly' | 'monthly' }[] = [
+  const routes: { path: string; priority: number; changeFrequency: 'daily' | 'weekly' | 'monthly' | 'yearly' }[] = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' },
-    // Main pages
-    { path: '/ressources/guide-15-experiences', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/offres', priority: 0.8, changeFrequency: 'monthly' },
+
+    // Architecture V3 — pages cœur
+    { path: '/idee', priority: 1.0, changeFrequency: 'monthly' },
+    { path: '/indice', priority: 0.95, changeFrequency: 'weekly' },
+    { path: '/advisory', priority: 0.9, changeFrequency: 'monthly' },
+    { path: '/travaux', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/interventions', priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/a-propos', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.7, changeFrequency: 'monthly' },
-    // Outils IA
-    { path: '/outils', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/outils/audit-presence-en-ligne', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/outils/generer-posts', priority: 0.9, changeFrequency: 'monthly' },
-    // Pillar pages
-    ...pillarPages.map((p) => ({
-      path: p,
-      priority: 0.9,
-      changeFrequency: 'monthly' as const,
-    })),
-    // Voyages sub-pages
-    { path: '/voyages/retour-aux-sources', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/voyages/voyage-signature', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/voyages/back-to-senegal', priority: 0.8, changeFrequency: 'monthly' },
-    // Guides sub-pages
-    { path: '/guides/guide-casamance', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/guides/guide-senegal-7jours', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/guides/bundle-decouverte', priority: 0.8, changeFrequency: 'monthly' },
-    // Consulting sub-pages
-    { path: '/consulting/audit-strategique', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/consulting/accompagnement', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/consulting/institutionnel', priority: 0.8, changeFrequency: 'monthly' },
-    // Digital & IA sub-pages
-    { path: '/digital-ia/presence-digitale', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/digital-ia/transformation', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/digital-ia/ia-appliquee', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/digital-ia/formations', priority: 0.8, changeFrequency: 'monthly' },
-    // Ressources gratuites publiques (lead magnets diaspora + institutionnel)
-    { path: '/ressources/le-bled-autrement', priority: 0.9, changeFrequency: 'monthly' },
+
+    // Ressources institutionnelles conservées (benchmark + newsletter)
+    { path: '/ressources', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/ressources/benchmark-institutionnel', priority: 0.9, changeFrequency: 'monthly' },
-    // Low priority pages
-    ...lowPriorityPages.map((p) => ({
-      path: p,
-      priority: 0.5,
-      changeFrequency: 'yearly' as unknown as 'monthly',
-    })),
+    { path: '/ressources/newsletter', priority: 0.6, changeFrequency: 'monthly' },
+
+    // Blog (Journal) — sera renommé /journal dans une session ultérieure
+    { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },
+
+    // Low priority
+    { path: '/liens', priority: 0.4, changeFrequency: 'monthly' },
+    { path: '/mentions-legales', priority: 0.3, changeFrequency: 'yearly' },
+    { path: '/politique-confidentialite', priority: 0.3, changeFrequency: 'yearly' },
   ]
 
   const now = new Date()
@@ -81,6 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
 
   // Articles de blog publiés (lecture Supabase)
+  // Filtre uniquement les articles taggés target_domain = 'roseline-perso'
+  // (les articles 'tripafro' migrent vers tripafro.com/fr/articles/[slug])
   let blogEntries: MetadataRoute.Sitemap = []
   try {
     if (
@@ -90,22 +60,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const supabase = createServiceClient()
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('slug, updated_at, published_at')
+        .select('slug, updated_at, published_at, target_domain')
         .eq('status', 'published')
         .lte('published_at', new Date().toISOString())
         .order('published_at', { ascending: false })
 
       if (!error && data) {
-        blogEntries = data.map((post) => ({
-          url: `${base}/blog/${post.slug}`,
-          lastModified: post.updated_at
-            ? new Date(post.updated_at)
-            : post.published_at
-              ? new Date(post.published_at)
-              : now,
-          changeFrequency: 'monthly',
-          priority: 0.8,
-        }))
+        blogEntries = data
+          .filter((post) => !post.target_domain || post.target_domain === 'roseline-perso')
+          .map((post) => ({
+            url: `${base}/blog/${post.slug}`,
+            lastModified: post.updated_at
+              ? new Date(post.updated_at)
+              : post.published_at
+                ? new Date(post.published_at)
+                : now,
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+          }))
       }
     }
   } catch (err) {
