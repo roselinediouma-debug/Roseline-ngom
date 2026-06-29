@@ -1,230 +1,227 @@
 import Link from 'next/link'
-import FooterRecentPosts from './FooterRecentPosts'
+
+const BRAND = '#560E13'
+const GOLD = '#F6C961'
+const CREAM = '#FEFCF9'
+
+const NAV = [
+  { href: '/idee', label: 'Idée' },
+  { href: '/indice', label: 'Observatoire' },
+  { href: '/travaux', label: 'Travaux' },
+  { href: '/interventions', label: 'Interventions' },
+  { href: '/advisory', label: 'Advisory' },
+  { href: '/a-propos', label: 'À propos' },
+  { href: '/contact', label: 'Contact' },
+]
+
+const SOCIAL = [
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/roseline-queval/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/roseline_ng/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@Roseline_ngom',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+      </svg>
+    ),
+  },
+]
 
 export default function Footer() {
+  const year = new Date().getFullYear()
   return (
-    <footer style={{ backgroundColor: '#560E13', color: '#FEFCF9' }}>
-      {/* Gold bar */}
-      <div className="h-1 w-full" style={{ backgroundColor: '#F6C961' }} />
+    <footer style={{ backgroundColor: BRAND, color: CREAM }}>
+      {/* fine gold rule */}
+      <div style={{ height: 1, background: `linear-gradient(90deg, transparent 0%, ${GOLD} 50%, transparent 100%)`, opacity: 0.5 }} />
 
-      <div className="max-w-6xl mx-auto px-6 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-10">
-          {/* Column 1: Brand */}
-          <div className="sm:col-span-2 md:col-span-1">
-            <h3
-              className="text-xl font-bold mb-3"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+      <div
+        style={{
+          maxWidth: 1240,
+          margin: '0 auto',
+          padding: 'clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem)',
+        }}
+      >
+        {/* signature mark + tagline */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            flexWrap: 'wrap',
+            gap: 36,
+            marginBottom: 56,
+          }}
+        >
+          <div style={{ maxWidth: 480 }}>
+            <Link
+              href="/"
+              style={{
+                fontFamily: 'var(--font-cormorant), serif',
+                fontSize: 'clamp(1.8rem, 2.6vw, 2.4rem)',
+                fontWeight: 600,
+                color: CREAM,
+                textDecoration: 'none',
+                letterSpacing: '0.01em',
+                lineHeight: 1,
+                display: 'inline-block',
+                marginBottom: 14,
+              }}
             >
               Roseline Ngom
-            </h3>
-            <p className="text-sm opacity-70 leading-relaxed mb-4">
-              Experte voyage S&eacute;n&eacute;gal &amp; Afrique de l&#39;Ouest. Fondatrice de TripAfro.
-            </p>
-
-            {/* Social icons */}
-            <div className="flex items-center gap-3 mb-4">
-              <a
-                href="https://youtube.com/@tripafro"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity text-sm"
-                style={{ backgroundColor: 'rgba(246,201,97,0.2)', border: '1px solid rgba(246,201,97,0.3)' }}
-                aria-label="YouTube"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-              </a>
-              <a
-                href="https://instagram.com/tripafro"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity text-sm"
-                style={{ backgroundColor: 'rgba(246,201,97,0.2)', border: '1px solid rgba(246,201,97,0.3)' }}
-                aria-label="Instagram"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-              </a>
-              <a
-                href="https://tiktok.com/@tripafro"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity text-sm"
-                style={{ backgroundColor: 'rgba(246,201,97,0.2)', border: '1px solid rgba(246,201,97,0.3)' }}
-                aria-label="TikTok"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-                </svg>
-              </a>
-              <a
-                href="https://linkedin.com/in/roselinengom"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity text-sm"
-                style={{ backgroundColor: 'rgba(246,201,97,0.2)', border: '1px solid rgba(246,201,97,0.3)' }}
-                aria-label="LinkedIn"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-              </a>
+            </Link>
+            <div
+              style={{
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: GOLD,
+                opacity: 0.85,
+              }}
+            >
+              Strategist · Speaker · Author · Advisor
             </div>
+            <p
+              style={{
+                fontFamily: 'var(--font-cormorant), serif',
+                fontStyle: 'italic',
+                fontSize: '1.1rem',
+                lineHeight: 1.5,
+                color: 'rgba(254,252,249,0.75)',
+                marginTop: 18,
+                maxWidth: 420,
+              }}
+            >
+              Désirabilité des nations francophones, attractivité des territoires, transformation par l’intelligence artificielle.
+            </p>
+          </div>
 
-            {/* @tripafro badge */}
+          {/* social */}
+          <div style={{ display: 'flex', gap: 10 }}>
+            {SOCIAL.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(246,201,97,0.12)',
+                  border: '1px solid rgba(246,201,97,0.25)',
+                  color: GOLD,
+                  textDecoration: 'none',
+                  transition: 'background .3s, color .3s',
+                }}
+                className="footer-social"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* nav inline */}
+        <nav
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 'clamp(16px, 2.5vw, 28px)',
+            paddingTop: 28,
+            borderTop: '1px solid rgba(246,201,97,0.2)',
+            marginBottom: 36,
+          }}
+        >
+          {NAV.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              style={{
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                color: 'rgba(254,252,249,0.7)',
+                textDecoration: 'none',
+                transition: 'color .25s',
+              }}
+              className="footer-nav-link"
+            >
+              {n.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* bottom bar */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 16,
+            paddingTop: 20,
+            borderTop: '1px solid rgba(246,201,97,0.12)',
+            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+            fontSize: 10,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: 'rgba(254,252,249,0.55)',
+          }}
+        >
+          <span>© {year} Roseline Ngom · Paris · Dakar</span>
+          <span style={{ display: 'inline-flex', gap: 18, flexWrap: 'wrap' }}>
             <a
-              href="https://instagram.com/tripafro"
+              href="mailto:bureau@roselinengom.com"
+              style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid rgba(254,252,249,0.25)', paddingBottom: 2 }}
+            >
+              bureau@roselinengom.com
+            </a>
+            <a
+              href="https://tripafro.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-3 py-1 rounded-full text-xs font-medium hover:opacity-80 transition-opacity mb-4"
-              style={{ backgroundColor: 'rgba(246,201,97,0.2)', border: '1px solid rgba(246,201,97,0.3)', color: '#F6C961' }}
+              style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid rgba(254,252,249,0.25)', paddingBottom: 2 }}
             >
-              @tripafro
+              Laboratoire terrain depuis 2016
             </a>
-
-            <p className="text-xs italic opacity-50 leading-relaxed">
-              Le S&eacute;n&eacute;gal a tout. Il est temps de le r&eacute;v&eacute;ler.
-            </p>
-          </div>
-
-          {/* Column 2: Voyages */}
-          <div>
-            <h4
-              className="font-semibold text-sm uppercase tracking-wider mb-4 opacity-60"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            <Link
+              href="/mentions-legales"
+              style={{ color: 'inherit', textDecoration: 'none' }}
             >
-              Voyages
-            </h4>
-            <ul className="flex flex-col gap-2 text-sm opacity-80">
-              <li>
-                <Link href="/voyages/retour-aux-sources" className="hover:opacity-60 transition-opacity">
-                  Retour aux Sources
-                </Link>
-              </li>
-              <li>
-                <Link href="/voyages/voyage-signature" className="hover:opacity-60 transition-opacity">
-                  Voyage Signature
-                </Link>
-              </li>
-              <li>
-                <Link href="/voyages/back-to-senegal" className="hover:opacity-60 transition-opacity">
-                  Back to Senegal
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Expertise */}
-          <div>
-            <h4
-              className="font-semibold text-sm uppercase tracking-wider mb-4 opacity-60"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              Expertise
-            </h4>
-            <ul className="flex flex-col gap-2 text-sm opacity-80">
-              <li>
-                <Link href="/consulting" className="hover:opacity-60 transition-opacity">
-                  Consulting
-                </Link>
-              </li>
-              <li>
-                <Link href="/digital-ia" className="hover:opacity-60 transition-opacity">
-                  Digital &amp; IA
-                </Link>
-              </li>
-              <li>
-                <Link href="/digital-ia/formations" className="hover:opacity-60 transition-opacity">
-                  Formations
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Ressources */}
-          <div>
-            <h4
-              className="font-semibold text-sm uppercase tracking-wider mb-4 opacity-60"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              Ressources
-            </h4>
-            <ul className="flex flex-col gap-2 text-sm opacity-80">
-              <li>
-                <Link href="/ressources/guide-15-experiences" className="hover:opacity-60 transition-opacity">
-                  Guide gratuit
-                </Link>
-              </li>
-              <li>
-                <Link href="/guides" className="hover:opacity-60 transition-opacity">
-                  Guides payants
-                </Link>
-              </li>
-              <li>
-                <Link href="/ressources/newsletter" className="hover:opacity-60 transition-opacity">
-                  Newsletter
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="hover:opacity-60 transition-opacity">
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 5: Contact */}
-          <div>
-            <h4
-              className="font-semibold text-sm uppercase tracking-wider mb-4 opacity-60"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              Contact
-            </h4>
-            <ul className="flex flex-col gap-2 text-sm opacity-80">
-              <li>
-                <a
-                  href="https://wa.me/33650329808"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-60 transition-opacity"
-                >
-                  WhatsApp
-                </a>
-              </li>
-              <li>
-                <Link href="/consulting" className="hover:opacity-60 transition-opacity">
-                  Prendre RDV
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:opacity-60 transition-opacity">
-                  Formulaire
-                </Link>
-              </li>
-              <li>
-                <Link href="/a-propos" className="hover:opacity-60 transition-opacity">
-                  &Agrave; propos
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 6: Articles récents (SEO, maillage interne) */}
-          <FooterRecentPosts />
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          className="mt-12 pt-6 text-xs opacity-40 flex flex-col md:flex-row justify-between gap-2"
-          style={{ borderTop: '1px solid rgba(254,252,249,0.15)' }}
-        >
-          <span>&copy; 2026 Roseline Ngom &mdash; TripAfro</span>
-          <span>Fait avec passion au S&eacute;n&eacute;gal</span>
+              Mentions
+            </Link>
+          </span>
         </div>
       </div>
+
+      <style>{`
+        .footer-social:hover { background: rgba(246,201,97,0.25) !important; color: #fff !important; }
+        .footer-nav-link:hover { color: #F6C961 !important; }
+      `}</style>
     </footer>
   )
 }
