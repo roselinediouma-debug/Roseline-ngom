@@ -15,23 +15,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  {
-    label: 'Voyages',
-    children: [
-      { href: '/voyages/retour-aux-sources', label: 'Retour aux Sources' },
-      { href: '/voyages/voyage-signature', label: 'Voyage Signature' },
-      { href: '/voyages/back-to-senegal', label: 'Back to Senegal' },
-    ],
-  },
-  {
-    label: 'Expertise',
-    children: [
-      { href: '/consulting', label: 'Consulting' },
-      { href: '/digital-ia', label: 'Digital & IA' },
-      { href: '/guides', label: 'Guides' },
-    ],
-  },
-  { label: 'A propos', href: '/a-propos' },
+  { label: 'Travaux', href: '/travaux' },
+  { label: 'Observatoire', href: '/indice' },
+  { label: 'Interventions', href: '/interventions' },
+  { label: 'À propos', href: '/a-propos' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -247,7 +234,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
 
             {/* CTA */}
             <Link
-              href="/ressources/guide-15-experiences"
+              href="/idee"
               className="btn-gold-pulse font-dm-sans px-6 py-2.5 text-[13px] font-semibold tracking-wide uppercase transition-all duration-300 hover:brightness-110"
               style={{
                 backgroundColor: '#F6C961',
@@ -256,7 +243,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
                 letterSpacing: '0.06em',
               }}
             >
-              Recevoir le guide
+              Lire le manifeste
             </Link>
           </div>
 
@@ -422,7 +409,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
             style={{ animationDelay: menuOpen ? `${navItems.length * 0.08}s` : '0s' }}
           >
             <Link
-              href="/ressources/guide-15-experiences"
+              href="/idee"
               className="font-dm-sans inline-block px-8 py-3.5 text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:brightness-110"
               style={{
                 backgroundColor: '#F6C961',
@@ -432,7 +419,7 @@ export default function Nav({ variant = 'overlay' }: NavProps) {
               }}
               onClick={closeMobile}
             >
-              Recevoir le guide
+              Lire le manifeste
             </Link>
           </div>
         </div>

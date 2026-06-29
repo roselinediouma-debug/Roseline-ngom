@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans, Poppins } from "next/font/google";
 import "./globals.css";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import LeadPopup from "@/components/LeadPopup";
 import Analytics from "@/components/Analytics";
-import ToolChatWidget from "@/components/ToolChatWidget";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL, SITE_NAME } from "@/lib/seo/metadata";
 import {
@@ -37,23 +34,24 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Roseline Ngom, voyages Sénégal & consulting tourisme",
+    default: "Roseline Ngom — Désirabilité des nations francophones",
     template: "%s, Roseline Ngom",
   },
   description:
-    "Voyages immersifs au Sénégal pour la diaspora et les voyageurs curieux. Consulting digital tourisme. 10 ans d'expertise terrain par Roseline Ngom.",
+    "Stratège en attractivité des territoires, IA et récit des nations. Je conseille les destinations, les institutions et les organisations du monde francophone qui veulent accroître leur désirabilité.",
   keywords: [
-    "voyage Sénégal",
-    "voyage sur mesure Sénégal",
-    "voyage diaspora Sénégal",
-    "Retour aux Sources Sénégal",
-    "TripAfro",
-    "Casamance",
-    "Sine Saloum",
-    "guide voyage Sénégal",
-    "consulting digital hôtel",
-    "IA tourisme",
     "Roseline Ngom",
+    "désirabilité des nations",
+    "attractivité territoriale",
+    "stratégie touristique",
+    "marketing territorial",
+    "nations francophones",
+    "Afrique francophone",
+    "transformation IA",
+    "souveraineté algorithmique",
+    "récit national",
+    "indice désirabilité",
+    "marque pays",
   ],
   authors: [{ name: "Roseline Ngom", url: SITE_URL }],
   creator: "Roseline Ngom",
@@ -82,24 +80,24 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     title:
-      "Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme",
+      "Roseline Ngom — Désirabilité des nations francophones",
     description:
-      "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme.",
+      "Stratège en attractivité des territoires, IA et récit des nations. Conseil aux destinations, institutions et organisations du monde francophone.",
     images: [
       {
-        url: `${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom, Experte voyage Sénégal & consulting digital tourisme')}&subtitle=${encodeURIComponent('Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital et IA pour hôtels et agences de tourisme.')}`,
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom — Désirabilité des nations francophones')}&subtitle=${encodeURIComponent('Stratège en attractivité des territoires, IA et récit des nations.')}`,
         width: 1200,
         height: 630,
-        alt: "Roseline Ngom, Experte voyage Sénégal",
+        alt: "Roseline Ngom — Désirabilité des nations francophones",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Roseline Ngom, Experte voyage Sénégal",
+    title: "Roseline Ngom — Désirabilité des nations francophones",
     description:
-      "Voyages immersifs au Sénégal, guides pour la diaspora, consulting digital pour hôtels et agences.",
-    images: [`${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom, Experte voyage Sénégal')}&subtitle=${encodeURIComponent('Voyages immersifs, diaspora, consulting digital tourisme.')}`],
+      "Stratège en attractivité des territoires, IA et récit des nations. Conseil aux destinations et institutions du monde francophone.",
+    images: [`${SITE_URL}/api/og?title=${encodeURIComponent('Roseline Ngom — Désirabilité des nations francophones')}&subtitle=${encodeURIComponent('Stratège en attractivité, IA et récit des nations.')}`],
     creator: "@roselinengom",
     site: "@roselinengom",
   },
@@ -132,9 +130,6 @@ export default function RootLayout({
         style={{ backgroundColor: "#FEFCF9", color: "#0A0A0A" }}
       >
         {children}
-        <WhatsAppButton />
-        <LeadPopup />
-        <ToolChatWidget />
         <Analytics />
       </body>
     </html>

@@ -1,482 +1,366 @@
-'use client'
-
-import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import JsonLd from '@/components/JsonLd'
-import { faqSchema } from '@/lib/seo/jsonld'
-import s from './page.module.css'
 
-const HOMEPAGE_FAQ = [
-  {
-    question: 'Qui est Roseline Ngom ?',
-    answer: "Roseline Ngom est franco-sénégalaise, fondatrice de TripAfro, avec 10 ans d'expertise terrain au Sénégal. Elle accompagne la diaspora dans son retour aux sources et conseille hôtels et agences de tourisme sur leur transformation digitale et l'adoption de l'IA."
+export const metadata: Metadata = {
+  title: 'Roseline Ngom — Désirabilité des nations francophones',
+  description:
+    "Je répare les récits nationaux des pays francophones et mesure leur désirabilité auprès du monde.",
+  openGraph: {
+    title: 'Roseline Ngom — Désirabilité des nations francophones',
+    description:
+      "Je répare les récits nationaux des pays francophones et mesure leur désirabilité auprès du monde.",
   },
-  {
-    question: 'Comment se déroule un voyage sur-mesure au Sénégal ?',
-    answer: "Après un appel découverte gratuit, Roseline conçoit un itinéraire personnalisé selon vos envies, votre budget et votre durée (7 à 21 jours). Vous recevez un programme détaillé, puis elle coordonne tout sur place : logements, chauffeurs-guides, rencontres, expériences exclusives."
-  },
-  {
-    question: 'Quelle différence entre « Retour aux Sources » et « Voyage Signature » ?',
-    answer: "« Retour aux Sources » est un voyage en groupe (8-15) de 14 jours pensé pour la diaspora, avec un programme fixe. « Voyage Signature » est 100 % sur-mesure, en solo, couple ou famille, durée et itinéraire libres."
-  },
-  {
-    question: 'Faut-il un visa pour voyager au Sénégal ?',
-    answer: "Non, les ressortissants français, belges et canadiens n'ont pas besoin de visa pour un séjour touristique de moins de 90 jours. Seul un passeport valide 6 mois après la date de retour est exigé."
-  },
-  {
-    question: 'Quand partir au Sénégal ?',
-    answer: "La meilleure période est la saison sèche, de novembre à mai, avec des températures entre 25 et 30 °C et peu d'humidité. La saison des pluies (juillet à octobre) offre une nature luxuriante et moins de touristes."
-  },
-  {
-    question: 'Le consulting digital concerne quel type d\'acteurs ?',
-    answer: "Roseline conseille hôtels indépendants, lodges, agences de tourisme et institutions touristiques africaines : audit digital, stratégie contenu, automatisations, adoption pratique de l'IA générative au quotidien."
-  }
-]
-
-/* Hook fade-in au scroll */
-function useReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add(s.vis)
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return ref
 }
 
-const GALLERY_IMAGES: Array<{ src: string; alt: string }> = [
-  { src: '/images/senegal/gallery-1.jpg', alt: 'Scène de vie au Sénégal, voyage immersif TripAfro' },
-  { src: '/images/senegal/gallery-2.jpg', alt: 'Paysage sénégalais, ambiance authentique' },
-  { src: '/images/senegal/gallery-3.jpg', alt: 'Rencontre locale au Sénégal, voyage culturel' },
-  { src: '/images/senegal/gallery-4.jpg', alt: 'Détail architecture et artisanat sénégalais' },
-  { src: '/images/senegal/gallery-5.jpg', alt: 'Côte atlantique sénégalaise, pirogues et océan' },
-  { src: '/images/senegal/gallery-6.jpg', alt: 'Marché et vie quotidienne au Sénégal' },
-  { src: '/images/senegal/exp-01-lac-rose.jpg', alt: 'Lac Rose du Sénégal avec ses eaux roses et pêcheurs en pirogue' },
-  { src: '/images/senegal/goree.jpg', alt: 'Île de Gorée, site UNESCO, mémoire de la traite transatlantique' },
-  { src: '/images/senegal/saint-louis.jpg', alt: 'Saint-Louis du Sénégal, ville coloniale classée UNESCO' },
-  { src: '/images/senegal/Lompoul.jpeg', alt: 'Désert de Lompoul au Sénégal, dunes de sable doré' },
+const BRAND = '#560E13'
+const GOLD = '#F6C961'
+const CREAM = '#FEFCF9'
+const INK = '#0A0A0A'
+
+const PORTES = [
+  {
+    n: '01',
+    label: 'Idée',
+    title: 'La thèse',
+    desc: "La désirabilité des nations, un actif économique mesurable et souverain.",
+    href: '/idee',
+  },
+  {
+    n: '02',
+    label: 'Indice',
+    title: 'L’Indice',
+    desc: "L’Indice de Désirabilité des Nations Africaines. Premier numéro pilote, déjà publié.",
+    href: '/indice',
+  },
+  {
+    n: '03',
+    label: 'Advisory',
+    title: 'Collaborer',
+    desc: "Trois portes pour travailler ensemble : mandats, advisory annuel, souveraineté algorithmique.",
+    href: '/advisory',
+  },
 ]
 
 export default function HomePage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const videoRef = useReveal<HTMLDivElement>()
-  const aboutRef = useReveal<HTMLDivElement>()
-  const voyLabelRef = useReveal<HTMLDivElement>()
-  const voyTitleRef = useReveal<HTMLDivElement>()
-  const vcard1Ref = useReveal<HTMLDivElement>()
-  const vcard2Ref = useReveal<HTMLDivElement>()
-  const vcard3Ref = useReveal<HTMLDivElement>()
-  const temoLabelRef = useReveal<HTMLDivElement>()
-  const temoTitleRef = useReveal<HTMLDivElement>()
-  const temoGridRef = useReveal<HTMLDivElement>()
-  const expRef = useReveal<HTMLDivElement>()
-  const guideTxtRef = useReveal<HTMLDivElement>()
-  const guidePhotosRef = useReveal<HTMLDivElement>()
-
-  const handleGuideSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email.includes('@')) return
-    setLoading(true)
-    try {
-      const res = await fetch('/api/capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: 'homepage-guide' }),
-      })
-      const data = await res.json()
-      if (data.success) {
-        router.push('/ressources/guide-15-experiences/merci')
-      }
-    } catch {
-      // silent
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Galerie : dédoublée pour le scroll infini
-  const galleryLoop = [...GALLERY_IMAGES, ...GALLERY_IMAGES]
-
   return (
-    <div className={s.home}>
-      <Nav />
+    <>
+      <Nav variant="solid" />
 
-      {/* ═══ HERO ═══ */}
-      <section className={s.hero}>
-        <div className={s.heroCt}>
-          <div className={s.heroLeft}>
-            <h1>
-              Le Sénégal<br />comme personne<br />ne vous l&apos;a<br /><em>jamais montré.</em>
-            </h1>
-            <p className={s.heroSub}>
-              Voyages immersifs au cœur du Sénégal. Consulting stratégique pour vos projets.
-              Transformation digitale du tourisme africain.
-            </p>
-            <div className={s.heroBtns}>
-              <Link href="/ressources/guide-15-experiences" className={s.btnGold}>Recevoir le guide gratuit</Link>
-              <a
-                href="https://calendly.com/roselinengom"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={s.btnOutline}
+      <main
+        style={{
+          backgroundColor: CREAM,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* glow doré décoratif très subtil */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            top: '-10%',
+            right: '-10%',
+            width: 700,
+            height: 700,
+            background: `radial-gradient(circle, rgba(246,201,97,0.14) 0%, transparent 70%)`,
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '-10%',
+            width: 520,
+            height: 520,
+            background: `radial-gradient(circle, rgba(86,14,19,0.08) 0%, transparent 70%)`,
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+          }}
+        />
+        {/* dot grid filigrane */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `radial-gradient(circle, rgba(86,14,19,0.05) 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+            maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* HERO — phrase signature géante */}
+        <section
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            padding: 'clamp(7rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 5vw, 4rem)',
+            maxWidth: 1240,
+            margin: '0 auto',
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* label monospace haut */}
+          <div
+            style={{
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+              fontSize: 10,
+              fontWeight: 500,
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
+              color: BRAND,
+              opacity: 0.65,
+              marginBottom: 32,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
+            <span
+              style={{
+                width: 28,
+                height: 1,
+                background: BRAND,
+                opacity: 0.4,
+                display: 'inline-block',
+              }}
+            />
+            Roseline Ngom · Désirabilité des nations francophones
+          </div>
+
+          {/* Phrase signature — accroche polarisante */}
+          <h1
+            style={{
+              fontFamily: 'var(--font-cormorant), serif',
+              fontWeight: 500,
+              color: BRAND,
+              fontSize: 'clamp(2.6rem, 7.2vw, 6.4rem)',
+              lineHeight: 1.02,
+              letterSpacing: '-0.01em',
+              marginBottom: 36,
+              maxWidth: 1100,
+            }}
+          >
+            Une nation qui ne possède plus son récit
+            <br />
+            <em
+              style={{
+                fontStyle: 'italic',
+                background: `linear-gradient(90deg, ${BRAND} 0%, #8a2530 60%, #b8860b 100%)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              perd plus que son image. Elle perd sa désirabilité.
+            </em>
+          </h1>
+
+          <p
+            style={{
+              fontFamily: 'var(--font-cormorant), serif',
+              fontStyle: 'italic',
+              fontWeight: 400,
+              fontSize: 'clamp(1.15rem, 1.6vw, 1.5rem)',
+              color: 'rgba(10,10,10,0.7)',
+              lineHeight: 1.55,
+              maxWidth: 720,
+              marginBottom: 24,
+            }}
+          >
+            Je répare les récits nationaux des pays francophones
+            <br />
+            et mesure leur désirabilité auprès du monde.
+          </p>
+
+          <p
+            style={{
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+              fontSize: 12,
+              letterSpacing: '0.08em',
+              color: 'rgba(10,10,10,0.5)',
+              lineHeight: 1.7,
+              maxWidth: 720,
+              marginTop: 8,
+            }}
+          >
+            Stratège en attractivité des territoires, IA et récit des nations.
+          </p>
+        </section>
+
+        {/* SECTION 3 PORTES */}
+        <section
+          style={{
+            padding: 'clamp(2rem, 4vw, 4rem) clamp(1.5rem, 5vw, 4rem) clamp(5rem, 8vw, 7rem)',
+            maxWidth: 1240,
+            margin: '0 auto',
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* séparateur or fin */}
+          <div
+            aria-hidden
+            style={{
+              height: 1,
+              background: `linear-gradient(90deg, transparent 0%, ${GOLD} 50%, transparent 100%)`,
+              opacity: 0.4,
+              marginBottom: 56,
+            }}
+          />
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 28,
+            }}
+          >
+            {PORTES.map((p) => (
+              <Link
+                key={p.n}
+                href={p.href}
+                className="v3-porte"
+                style={{
+                  textDecoration: 'none',
+                  color: INK,
+                  display: 'block',
+                  padding: 'clamp(1.75rem, 2.5vw, 2.25rem)',
+                  background: 'rgba(255,255,255,0.5)',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid rgba(86,14,19,0.12)`,
+                  borderRadius: 4,
+                  transition: 'transform .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
               >
-                Session découverte 15 min →
-              </a>
-            </div>
-            <div className={s.heroStats}>
-              <div className={s.stat}>
-                <div className="n" style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 700, color: '#F6C961' }}>2 000+</div>
-                <div className="l" style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 2, textTransform: 'uppercase', letterSpacing: 1 }}>voyageurs accompagnés</div>
-              </div>
-              <div className={s.stat}>
-                <div className="n" style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 700, color: '#F6C961' }}>10 ans</div>
-                <div className="l" style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 2, textTransform: 'uppercase', letterSpacing: 1 }}>de terrain au Sénégal</div>
-              </div>
-              <div className={s.stat}>
-                <div className="n" style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 700, color: '#F6C961' }}>35K</div>
-                <div className="l" style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 2, textTransform: 'uppercase', letterSpacing: 1 }}>communauté TripAfro</div>
-              </div>
-            </div>
-          </div>
-          <div className={s.heroRight}>
-            <div className={s.heroPortrait}>
-              <Image
-                src="/images/roseline-portrait-3.jpg"
-                alt="Roseline Ngom"
-                width={340}
-                height={510}
-                priority
-                style={{ width: '100%', height: 'auto' }}
-              />
-              <span className="tag">Tourisme · Culture · Développement</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ TRUST BAR ═══ */}
-      <div className={s.trust}>
-        <span>Fondatrice TripAfro · 10 ans d&apos;expertise Sénégal · Master Finance INSEEC · Consultante tourisme &amp; digital</span>
-      </div>
-
-      {/* ═══ VIDEO ═══ */}
-      <section className={s.videoSec}>
-        <div className={`${s.videoIn} ${s.fi}`} ref={videoRef}>
-          <div className={s.label}>Expérience TripAfro</div>
-          <h2>Regardez ce que vivent nos voyageurs</h2>
-          <div className={s.videoSub}>
-            Pas une promesse. Une preuve. Découvrez les coulisses d&apos;une expérience TripAfro au Sénégal.
-          </div>
-          <div className={s.videoWrap}>
-            <iframe
-              src="https://www.youtube.com/embed/cAXg3qd8HkI"
-              title="Expérience TripAfro"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ ABOUT ═══ */}
-      <section className={s.about}>
-        <div className={`${s.aboutIn} ${s.fi}`} ref={aboutRef}>
-          <div className={s.aboutImg}>
-            <Image
-              src="/images/roseline-portrait-1.jpg"
-              alt="Roseline Ngom"
-              width={500}
-              height={620}
-              style={{ width: '100%', height: 'auto' }}
-            />
-            <div className="badge" style={{ position: 'absolute', bottom: -14, right: -14, background: '#F6C961', color: '#3A0A0D', padding: '12px 20px', fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', boxShadow: '0 4px 15px rgba(246,201,97,0.25)' }}>
-              Experte Sénégal
-            </div>
-          </div>
-          <div className={s.aboutTxt}>
-            <div className={s.label}>Qui est Roseline Ngom</div>
-            <h2>Casamançaise de cœur.<br /><em>Experte de conviction.</em></h2>
-            <p>
-              Depuis 10 ans, je construis un pont entre les voyageurs du monde entier et le vrai Sénégal.
-              Pas celui des brochures. Celui des rencontres, des saveurs, des silences.
-            </p>
-            <p>
-              Fondatrice de TripAfro, j&apos;ai accompagné plus de 2 000 voyageurs, et aujourd&apos;hui je concentre
-              mon énergie sur trois missions : faire vivre le Sénégal autrement, accompagner les porteurs
-              de projets, et transformer le digital du tourisme africain.
-            </p>
-            <div className={s.aboutSig}>« Le Sénégal a tout. Il est temps de le révéler. »</div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ GALLERY SCROLL ═══ */}
-      <section className={s.gallery}>
-        <div className={s.galleryTrack}>
-          {galleryLoop.map((img, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={i} src={img.src} alt={img.alt} loading="lazy" />
-          ))}
-        </div>
-      </section>
-
-      {/* ═══ VOYAGES ═══ */}
-      <section className={s.voyages}>
-        <div className={s.voyagesIn}>
-          <div className={`${s.secLabel} ${s.fi}`} ref={voyLabelRef}>Voyages TripAfro</div>
-          <div className={`${s.secTitle} ${s.fi}`} ref={voyTitleRef}>Trois façons de vivre le Sénégal</div>
-
-          <div className={`${s.vcard} ${s.fi}`} ref={vcard1Ref}>
-            <div className={s.vcardImg}>
-              <Image src="/images/senegal/gallery-1.jpg" alt="Retour aux Sources" fill sizes="(max-width:900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
-              <span className={s.vcardPrice}>Dès 2 200 €</span>
-            </div>
-            <div className={s.vcardCt}>
-              <div className="tags" style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>14 jours</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Groupe 8-15</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Juillet-Août · Décembre</span>
-              </div>
-              <h3>Retour aux Sources</h3>
-              <p>14 jours d&apos;immersion totale. Dakar, Saly, Sine Saloum, Saint-Louis. Un voyage pensé pour ceux qui veulent vivre le Sénégal de l&apos;intérieur, pas le survoler.</p>
-              <Link href="/voyages/retour-aux-sources">Découvrir le programme →</Link>
-            </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                    marginBottom: 24,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                      fontSize: 10,
+                      fontWeight: 600,
+                      letterSpacing: '0.3em',
+                      textTransform: 'uppercase',
+                      color: BRAND,
+                      opacity: 0.7,
+                    }}
+                  >
+                    / {p.n} — {p.label}
+                  </span>
+                </div>
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-cormorant), serif',
+                    fontWeight: 600,
+                    fontSize: 'clamp(1.6rem, 2.2vw, 2rem)',
+                    color: BRAND,
+                    lineHeight: 1.1,
+                    marginBottom: 14,
+                  }}
+                >
+                  {p.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: 14,
+                    lineHeight: 1.65,
+                    color: 'rgba(10,10,10,0.7)',
+                    marginBottom: 24,
+                  }}
+                >
+                  {p.desc}
+                </p>
+                <span
+                  style={{
+                    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                    fontSize: 11,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    color: BRAND,
+                    fontWeight: 600,
+                  }}
+                >
+                  Entrer →
+                </span>
+              </Link>
+            ))}
           </div>
 
-          <div className={`${s.vcard} ${s.rev} ${s.fi}`} ref={vcard2Ref}>
-            <div className={s.vcardImg}>
-              <Image src="/images/senegal/gallery-4.jpg" alt="Voyage Signature" fill sizes="(max-width:900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
-              <span className={s.vcardPrice}>Sur devis</span>
-            </div>
-            <div className={s.vcardCt}>
-              <div className="tags" style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Sur mesure</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>5-14 jours</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Toute l&apos;année</span>
-              </div>
-              <h3>Voyage Signature</h3>
-              <p>Votre Sénégal, votre rythme, votre histoire. Un itinéraire conçu sur mesure, du premier échange jusqu&apos;au retour. Couples, familles, groupes d&apos;amis, voyageurs solo.</p>
-              <Link href="/voyages/voyage-signature">Demander un devis →</Link>
-            </div>
-          </div>
-
-          <div className={`${s.vcard} ${s.fi}`} ref={vcard3Ref}>
-            <div className={s.vcardImg}>
-              <Image src="/images/senegal/gallery-2.jpg" alt="Back to Senegal" fill sizes="(max-width:900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
-              <span className={s.vcardSoon}>Coming soon, Fév. 2027</span>
-              <span className={s.vcardPrice}>Dès 3 800 €</span>
-            </div>
-            <div className={s.vcardCt}>
-              <div className="tags" style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>7 jours</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Institutionnel</span>
-                <span style={{ fontSize: 9, color: '#8A7E74', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px', background: 'white', borderRadius: 20 }}>Sélection sur dossier</span>
-              </div>
-              <h3>Back to Senegal</h3>
-              <p>7 jours pour passer de l&apos;idée au projet concret. Rencontres institutionnelles, banques, entrepreneurs locaux. Le programme qui accélère vos projets au Sénégal.</p>
-              <Link href="/voyages/back-to-senegal">S&apos;inscrire à la liste d&apos;attente →</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ TÉMOIGNAGES ═══ */}
-      <section className={s.temoSec}>
-        <div className={s.temoIn}>
-          <div className={`${s.secLabel} ${s.fi}`} ref={temoLabelRef}>Ils ont voyagé avec TripAfro</div>
-          <div className={`${s.secTitle} ${s.fi}`} ref={temoTitleRef}>Ce qu&apos;ils en disent</div>
-          <div className={`${s.temoGrid} ${s.fi}`} ref={temoGridRef}>
-            <div className={s.temo}>
-              <div className="stars" style={{ color: '#F6C961', fontSize: 14, marginBottom: 14, letterSpacing: 2 }}>★★★★★</div>
-              <q>Ce voyage m&apos;a reconnectée avec mes racines d&apos;une manière que je n&apos;aurais jamais imaginée. Roseline a pensé à chaque détail.</q>
-              <div className="who" style={{ fontSize: 13, fontWeight: 600, color: '#560E13' }}>Aminata D.</div>
-              <div className="where" style={{ fontSize: 11, color: '#8A7E74', marginTop: 2 }}>Paris, France</div>
-            </div>
-            <div className={s.temo}>
-              <div className="stars" style={{ color: '#F6C961', fontSize: 14, marginBottom: 14, letterSpacing: 2 }}>★★★★★</div>
-              <q>Nous sommes venus en couple pour notre anniversaire. L&apos;expérience du Sine Saloum restera gravée à jamais. Merci TripAfro.</q>
-              <div className="who" style={{ fontSize: 13, fontWeight: 600, color: '#560E13' }}>Marc &amp; Sophie</div>
-              <div className="where" style={{ fontSize: 11, color: '#8A7E74', marginTop: 2 }}>Bruxelles, Belgique</div>
-            </div>
-            <div className={s.temo}>
-              <div className="stars" style={{ color: '#F6C961', fontSize: 14, marginBottom: 14, letterSpacing: 2 }}>★★★★★</div>
-              <q>J&apos;ai découvert un Sénégal que 20 ans de voyages en solo ne m&apos;avaient jamais montré. Le guide de Roseline est précieux.</q>
-              <div className="who" style={{ fontSize: 13, fontWeight: 600, color: '#560E13' }}>Mamadou N.</div>
-              <div className="where" style={{ fontSize: 11, color: '#8A7E74', marginTop: 2 }}>Lyon, France</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ EXPERTISE ═══ */}
-      <section className={s.expertise}>
-        <div className={s.expertiseIn}>
-          <div className={s.expertiseImg}>
-            <Image
-              src="/images/roseline-portrait-2.jpg"
-              alt="Roseline Ngom"
-              width={420}
-              height={630}
-              style={{ width: '100%', height: 'auto' }}
-            />
-          </div>
-          <div className={`${s.expCards} ${s.fi}`} ref={expRef}>
-            <div className={s.expHead}>
-              <div className={s.label} style={{ textAlign: 'left' }}>Au-delà des voyages</div>
-              <h2 style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 32, fontWeight: 600, color: 'white', marginBottom: 20, lineHeight: 1.12 }}>
-                Mon expertise au service<br />du tourisme <em style={{ color: '#F6C961', fontStyle: 'italic', fontWeight: 400 }}>africain</em>
-              </h2>
-            </div>
-            <div className={s.expCard}>
-              <h3>Consulting stratégique</h3>
-              <p>Audit, accompagnement et conseil pour les acteurs du tourisme et de la culture en Afrique de l&apos;Ouest. De la vision à l&apos;exécution.</p>
-              <Link href="/consulting">En savoir plus →</Link>
-            </div>
-            <div className={s.expCard}>
-              <h3>Digital &amp; Intelligence Artificielle</h3>
-              <p>Présence digitale, transformation, IA appliquée et formations pour hôtels, lodges, agences et acteurs culturels.</p>
-              <Link href="/digital-ia">Découvrir les offres →</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ GUIDE LEAD MAGNET ═══ */}
-      <section className={s.guide}>
-        <div className={s.guideIn}>
-          <div className={`${s.guideTxt} ${s.fi}`} ref={guideTxtRef}>
-            <div className={s.label}>Guide offert · 2026</div>
-            <h2>15 expériences secrètes<br /><em>au Sénégal</em></h2>
-            <p>
-              Le guide que seule une locale peut vous offrir. 33 pages de lieux cachés, de conseils pratiques
-              et de secrets que les circuits touristiques ne montrent jamais.
-            </p>
-            <form className={s.guideForm} onSubmit={handleGuideSubmit}>
-              <input
-                type="email"
-                placeholder="Votre adresse email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <button type="submit" disabled={loading}>
-                {loading ? '...' : 'Télécharger'}
-              </button>
-            </form>
-            <div className={s.guideMicro}>Gratuit, sans spam. 500+ voyageurs nous font déjà confiance.</div>
-          </div>
-          <div className={`${s.guidePhotos} ${s.fi}`} ref={guidePhotosRef}>
-            <div>
-              <Image src="/images/senegal/exp-01-lac-rose.jpg" alt="Lac Rose du Sénégal, destination phare du guide gratuit" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
-            </div>
-            <div>
-              <Image src="/images/senegal/gallery-5.jpg" alt="Côte atlantique sénégalaise, aperçu du guide gratuit 15 expériences" fill sizes="(max-width:900px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ MAILLAGE INTERNE (SEO) ═══ */}
-      <section style={{ padding: '60px 24px', maxWidth: 1100, margin: '0 auto', borderTop: '1px solid rgba(86,14,19,0.1)' }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 600, textAlign: 'center', marginBottom: 12, color: '#560E13' }}>
-          Pour aller plus loin
-        </h2>
-        <p style={{ textAlign: 'center', opacity: 0.7, marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.7 }}>
-          Préparez votre voyage, découvrez le Sénégal en profondeur, ou explorez mes ressources pour les professionnels du tourisme.
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
-          <div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Voyages signature</h3>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
-              <li>→ <Link href="/voyages/retour-aux-sources" style={{ color: '#560E13', textDecoration: 'underline' }}>Retour aux Sources : voyage diaspora 14 jours</Link></li>
-              <li>→ <Link href="/voyages/voyage-signature" style={{ color: '#560E13', textDecoration: 'underline' }}>Voyage sur-mesure au Sénégal</Link></li>
-              <li>→ <Link href="/voyages/back-to-senegal" style={{ color: '#560E13', textDecoration: 'underline' }}>Back to Senegal pour entrepreneurs</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Ressources & lecture</h3>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
-              <li>→ <Link href="/ressources/guide-15-experiences" style={{ color: '#560E13', textDecoration: 'underline' }}>Guide gratuit : 15 expériences secrètes</Link></li>
-              <li>→ <Link href="/blog/voyage-senegal-guide-complet-2026" style={{ color: '#560E13', textDecoration: 'underline' }}>Voyage au Sénégal en 2026, guide complet</Link></li>
-              <li>→ <Link href="/blog/rentrer-au-senegal-diaspora" style={{ color: '#560E13', textDecoration: 'underline' }}>Rentrer au Sénégal, conseils diaspora</Link></li>
-              <li>→ <Link href="/blog" style={{ color: '#560E13', textDecoration: 'underline' }}>Tous les articles du blog</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: '#560E13', marginBottom: 12 }}>Pour les pros du tourisme</h3>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 15, lineHeight: 1.6 }}>
-              <li>→ <Link href="/digital-ia" style={{ color: '#560E13', textDecoration: 'underline' }}>Consulting digital & IA tourisme</Link></li>
-              <li>→ <Link href="/digital-ia/formations" style={{ color: '#560E13', textDecoration: 'underline' }}>Formations IA appliquée au tourisme</Link></li>
-              <li>→ <Link href="/ressources/benchmark-institutionnel" style={{ color: '#560E13', textDecoration: 'underline' }}>Benchmark institutionnel Bénin · Maroc · Rwanda</Link></li>
-              <li>→ <Link href="/a-propos" style={{ color: '#560E13', textDecoration: 'underline' }}>À propos de Roseline Ngom</Link></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FAQ (SEO + GEO) ═══ */}
-      <section style={{ padding: '80px 24px', maxWidth: 900, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 600, textAlign: 'center', marginBottom: 48, color: '#560E13' }}>
-          Questions fréquentes
-        </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {HOMEPAGE_FAQ.map((item, idx) => (
-            <details key={idx} style={{ border: '1px solid rgba(86,14,19,0.15)', borderRadius: 8, padding: '16px 20px', backgroundColor: '#FEFCF9' }}>
-              <summary style={{ cursor: 'pointer', fontWeight: 600, color: '#560E13', fontSize: 16, listStyle: 'none' }}>
-                {item.question}
-              </summary>
-              <p style={{ marginTop: 12, lineHeight: 1.7, color: '#0A0A0A', opacity: 0.85 }}>
-                {item.answer}
-              </p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <JsonLd data={faqSchema(HOMEPAGE_FAQ)} />
-
-      {/* ═══ CTA FINAL ═══ */}
-      <section className={s.ctaFinal}>
-        <h2>Prêt à découvrir le <em>vrai Sénégal</em> ?</h2>
-        <p>Que vous souhaitiez voyager, entreprendre ou transformer votre activité, je suis là pour vous accompagner.</p>
-        <div className={s.ctaBtns}>
-          <a
-            href="https://calendly.com/roselinengom"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={s.btnGold}
+          {/* mention bas — bureau */}
+          <div
+            style={{
+              marginTop: 56,
+              paddingTop: 28,
+              borderTop: `1px solid rgba(86,14,19,0.08)`,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 16,
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+              fontSize: 10,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'rgba(10,10,10,0.55)',
+            }}
           >
-            Réserver un appel gratuit
-          </a>
-          <a
-            href="https://wa.me/33650329808"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={s.btnOutline}
-          >
-            Discuter sur WhatsApp →
-          </a>
-        </div>
-      </section>
+            <span>bureau@roselinengom.com · Paris · Dakar</span>
+            <a
+              href="https://tripafro.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: 'rgba(10,10,10,0.55)',
+                textDecoration: 'none',
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                fontSize: 10,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                borderBottom: '1px solid rgba(10,10,10,0.2)',
+                paddingBottom: 2,
+              }}
+            >
+              Laboratoire terrain depuis 2016
+            </a>
+          </div>
+        </section>
+
+        <style>{`
+          .v3-porte:hover {
+            transform: translateY(-4px);
+            border-color: rgba(86,14,19,0.35) !important;
+            background: rgba(255,255,255,0.85) !important;
+            box-shadow: 0 12px 32px rgba(86,14,19,0.08);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .v3-porte { transition: none !important; }
+          }
+        `}</style>
+      </main>
 
       <Footer />
-    </div>
+    </>
   )
 }
