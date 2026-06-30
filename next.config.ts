@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
       { source: '/ressources/guide-15-experiences/merci', destination: 'https://tripafro.com/fr/ressources/guide-15-experiences', permanent: true },
       { source: '/ressources/le-bled-autrement', destination: 'https://tripafro.com/fr/diaspora', permanent: true },
 
+      // C-bis Phase 4 — Articles voyage 301 vers tripafro.com/fr/articles/[slug]
+      // (uniquement les 2 articles publishes ; les 24 drafts seront ajoutes
+      // au fur et a mesure qu'ils passent en published)
+      { source: '/blog/voyage-senegal-guide-complet-2026', destination: 'https://tripafro.com/fr/articles/voyage-senegal-guide-complet-2026', permanent: true },
+      { source: '/blog/lac-rose-senegal', destination: 'https://tripafro.com/fr/articles/lac-rose-senegal', permanent: true },
+
       // C-bis Phase 5 — Cleanup pages legacy V1 (consulting / digital-ia / outils / expertise)
       // Redirigées vers /advisory (le hub V3 des mandats / IA / souveraineté algorithmique)
       // pour préserver le jus SEO des anciens liens entrants externes.
