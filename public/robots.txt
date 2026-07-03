@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-Sitemap: https://www.roselinengom.com/sitemap.xml
+# Site en refonte, indexation désactivée temporairement.

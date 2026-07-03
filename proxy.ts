@@ -2,11 +2,16 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function proxy(request: NextRequest) {
-  // L'authentification admin est gérée côté client par AdminLayout
-  // qui vérifie la session Supabase via localStorage
-  return NextResponse.next()
+  const response = NextResponse.next()
+  response.headers.set(
+    'X-Robots-Tag',
+    'noindex, nofollow, noarchive, nosnippet, noimageindex',
+  )
+  return response
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+  ],
 }
